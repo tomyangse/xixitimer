@@ -1,0 +1,609 @@
+:root {
+  --bg-color: #f0f4f8;
+  --card-bg: rgba(255, 255, 255, 0.8);
+  --text-color: #334e68;
+  --primary: #3b82f6;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  -webkit-font-smoothing: antialiased;
+}
+
+.app-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  font-size: 2rem;
+  margin: 0;
+  color: var(--primary);
+}
+
+/* Activity Grid */
+.activity-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.activity-card,
+.add-card-btn,
+.add-card-form {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  min-height: 120px;
+}
+
+.activity-card:active {
+  transform: scale(0.95);
+}
+
+.activity-icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.activity-name {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-card-btn {
+  border: 2px dashed #cbd5e0;
+  background: transparent;
+  color: #829ab1;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.add-card-form {
+  cursor: default;
+  grid-column: span 2;
+}
+
+.add-card-form input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.icon-selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.icon-selector span {
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 1.5rem;
+}
+
+.icon-selector span.selected {
+  background: #e2e8f0;
+  transform: scale(1.1);
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.form-actions button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.form-actions button:first-child {
+  background: var(--primary);
+  color: white;
+}
+
+/* Active Timer Overlay */
+.active-timer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.95);
+  /* High opacity backdrop */
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+}
+
+.timer-card {
+  background: white;
+  padding: 3rem;
+  border-radius: 24px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border: 4px solid #eee;
+  /* Dynamic color via inline styles */
+  min-width: 300px;
+}
+
+.time-display {
+  font-size: 4rem;
+  font-family: monospace;
+  font-weight: 700;
+  margin: 1rem 0;
+  color: #2d3748;
+}
+
+.stop-btn {
+  background: #e53e3e;
+  color: white;
+  font-size: 1.2rem;
+  padding: 12px 32px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.stop-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Summary Section */
+.summary-section {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  margin-top: auto;
+  /* Push to bottom if space allows */
+}
+
+.summary-totals {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.summary-pill {
+  padding: 8px 16px;
+  border-radius: 20px;
+  display: flex;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.logs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.log-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  background: #f8fafc;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.log-date {
+  color: #888;
+  font-size: 0.8rem;
+}
+
+.small-delete {
+  background: none;
+  border: none;
+  color: #cbd5e0;
+  cursor: pointer;
+}
+
+/* Refactored UI Styles */
+
+/* Main Header */
+.main-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+/* Edit Mode Styles */
+.item-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-btn-small {
+  background: #bee3f8;
+  color: #2b6cb0;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.reward-toggle-row {
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.reward-toggle-row input {
+  margin-right: 8px;
+  width: auto;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.cancel-btn-settings {
+  background: #edf2f7;
+  color: #4a5568;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  flex: 1;
+}
+
+/* Ensure add button (now in form-buttons flex) takes available space or matches style */
+.form-buttons .add-btn-settings {
+  flex: 2;
+}
+
+
+.reset-btn {
+  width: 100%;
+  background: #e53e3e;
+  color: white;
+  font-weight: bold;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 10px;
+}
+
+.reset-btn:hover {
+  background: #c53030;
+}
+
+.settings-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  /* Add border for visibility */
+  border-radius: 50%;
+  /* Circle */
+  font-size: 1.5rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.8;
+  /* Higher opacity */
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 10;
+}
+
+.settings-btn:hover {
+  opacity: 1;
+  transform: rotate(90deg);
+}
+
+.reward-banner-large {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  width: 100%;
+  padding: 2rem;
+  border-radius: 20px;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
+  text-align: center;
+}
+
+.reward-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.reward-time {
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+/* Child View Activity Grid */
+.activity-grid-child {
+  display: grid;
+  grid-template-columns: 1fr;
+  /* Stacked blocks as requested "blocks" usually implies full width or big tiles */
+  gap: 1rem;
+}
+
+.activity-card-child {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  position: relative;
+  overflow: hidden;
+  min-height: 100px;
+}
+
+.activity-card-child:active {
+  transform: scale(0.98);
+}
+
+.activity-card-child.active-pulse {
+  animation: pulse-border 2s infinite;
+}
+
+@keyframes pulse-border {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+.activity-icon-child {
+  font-size: 3rem;
+}
+
+.activity-info-child {
+  flex: 1;
+}
+
+.activity-name-child {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.activity-time-child {
+  font-size: 1.1rem;
+  color: #666;
+  margin-top: 5px;
+}
+
+.running-badge {
+  background: #e53e3e;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.8rem;
+  animation: flash 1s infinite alternate;
+}
+
+@keyframes flash {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.5;
+  }
+}
+
+/* Settings View */
+.settings-container {
+  background: white;
+  min-height: 100vh;
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+}
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
+}
+
+.settings-section {
+  margin-bottom: 2rem;
+}
+
+.settings-section label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #4a5568;
+}
+
+.settings-section input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 1.1rem;
+}
+
+.settings-activity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #f7fafc;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.delete-btn-small {
+  background: #fed7d7;
+  color: #c53030;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.add-activity-in-settings {
+  background: #f0fff4;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px dashed #48bb78;
+}
+
+.add-activity-in-settings input {
+  margin-bottom: 10px;
+}
+
+.multiplier-row,
+.icon-row {
+  margin-bottom: 10px;
+}
+
+.add-btn-settings {
+  width: 100%;
+  background: #48bb78;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Styles for ActivityGrid badge */
+.card-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: #FFD700;
+  color: #333;
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles for Add Form Multiplier */
+.multiplier-input {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.multiplier-input input {
+  width: 60px;
+  margin-bottom: 0;
+  padding: 4px;
+}
+
+/* Styles for ActiveTimer badge */
+.timer-badge {
+  font-size: 1.2rem;
+  margin-top: 5px;
+  font-weight: 600;
+  background: #fff9c4;
+  padding: 4px 12px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+/* Styles for Summary Reward Banner */
+.reward-banner {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #333;
+  padding: 1rem;
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.reward-banner h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
