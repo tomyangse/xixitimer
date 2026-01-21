@@ -1,11 +1,29 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { DataProvider, useData } from './context/DataContext';
 import ActivityGrid from './components/ActivityGrid';
 import SettingsView from './components/SettingsView';
+import Auth from './components/Auth';
+import { supabase } from './supabaseClient';
 
 function AppContent() {
   const { state } = useData();
   const [showSettings, setShowSettings] = useState(false);
+  const [session, setSession] = useState(null);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
   const todaysLogs = state.logs.filter(l => l.dateStr === new Date().toISOString().split('T')[0]);
 
   // Calculate Total Reward Time
@@ -21,6 +39,10 @@ function AppContent() {
   };
 
   const rewardName = state.settings?.rewardName || 'Reward';
+
+  if (!session) {
+    return <Auth />;
+  }
 
   if (showSettings) {
     return <SettingsView onClose={() => setShowSettings(false)} />;

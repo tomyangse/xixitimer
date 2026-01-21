@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
 
 export default function SettingsView({ onClose }) {
-    const { state, addActivity, deleteActivity, updateSettings, editActivity, resetToday } = useData();
+    const { state, addActivity, deleteActivity, updateSettings, editActivity, resetToday, loadData } = useData();
 
     const [rewardName, setRewardName] = useState(state.settings?.rewardName || 'Roblox');
 
@@ -154,6 +154,44 @@ export default function SettingsView({ onClose }) {
                 >
                     ONE-CLICK CLEAR TIME (Reset Today) ️
                 </button>
+            </div>
+
+            <div className="settings-section">
+                <h3>Data Backup</h3>
+                <div className="backup-controls" style={{ display: 'flex', gap: '10px' }}>
+                    <button className="export-btn" onClick={() => {
+                        const dataStr = JSON.stringify(state, null, 2);
+                        const blob = new Blob([dataStr], { type: "application/json" });
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.download = `kidstimer_backup_${new Date().toISOString().split('T')[0]}.json`;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    }}>⬇️ Export JSON</button>
+                    <label className="import-btn">
+                        ⬆️ Import JSON
+                        <input type="file" accept=".json" onChange={(e) => {
+                            const file = e.target.files[0];
+                            if (!file) return;
+                            const reader = new FileReader();
+                            reader.onload = (event) => {
+                                try {
+                                    const data = JSON.parse(event.target.result);
+                                    if (window.confirm("This will overwrite your current data. Are you sure?")) {
+                                        loadData(data);
+                                        onClose();
+                                        alert("Data imported successfully!");
+                                    }
+                                } catch (err) {
+                                    alert("Failed to parse file. Is it a valid JSON backup?");
+                                }
+                            };
+                            reader.readAsText(file);
+                        }} style={{ display: 'none' }} />
+                    </label>
+                </div>
             </div>
         </div>
     );
