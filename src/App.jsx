@@ -3,6 +3,7 @@ import { DataProvider, useData } from './context/DataContext';
 import ActivityGrid from './components/ActivityGrid';
 import SettingsView from './components/SettingsView';
 import Auth from './components/Auth';
+import ActiveTimerOverlay from './components/ActiveTimerOverlay';
 import { supabase } from './supabaseClient';
 
 function AppContent() {
@@ -50,6 +51,9 @@ function AppContent() {
 
   return (
     <div className="app-container">
+      {/* Active Timer Overlay */}
+      <ActiveTimerOverlay />
+
       <header className="app-header">
         <div className="header-title">
           你好! <span className="weather-icon">⛅</span>
