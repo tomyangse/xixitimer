@@ -50,40 +50,47 @@ export default function ActivityGrid() {
     };
 
     return (
-        <div className="activity-grid-container-child">
-            <div className="activity-grid-child">
-                {state.activities.map(activity => {
-                    const isActive = activeId === activity.id;
-                    let duration = activityDurations[activity.id] || 0;
+        <div className="activity-grid">
+            {state.activities.map((activity, index) => {
+                const isActive = activeId === activity.id;
+                let duration = activityDurations[activity.id] || 0;
 
-                    // Add current session time if active
-                    if (isActive && state.activeSession) {
-                        duration += (now - state.activeSession.startTime);
-                    }
+                // Add current session time if active
+                if (isActive && state.activeSession) {
+                    duration += (now - state.activeSession.startTime);
+                }
 
-                    return (
-                        <div
-                            key={activity.id}
-                            className={`activity-card-child ${isActive ? 'active-pulse' : ''}`}
-                            style={{
-                                backgroundColor: activity.color,
-                                border: isActive ? '4px solid #333' : 'none'
-                            }}
-                            onClick={() => handleCardClick(activity.id)}
-                        >
-                            <div className="activity-icon-child">{activity.icon}</div>
-                            <div className="activity-info-child">
-                                <div className="activity-name-child">{activity.name}</div>
-                                <div className="activity-time-child">
-                                    {formatDuration(duration)}
-                                </div>
-                            </div>
-                            {isActive && <div className="running-badge">Running...</div>}
+                return (
+                    <button
+                        key={activity.id}
+                        className={`stitched-card card-color-${index % 5} ${isActive ? 'animate-pop' : ''}`}
+                        onClick={() => handleCardClick(activity.id)}
+                    >
+                        <div className="card-icon">{activity.icon}</div>
+                        <div className="card-title">{activity.name}</div>
+                        <div className="card-time">Today: {formatDuration(duration)}</div>
+
+                        {/* Progress Slot Visual */}
+                        <div className="progress-slot">
+                            <div
+                                className="progress-fill"
+                                style={{
+                                    width: isActive ? '100%' : '0%',
+                                    opacity: isActive ? 1 : 0,
+                                    transition: 'width 2s linear' // Fake progress for visual feedback
+                                }}
+                            />
                         </div>
-                    );
-                })}
-                {state.activities.length === 0 && <p className="empty-text">Ask parents to add activities in Settings!</p>}
-            </div>
+                        {isActive && <div style={{ fontSize: '0.8rem', marginTop: '5px' }}>⚡ Active</div>}
+                    </button>
+                );
+            })}
+            {state.activities.length === 0 && (
+                <div style={{ gridColumn: '1/-1', textAlign: 'center', color: 'var(--text-secondary)', padding: '40px' }}>
+                    <p>No activities yet!</p>
+                    <p>Tap ⚙️ to add some.</p>
+                </div>
+            )}
         </div>
     );
 }

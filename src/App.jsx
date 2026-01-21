@@ -50,16 +50,43 @@ function AppContent() {
 
   return (
     <div className="app-container">
-      <header className="main-header">
-        <button className="settings-btn" onClick={() => setShowSettings(true)}>⚙️</button>
-        <div className="reward-banner-large">
-          <div className="reward-title">{rewardName} Time</div>
-          <div className="reward-time">{formatDuration(totalRewardTime)}</div>
+      <header className="app-header">
+        <div className="header-title">
+          你好! <span className="weather-icon">⛅</span>
         </div>
+        <button className="settings-btn" onClick={() => setShowSettings(true)}>⚙️</button>
       </header>
-      <main>
+
+      <main className="main-content">
         <ActivityGrid />
+
+        {/* Leather Patch Reward Section Moved to Bottom/Main */}
+        <div className="reward-section">
+          <div className="reward-info">
+            <h3>⭐ My Reward</h3>
+            <div className="reward-total">
+              {formatDuration(totalRewardTime)} <span style={{ fontSize: '0.6em', fontWeight: 'normal' }}>({rewardName})</span>
+            </div>
+          </div>
+          <div className="reward-coin">®️</div>
+        </div>
       </main>
+
+      {/* Mockup Bottom Navigation */}
+      <nav className="bottom-nav">
+        <div className="nav-item active">
+          <span className="nav-icon">🏠</span>
+          <span>Home</span>
+        </div>
+        <div className="nav-item">
+          <span className="nav-icon">📊</span>
+          <span>Stats</span>
+        </div>
+        <div className="nav-item">
+          <span className="nav-icon">👤</span>
+          <span>Me</span>
+        </div>
+      </nav>
     </div>
   );
 }

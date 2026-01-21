@@ -1,759 +1,351 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
+
 :root {
-  --bg-color: #f0f4f8;
-  --card-bg: rgba(255, 255, 255, 0.8);
-  --text-color: #334e68;
-  --primary: #3b82f6;
-  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  /* Cozy Palette */
+  --bg-color: #fdf6e3;
+  /* Cream/Parchment */
+  --text-primary: #5d4037;
+  /* Dark Walnut */
+  --text-secondary: #8d6e63;
+  /* Light Brown */
+
+  /* Card Colors (Pastel/Cozy) */
+  --card-blue: #8ecae6;
+  --card-red: #f4a261;
+  --card-green: #a7c957;
+  --card-purple: #c7b2de;
+  --card-yellow: #ffb703;
+
+  /* UI Elements */
+  --stitch-color: rgba(255, 255, 255, 0.6);
+  --shadow-cozy: 0 4px 6px rgba(93, 64, 55, 0.1), 0 10px 20px rgba(93, 64, 55, 0.05);
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 8px;
+
+  font-family: 'Nunito', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: 'Inter', system-ui, sans-serif;
+  padding: 0;
   background-color: var(--bg-color);
-  color: var(--text-color);
-  -webkit-font-smoothing: antialiased;
+  /* Wood Texture pattern using CSS gradients */
+  background-image:
+    linear-gradient(90deg, rgba(230, 220, 200, 0.3) 0%, transparent 1%),
+    linear-gradient(rgba(230, 220, 200, 0.3) 0%, transparent 1%),
+    repeating-linear-gradient(45deg, rgba(240, 230, 210, 0.5) 0px, transparent 2px, transparent 6px);
+  background-size: 100px 100%;
+  /* Vertical wood grain hint */
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  min-height: 100vh;
 }
 
-.app-container {
+#root {
   max-width: 600px;
+  /* Mobile-first container */
   margin: 0 auto;
-  padding: 20px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-header {
+/* --- Layout --- */
+
+.app-header {
+  padding: 20px;
   text-align: center;
-  margin-bottom: 2rem;
-}
-
-h1 {
-  font-size: 2rem;
-  margin: 0;
-  color: var(--primary);
-}
-
-/* Activity Grid */
-.activity-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.activity-card,
-.add-card-btn,
-.add-card-form {
-  background: white;
-  border-radius: 16px;
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow);
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  position: relative;
-  min-height: 120px;
-}
-
-.activity-card:active {
-  transform: scale(0.95);
-}
-
-.activity-icon {
-  font-size: 3rem;
-  margin-bottom: 0.5rem;
-}
-
-.activity-name {
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-
-.delete-btn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: rgba(0, 0, 0, 0.1);
-  border: none;
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.add-card-btn {
-  border: 2px dashed #cbd5e0;
-  background: transparent;
-  color: #829ab1;
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.add-card-form {
-  cursor: default;
-  grid-column: span 2;
-}
-
-.add-card-form input {
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  width: 100%;
-  margin-bottom: 10px;
-  font-size: 1rem;
-}
-
-.icon-selector {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 10px;
-  flex-wrap: wrap;
-}
-
-.icon-selector span {
-  cursor: pointer;
-  padding: 5px;
-  border-radius: 4px;
-  font-size: 1.5rem;
-}
-
-.icon-selector span.selected {
-  background: #e2e8f0;
-  transform: scale(1.1);
-}
-
-.form-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.form-actions button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.form-actions button:first-child {
-  background: var(--primary);
-  color: white;
-}
-
-/* Active Timer Overlay */
-.active-timer-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.95);
-  /* High opacity backdrop */
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(5px);
-}
-
-.timer-card {
-  background: white;
-  padding: 3rem;
-  border-radius: 24px;
-  text-align: center;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  border: 4px solid #eee;
-  /* Dynamic color via inline styles */
-  min-width: 300px;
-}
-
-.time-display {
-  font-size: 4rem;
-  font-family: monospace;
-  font-weight: 700;
-  margin: 1rem 0;
-  color: #2d3748;
-}
-
-.stop-btn {
-  background: #e53e3e;
-  color: white;
-  font-size: 1.2rem;
-  padding: 12px 32px;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.stop-btn:hover {
-  transform: scale(1.05);
-}
-
-/* Summary Section */
-.summary-section {
-  background: white;
-  border-radius: 16px;
-  padding: 1.5rem;
-  box-shadow: var(--shadow);
-  margin-top: auto;
-  /* Push to bottom if space allows */
-}
-
-.summary-totals {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 1.5rem;
-}
-
-.summary-pill {
-  padding: 8px 16px;
-  border-radius: 20px;
-  display: flex;
-  gap: 8px;
-  font-size: 0.9rem;
-}
-
-.logs-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.log-item {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px;
-  background: #f8fafc;
-  border-radius: 8px;
-  font-size: 0.9rem;
-}
-
-.log-date {
-  color: #888;
-  font-size: 0.8rem;
-}
-
-.small-delete {
-  background: none;
-  border: none;
-  color: #cbd5e0;
-  cursor: pointer;
-}
-
-/* Refactored UI Styles */
-
-/* Main Header */
-.main-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  margin-bottom: 2rem;
-}
-
-/* Edit Mode Styles */
-.item-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.edit-btn-small {
-  background: #bee3f8;
-  color: #2b6cb0;
-  border: none;
-  padding: 4px 8px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.8rem;
-}
-
-.reward-toggle-row {
-  margin-bottom: 10px;
-  font-weight: 600;
-}
-
-.reward-toggle-row input {
-  margin-right: 8px;
-  width: auto;
-}
-
-.form-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.cancel-btn-settings {
-  background: #edf2f7;
-  color: #4a5568;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  flex: 1;
-}
-
-/* Ensure add button (now in form-buttons flex) takes available space or matches style */
-.form-buttons .add-btn-settings {
-  flex: 2;
-}
-
-
-.reset-btn {
-  width: 100%;
-  background: #e53e3e;
-  color: white;
-  font-weight: bold;
-  padding: 1rem;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 1px;
   margin-top: 10px;
 }
 
-.reset-btn:hover {
-  background: #c53030;
-}
-
-
-/* Account Section */
-.account-section {
-  border-bottom: 2px dashed var(--border-color);
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-}
-
-.user-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: white;
-  padding: 12px;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-}
-
-.user-email {
-  font-weight: 500;
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-}
-
-.logout-btn {
-  background-color: #ffcccc;
-  color: #cc0000;
-  border: none;
-  padding: 6px 12px;
-  border-radius: var(--radius-sm);
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 0.85rem;
-}
-
-.logout-btn:hover {
-  background-color: #ff9999;
-}
-
-.export-btn,
-.import-btn,
-.reset-btn {
-  flex: 1;
-  padding: 12px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  text-align: center;
-  border: none;
-  color: white;
-}
-
-.export-btn {
-  background: #4a5568;
-}
-
-.import-btn {
-  background: #2d3748;
-  display: inline-block;
-}
-
-.export-btn:hover {
-  background: #2d3748;
-}
-
-.import-btn:hover {
-  background: #1a202c;
-}
-
-.settings-btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background: white;
-  border: 1px solid #ccc;
-  /* Add border for visibility */
-  border-radius: 50%;
-  /* Circle */
-  font-size: 1.5rem;
-  width: 40px;
-  height: 40px;
+.header-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #8d6e63;
+  /* Knitting brown */
+  text-shadow: 2px 2px 0px #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  opacity: 0.8;
-  /* Higher opacity */
-  transition: opacity 0.2s, transform 0.2s;
-  z-index: 10;
+  gap: 10px;
 }
 
-.settings-btn:hover {
-  opacity: 1;
-  transform: rotate(90deg);
+.weather-icon {
+  font-size: 2rem;
 }
 
-.reward-banner-large {
-  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-  width: 100%;
-  padding: 2rem;
-  border-radius: 20px;
-  color: #fff;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 10px 20px rgba(255, 215, 0, 0.3);
-  text-align: center;
+.main-content {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.reward-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 0.5rem;
-  color: rgba(255, 255, 255, 0.9);
-}
+/* --- Components: Stitched Cards --- */
 
-.reward-time {
-  font-size: 4rem;
-  font-weight: 800;
-  line-height: 1;
-}
-
-/* Child View Activity Grid */
-.activity-grid-child {
+.activity-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  /* Stacked blocks as requested "blocks" usually implies full width or big tiles */
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
 }
 
-.activity-card-child {
-  background: white;
-  border-radius: 16px;
-  padding: 1.5rem;
+.stitched-card {
+  position: relative;
+  background-color: var(--card-blue);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  color: white;
+  box-shadow: var(--shadow-cozy);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  border: none;
+  /* Fabric Texture */
+  background-image: repeating-linear-gradient(45deg,
+      rgba(255, 255, 255, 0.1) 0px,
+      rgba(255, 255, 255, 0.1) 2px,
+      transparent 2px,
+      transparent 8px);
+}
+
+/* The "Stitch" Effect - using pseudo-element */
+.stitched-card::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  border: 2px dashed var(--stitch-color);
+  border-radius: 18px;
+  /* Slightly smaller radius */
+  pointer-events: none;
+}
+
+.stitched-card:active {
+  transform: scale(0.96);
+}
+
+/* Card Variants */
+.card-blue {
+  background-color: var(--card-blue);
+}
+
+.card-red {
+  background-color: var(--card-red);
+}
+
+.card-green {
+  background-color: var(--card-green);
+}
+
+.card-purple {
+  background-color: var(--card-purple);
+}
+
+.card-icon {
+  font-size: 3rem;
+  margin-bottom: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  box-shadow: var(--shadow);
-  cursor: pointer;
-  transition: transform 0.1s, box-shadow 0.1s;
-  position: relative;
+  justify-content: center;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin-bottom: 5px;
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.card-time {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+/* --- Progress Bar (Slot style) --- */
+.progress-slot {
+  width: 100%;
+  height: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  margin-top: 10px;
   overflow: hidden;
-  min-height: 100px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-.activity-card-child:active {
-  transform: scale(0.98);
+.progress-fill {
+  height: 100%;
+  background: white;
+  /* Or gold */
+  width: 0%;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
-.activity-card-child.active-pulse {
-  animation: pulse-border 2s infinite;
+/* --- Reward Section (Leather Patch) --- */
+.reward-section {
+  background-color: #d4a373;
+  /* Leather brown base */
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23926c45' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+  color: #fff9db;
+  /* Creamy text */
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  margin-top: 20px;
+  position: relative;
+  box-shadow: var(--shadow-cozy);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 3px solid #b08968;
 }
 
-@keyframes pulse-border {
+/* Leather Stitching */
+.reward-section::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border: 2px dashed #e6ccb2;
+  border-radius: 18px;
+  pointer-events: none;
+}
+
+.reward-info h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #faedcd;
+}
+
+.reward-total {
+  font-size: 2rem;
+  font-weight: 900;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.reward-coin {
+  font-size: 3rem;
+  color: #ffd700;
+  text-shadow: 0 2px 0 #b8860b;
+}
+
+/* --- Settings Button --- */
+.settings-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: white;
+  border: none;
+  font-size: 1.5rem;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  box-shadow: var(--shadow-cozy);
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+}
+
+/* --- Auth & Settings Overlays (Keep mostly same but utilize variables) --- */
+.auth-container,
+.settings-modal {
+  background: white;
+  border-radius: var(--radius-lg);
+  padding: 30px;
+  box-shadow: var(--shadow-cozy);
+}
+
+/* Bottom Nav Mockup */
+.bottom-nav {
+  background: #faedcd;
+  padding: 15px;
+  display: flex;
+  justify-content: space-around;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+  margin-top: auto;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.nav-item.active {
+  color: var(--text-primary);
+  font-weight: bold;
+}
+
+.nav-icon {
+  font-size: 1.5rem;
+}
+
+/* Animation classes */
+@keyframes pop {
   0% {
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1);
+    transform: scale(1);
   }
 
-  70% {
-    box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+  50% {
+    transform: scale(1.05);
   }
 
   100% {
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    transform: scale(1);
   }
 }
 
-.activity-icon-child {
-  font-size: 3rem;
+.animate-pop {
+  animation: pop 0.2s ease;
 }
 
-.activity-info-child {
-  flex: 1;
+/* Utility to map dynamic colors to classes */
+.card-color-0 {
+  background-color: var(--card-blue);
 }
 
-.activity-name-child {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #333;
+.card-color-1 {
+  background-color: var(--card-red);
 }
 
-.activity-time-child {
-  font-size: 1.1rem;
-  color: #666;
-  margin-top: 5px;
+.card-color-2 {
+  background-color: var(--card-green);
 }
 
-.running-badge {
-  background: #e53e3e;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-weight: bold;
-  font-size: 0.8rem;
-  animation: flash 1s infinite alternate;
+.card-color-3 {
+  background-color: var(--card-purple);
 }
 
-@keyframes flash {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0.5;
-  }
-}
-
-/* Settings View */
-.settings-container {
-  background: white;
-  min-height: 100vh;
-  padding: 20px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 200;
-}
-
-.settings-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 1rem;
-}
-
-.settings-section {
-  margin-bottom: 2rem;
-}
-
-.settings-section label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #4a5568;
-}
-
-.settings-section input[type="text"] {
-  width: 100%;
-  padding: 12px;
-  border: 2px solid #e2e8f0;
-  border-radius: 8px;
-  font-size: 1.1rem;
-}
-
-.settings-activity-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-  background: #f7fafc;
-  border-radius: 8px;
-  margin-bottom: 8px;
-}
-
-.delete-btn-small {
-  background: #fed7d7;
-  color: #c53030;
-  border: none;
-  padding: 4px 8px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.8rem;
-}
-
-.add-activity-in-settings {
-  background: #f0fff4;
-  padding: 1rem;
-  border-radius: 12px;
-  border: 1px dashed #48bb78;
-}
-
-.add-activity-in-settings input {
-  margin-bottom: 10px;
-}
-
-.multiplier-row,
-.icon-row {
-  margin-bottom: 10px;
-}
-
-.add-btn-settings {
-  width: 100%;
-  background: #48bb78;
-  color: white;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-/* Styles for ActivityGrid badge */
-.card-badge {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  background: #FFD700;
-  color: #333;
-  font-size: 0.7rem;
-  font-weight: bold;
-  padding: 2px 6px;
-  border-radius: 4px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-}
-
-/* Styles for Add Form Multiplier */
-.multiplier-input {
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
-  color: #666;
-}
-
-.multiplier-input input {
-  width: 60px;
-  margin-bottom: 0;
-  padding: 4px;
-}
-
-/* Styles for ActiveTimer badge */
-.timer-badge {
-  font-size: 1.2rem;
-  margin-top: 5px;
-  font-weight: 600;
-  background: #fff9c4;
-  padding: 4px 12px;
-  border-radius: 12px;
-  display: inline-block;
-}
-
-/* Styles for Summary Reward Banner */
-.reward-banner {
-  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-  color: #333;
-  padding: 1rem;
-  border-radius: 12px;
-  margin-bottom: 1.5rem;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-
-/* Auth Styles */
-.auth-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-}
-
-.auth-card {
-  background: white;
-  padding: 2.5rem;
-  border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  width: 100%;
-  max-width: 400px;
-  text-align: center;
-}
-
-.auth-subtitle {
-  color: #666;
-  margin-bottom: 2rem;
-}
-
-.form-group {
-  margin-bottom: 1.5rem;
-  text-align: left;
-}
-
-.form-group label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: #4a5568;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 12px;
-  border: 2px solid #e2e8f0;
-  border-radius: 10px;
-  font-size: 1rem;
-  transition: border-color 0.2s;
-}
-
-.form-group input:focus {
-  border-color: #f5576c;
-  outline: none;
-}
-
-.auth-btn {
-  width: 100%;
-  padding: 14px;
-  background: #f5576c;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: transform 0.1s;
-}
-
-.auth-btn:active {
-  transform: scale(0.98);
-}
-
-.switch-auth-mode {
-  background: none;
-  border: none;
-  color: #f5576c;
-  margin-top: 1rem;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.auth-error {
-  background: #fed7d7;
-  color: #c53030;
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  font-size: 0.9rem;
+.card-color-4 {
+  background-color: var(--card-yellow);
 }
