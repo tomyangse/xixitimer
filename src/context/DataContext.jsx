@@ -5,21 +5,21 @@ import { supabase } from '../supabaseClient';
 const DataContext = createContext();
 
 const initialState = {
-  settings: { rewardName: 'Roblox' },
   activities: [],
   logs: [],
+  settings: {
+    rewardName: 'Roblox'
+  },
   activeSession: null,
+  user: null // Store user info
 };
 
 function reducer(state, action) {
   switch (action.type) {
     case 'LOAD_DATA':
-      return {
-        ...state,
-        settings: { ...state.settings, ...action.payload.settings },
-        activities: action.payload.activities,
-        logs: action.payload.logs
-      };
+      return { ...state, ...action.payload };
+    case 'SET_USER': // New action to set user
+      return { ...state, user: action.payload };
     case 'UPDATE_SETTINGS':
       return { ...state, settings: { ...state.settings, ...action.payload } };
     case 'ADD_ACTIVITY':
@@ -93,7 +93,13 @@ export function DataProvider({ children }) {
   useEffect(() => {
     const fetchData = async () => {
       const { data: { session } } = await supabase.auth.getSession();
-      if (!session) return;
+
+      if (!session) {
+        dispatch({ type: 'SET_USER', payload: null });
+        return;
+      }
+
+      dispatch({ type: 'SET_USER', payload: session.user });
 
       // Fetch Settings
       let { data: settings } = await supabase.from('user_settings').select('*').single();
@@ -130,7 +136,23 @@ export function DataProvider({ children }) {
       });
     };
 
+    // Initial fetch
     fetchData();
+
+    // Listen for auth changes to re-fetch data
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
+        fetchData();
+      } else if (event === 'SIGNED_OUT') {
+        dispatch({ type: 'LOAD_DATA', payload: { settings: { rewardName: 'Roblox' }, activities: [], logs: [] } }); // Clear data on logout
+        // Optionally clear active session on logout if desired, but user might want to keep local timer running.
+        // For now, we keep activeSession separate as per design.
+      }
+    });
+
+    return () => {
+      authListener.subscription.unsubscribe();
+    };
   }, []);
 
   const updateSettings = async (settings) => {
@@ -240,6 +262,10 @@ export function DataProvider({ children }) {
     window.location.reload();
   };
 
+  const logout = async () => {
+    await supabase.auth.signOut();
+  };
+
   return (
     <DataContext.Provider
       value={{
@@ -252,7 +278,9 @@ export function DataProvider({ children }) {
         deleteLog,
         resetToday,
         loadData,
-        updateSettings
+        updateSettings,
+        logout, // Expose logout
+        user: state.user // Expose user info (we need to add this to state first)
       }}
     >
       {children}

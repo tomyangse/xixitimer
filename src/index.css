@@ -326,8 +326,48 @@ h1 {
   background: #c53030;
 }
 
+
+/* Account Section */
+.account-section {
+  border-bottom: 2px dashed var(--border-color);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.user-email {
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.logout-btn {
+  background-color: #ffcccc;
+  color: #cc0000;
+  border: none;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.logout-btn:hover {
+  background-color: #ff9999;
+}
+
 .export-btn,
-.import-btn {
+.import-btn,
+.reset-btn {
   flex: 1;
   padding: 12px;
   border-radius: 8px;

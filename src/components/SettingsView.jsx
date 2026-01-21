@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
 
 export default function SettingsView({ onClose }) {
-    const { state, addActivity, deleteActivity, updateSettings, editActivity, resetToday, loadData } = useData();
+    const { state, updateSettings, addActivity, deleteActivity, toggleActivityReward, updateActivity, handleExport, handleImport, resetToday, user, logout } = useData();
+    const { settings } = state;
 
-    const [rewardName, setRewardName] = useState(state.settings?.rewardName || 'Roblox');
+    const [rewardName, setRewardName] = useState(settings?.rewardName || 'Roblox');
 
     // New Activity State
     const [isEditing, setIsEditing] = useState(null); // id of activity being edited
@@ -56,11 +57,25 @@ export default function SettingsView({ onClose }) {
         }
     };
 
+    const handleLogout = async () => {
+        await logout();
+        // No need to redirect manually, App.jsx handles auth state
+    };
+
     return (
         <div className="settings-container">
             <div className="settings-header">
                 <h2>⚙️ Settings</h2>
                 <button onClick={handleSaveSettings}>Done</button>
+            </div>
+
+            {/* User Account Section */}
+            <div className="settings-section account-section">
+                <h3>Account</h3>
+                <div className="user-info">
+                    <span className="user-email">{user?.email}</span>
+                    <button className="logout-btn" onClick={handleLogout}>Log Out</button>
+                </div>
             </div>
 
             <div className="settings-section">
