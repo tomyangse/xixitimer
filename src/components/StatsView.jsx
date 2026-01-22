@@ -62,48 +62,74 @@ export default function StatsView() {
                                 <span className="date-label">{formatDate(date)}</span>
                                 <span className="day-total-badge">{formatDuration(dayTotal)}</span>
                             </div>
-                            <div className="paper-lines">
-                                {Object.entries(activitiesMap).map(([actId, duration]) => {
-                                    // Use String comparison for robustness
-                                    const activity = activities.find(a => String(a.id) === String(actId));
-                                    if (!activity) return null;
+                            <div className="paper-lines" style={{ display: 'flex', flexDirection: 'column', gap: '12px', padding: '15px' }}>
+                                {(() => {
+                                    // Calculate max duration for this day to scale bars
+                                    const maxDuration = Math.max(...Object.values(activitiesMap)) || 1;
 
-                                    const activityIndex = activities.findIndex(a => String(a.id) === String(actId));
-                                    const colorClass = `card-color-${activityIndex % 5}`;
+                                    return Object.entries(activitiesMap).map(([actId, duration]) => {
+                                        // Use String comparison for robustness
+                                        const activity = activities.find(a => String(a.id) === String(actId));
+                                        if (!activity) return null;
 
-                                    return (
-                                        <div key={actId} className="stat-row">
-                                            <div className="stat-info">
-                                                <span
+                                        const activityIndex = activities.findIndex(a => String(a.id) === String(actId));
+                                        const colorClass = `card-color-${activityIndex % 5}`;
+
+                                        // Calculate percentage width (min 5% so it's visible)
+                                        const percentage = Math.max((duration / maxDuration) * 100, 5);
+
+                                        return (
+                                            <div key={actId} className="stat-row-chart" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                                {/* Icon */}
+                                                <div
                                                     className={`stat-icon ${colorClass}`}
                                                     style={{
                                                         display: 'flex',
                                                         alignItems: 'center',
                                                         justifyContent: 'center',
-                                                        width: '32px',
-                                                        height: '32px',
-                                                        borderRadius: '50%',
+                                                        width: '40px',
+                                                        height: '40px',
+                                                        borderRadius: '12px',
                                                         color: 'white',
-                                                        marginRight: '8px',
-                                                        textShadow: '0 1px 1px rgba(0,0,0,0.2)'
+                                                        fontSize: '1.5rem',
+                                                        textShadow: '0 1px 1px rgba(0,0,0,0.2)',
+                                                        flexShrink: 0
                                                     }}
                                                 >
                                                     {activity.icon}
-                                                </span>
-                                                <span className="stat-name">{activity.name}</span>
+                                                </div>
+
+                                                {/* Bar & Text Container */}
+                                                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', color: '#5d4037', fontWeight: 'bold' }}>
+                                                        <span>{activity.name}</span>
+                                                        <span>{formatDuration(duration)}</span>
+                                                    </div>
+
+                                                    {/* Bar Track */}
+                                                    <div style={{
+                                                        height: '10px',
+                                                        background: 'rgba(0,0,0,0.05)',
+                                                        borderRadius: '5px',
+                                                        width: '100%',
+                                                        overflow: 'hidden'
+                                                    }}>
+                                                        {/* Actual Bar */}
+                                                        <div
+                                                            className={colorClass}
+                                                            style={{
+                                                                height: '100%',
+                                                                width: `${percentage}%`,
+                                                                borderRadius: '5px',
+                                                                transition: 'width 0.5s ease-out'
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <span
-                                                className={`stat-time ${colorClass}`}
-                                                style={{
-                                                    color: 'white',
-                                                    textShadow: '0 1px 1px rgba(0,0,0,0.2)'
-                                                }}
-                                            >
-                                                {formatDuration(duration)}
-                                            </span>
-                                        </div>
-                                    );
-                                })}
+                                        );
+                                    });
+                                })()}
                             </div>
                         </div>
                     );
