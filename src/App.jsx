@@ -4,6 +4,7 @@ import ActivityGrid from './components/ActivityGrid';
 import SettingsView from './components/SettingsView';
 import Auth from './components/Auth';
 import ActiveTimerOverlay from './components/ActiveTimerOverlay';
+import StatsView from './components/StatsView';
 import { supabase } from './supabaseClient';
 
 function AppContent() {
@@ -41,6 +42,8 @@ function AppContent() {
 
   const rewardName = state.settings?.rewardName || 'Reward';
 
+  const [currentView, setCurrentView] = useState('home');
+
   if (!session) {
     return <Auth />;
   }
@@ -62,31 +65,55 @@ function AppContent() {
       </header>
 
       <main className="main-content">
-        <ActivityGrid />
-
-        {/* Leather Patch Reward Section Moved to Bottom/Main */}
-        <div className="reward-section">
-          <div className="reward-info">
-            <h3>⭐ My Reward</h3>
-            <div className="reward-total">
-              {formatDuration(totalRewardTime)} <span style={{ fontSize: '0.6em', fontWeight: 'normal' }}>({rewardName})</span>
+        {currentView === 'home' && (
+          <>
+            <ActivityGrid />
+            {/* Leather Patch Reward Section Moved to Bottom/Main */}
+            <div className="reward-section">
+              <div className="reward-info">
+                <h3>⭐ My Reward</h3>
+                <div className="reward-total">
+                  {formatDuration(totalRewardTime)} <span style={{ fontSize: '0.6em', fontWeight: 'normal' }}>({rewardName})</span>
+                </div>
+              </div>
+              <div className="reward-coin">®️</div>
             </div>
+          </>
+        )}
+
+        {currentView === 'stats' && <StatsView />}
+
+        {currentView === 'me' && (
+          <div style={{ textAlign: 'center', marginTop: '50px', color: '#8d6e63' }}>
+            <h2>User Profile</h2>
+            <p>Logged in as: {session.user.email}</p>
+            <button onClick={() => supabase.auth.signOut()} style={{ marginTop: '20px', padding: '10px 20px' }}>
+              Sign Out
+            </button>
           </div>
-          <div className="reward-coin">®️</div>
-        </div>
+        )}
       </main>
 
       {/* Mockup Bottom Navigation */}
       <nav className="bottom-nav">
-        <div className="nav-item active">
+        <div
+          className={`nav-item ${currentView === 'home' ? 'active' : ''}`}
+          onClick={() => setCurrentView('home')}
+        >
           <span className="nav-icon">🏠</span>
           <span>Home</span>
         </div>
-        <div className="nav-item">
+        <div
+          className={`nav-item ${currentView === 'stats' ? 'active' : ''}`}
+          onClick={() => setCurrentView('stats')}
+        >
           <span className="nav-icon">📊</span>
           <span>Stats</span>
         </div>
-        <div className="nav-item">
+        <div
+          className={`nav-item ${currentView === 'me' ? 'active' : ''}`}
+          onClick={() => setCurrentView('me')}
+        >
           <span className="nav-icon">👤</span>
           <span>Me</span>
         </div>
