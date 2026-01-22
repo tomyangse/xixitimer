@@ -501,6 +501,128 @@ body {
   box-shadow: 0 2px 0 #6f4c3e, 0 5px 5px rgba(0, 0, 0, 0.2);
 }
 
+/* --- Stats View (Phase 5) --- */
+.stats-container {
+  padding: 10px;
+  max-width: 600px;
+  margin: 0 auto;
+  padding-bottom: 80px;
+  /* Space for bottom nav */
+  width: 100%;
+}
+
+.stats-header {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #5d4037;
+  font-family: 'Nunito', sans-serif;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.stats-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.daily-card {
+  background: #fffbf0;
+  /* Paper color */
+  border-radius: 12px;
+  box-shadow:
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    inset 0 0 20px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #e6ccb2;
+}
+
+/* Notebook holes visuals */
+.daily-card::before {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  border-right: 2px double #e0e0e0;
+  /* Margin line */
+  z-index: 1;
+}
+
+.daily-header {
+  background: #f7e7ce;
+  /* Header tape color */
+  padding: 12px 15px 12px 40px;
+  /* Pad for "margin" */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px dashed #d7ccc8;
+}
+
+.date-label {
+  font-weight: 800;
+  color: #5d4037;
+  font-size: 1.1rem;
+}
+
+.day-total-badge {
+  background: #a1887f;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.paper-lines {
+  padding: 10px 15px 10px 40px;
+  background-image: repeating-linear-gradient(white 0px, white 39px, #e0f2f1 40px);
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  /* Aligns with line height */
+  border-bottom: 1px solid transparent;
+  /* Keeps spacing */
+}
+
+.stat-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stat-icon {
+  font-size: 1.2rem;
+}
+
+.stat-name {
+  color: #4e342e;
+  font-weight: 600;
+}
+
+.stat-time {
+  font-family: 'Nunito', monospace;
+  color: #795548;
+  font-weight: bold;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.empty-state {
+  text-align: center;
+  color: #8d6e63;
+  margin-top: 40px;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
 /* --- Active Timer Overlay (Phase 4) --- */
 .timer-overlay {
   position: fixed;
