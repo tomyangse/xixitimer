@@ -43,6 +43,31 @@ function AppContent() {
   const rewardName = state.settings?.rewardName || 'Reward';
 
   const [currentView, setCurrentView] = useState('home');
+  const [displayName, setDisplayName] = useState('');
+  const [editingName, setEditingName] = useState('');
+  const [isUpdatingProfile, setIsUpdatingProfile] = useState(false);
+
+  useEffect(() => {
+    if (session?.user?.user_metadata?.full_name) {
+      setDisplayName(session.user.user_metadata.full_name);
+      setEditingName(session.user.user_metadata.full_name);
+    }
+  }, [session]);
+
+  const handleUpdateProfile = async () => {
+    setIsUpdatingProfile(true);
+    const { data, error } = await supabase.auth.updateUser({
+      data: { full_name: editingName }
+    });
+
+    if (error) {
+      alert('Error updating profile: ' + error.message);
+    } else {
+      setDisplayName(editingName);
+      alert('Profile updated! ✨');
+    }
+    setIsUpdatingProfile(false);
+  };
 
   if (!session) {
     return <Auth />;
@@ -59,7 +84,7 @@ function AppContent() {
 
       <header className="app-header">
         <div className="header-title">
-          你好! <span className="weather-icon">⛅</span>
+          你好, {displayName || '朋友'}! <span className="weather-icon">⛅</span>
         </div>
         <button className="settings-btn" onClick={() => setShowSettings(true)}>⚙️</button>
       </header>
@@ -84,10 +109,71 @@ function AppContent() {
         {currentView === 'stats' && <StatsView />}
 
         {currentView === 'me' && (
-          <div style={{ textAlign: 'center', marginTop: '50px', color: '#8d6e63' }}>
-            <h2>User Profile</h2>
-            <p>Logged in as: {session.user.email}</p>
-            <button onClick={() => supabase.auth.signOut()} style={{ marginTop: '20px', padding: '10px 20px' }}>
+          <div style={{
+            textAlign: 'center',
+            marginTop: '30px',
+            color: '#8d6e63',
+            background: 'white',
+            padding: '40px 20px',
+            borderRadius: '24px',
+            boxShadow: '0 4px 6px rgba(93, 64, 55, 0.1)'
+          }}>
+            <h2 style={{ marginBottom: '30px' }}>User Profile</h2>
+
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px', marginBottom: '30px' }}>
+              <div style={{ width: '100%', maxWidth: '300px', textAlign: 'left' }}>
+                <label style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>Display Name</label>
+                <input
+                  type="text"
+                  value={editingName}
+                  onChange={(e) => setEditingName(e.target.value)}
+                  placeholder="Enter your name (e.g. Felicia)"
+                  style={{
+                    width: '100%',
+                    padding: '12px',
+                    borderRadius: '12px',
+                    border: '2px solid #e6ccb2',
+                    fontSize: '1rem',
+                    fontFamily: 'Nunito'
+                  }}
+                />
+              </div>
+              <button
+                onClick={handleUpdateProfile}
+                disabled={isUpdatingProfile}
+                className="animate-pop"
+                style={{
+                  background: '#a7c957',
+                  color: 'white',
+                  border: 'none',
+                  padding: '12px 30px',
+                  borderRadius: '20px',
+                  fontSize: '1rem',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 0 #7cb342'
+                }}
+              >
+                {isUpdatingProfile ? 'Saving...' : 'Save Name'}
+              </button>
+            </div>
+
+            <p style={{ opacity: 0.7, marginBottom: '30px' }}>Logged in as: {session.user.email}</p>
+
+            <button
+              onClick={() => supabase.auth.signOut()}
+              style={{
+                marginTop: '10px',
+                padding: '10px 25px',
+                background: '#ef5350',
+                color: 'white',
+                border: 'none',
+                borderRadius: '20px',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                boxShadow: '0 4px 0 #c62828'
+              }}
+            >
               Sign Out
             </button>
           </div>
