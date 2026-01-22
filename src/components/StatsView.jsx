@@ -23,7 +23,7 @@ export default function StatsView() {
         return stats;
     }, [logs]);
 
-    const getActivity = (id) => activities.find(a => a.id === id);
+    // Helper removed in favor of inline find for closure access to activities index
 
     const formatDuration = (ms) => {
         const minutes = Math.floor(ms / 60000);
@@ -64,15 +64,43 @@ export default function StatsView() {
                             </div>
                             <div className="paper-lines">
                                 {Object.entries(activitiesMap).map(([actId, duration]) => {
-                                    const activity = getActivity(parseInt(actId));
+                                    // Use String comparison for robustness
+                                    const activity = activities.find(a => String(a.id) === String(actId));
                                     if (!activity) return null;
+
+                                    const activityIndex = activities.findIndex(a => String(a.id) === String(actId));
+                                    const colorClass = `card-color-${activityIndex % 5}`;
+
                                     return (
                                         <div key={actId} className="stat-row">
                                             <div className="stat-info">
-                                                <span className="stat-icon">{activity.icon}</span>
+                                                <span
+                                                    className={`stat-icon ${colorClass}`}
+                                                    style={{
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        width: '32px',
+                                                        height: '32px',
+                                                        borderRadius: '50%',
+                                                        color: 'white',
+                                                        marginRight: '8px',
+                                                        textShadow: '0 1px 1px rgba(0,0,0,0.2)'
+                                                    }}
+                                                >
+                                                    {activity.icon}
+                                                </span>
                                                 <span className="stat-name">{activity.name}</span>
                                             </div>
-                                            <span className="stat-time">{formatDuration(duration)}</span>
+                                            <span
+                                                className={`stat-time ${colorClass}`}
+                                                style={{
+                                                    color: 'white',
+                                                    textShadow: '0 1px 1px rgba(0,0,0,0.2)'
+                                                }}
+                                            >
+                                                {formatDuration(duration)}
+                                            </span>
                                         </div>
                                     );
                                 })}
