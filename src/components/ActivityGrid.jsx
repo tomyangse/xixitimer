@@ -69,8 +69,6 @@ export default function ActivityGrid() {
                     duration += (now - state.activeSession.startTime);
                 }
 
-                const bgImage = getCardImage(index);
-
                 return (
                     <div
                         key={activity.id}
@@ -78,42 +76,28 @@ export default function ActivityGrid() {
                         onClick={() => handleCardClick(activity.id)}
                         style={{
                             backgroundImage: `url(${bgImage})`,
-                            backgroundSize: 'contain',
+                            backgroundSize: '100% 100%', /* Stretch to fill completely */
                             backgroundRepeat: 'no-repeat',
-                            backgroundPosition: 'center',
-                            // The image aspect ratio is roughly square or 4:3. We enforce a ratio.
                         }}
                     >
                         {/* Checkmark Badge if Active */}
                         {isActive && (
-                            <div style={{
-                                position: 'absolute',
-                                top: '-5px',
-                                right: '-5px',
-                                background: '#81c784',
-                                borderRadius: '50%',
-                                width: '24px',
-                                height: '24px',
-                                border: '2px solid white',
-                                boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                            }}>
-                                ✅
-                            </div>
+                            <div className="active-badge">✅</div>
                         )}
 
-                        <div className="knit-card-content">
-                            {/* Icon (on a little paper/leather patch style) */}
-                            <div className="card-icon-patch">
-                                {activity.icon}
-                            </div>
+                        {/* Icon Badge (Now absolutely positioned by CSS) */}
+                        <div className="card-icon-patch">
+                            {activity.icon}
+                        </div>
 
+                        <div className="knit-card-content">
                             <div className="card-title-shadow">{activity.name}</div>
 
                             <div className="card-time-pill">
-                                今天: {formatDuration(duration)}
+                                {formatDuration(duration)}
                             </div>
 
-                            {/* Energy Bar (Dark pill with glowing yellow progress) */}
+                            {/* Recessed Energy Bar */}
                             <div className="energy-bar-track">
                                 <div className="energy-bar-fill">
                                     ⚡⚡⚡
@@ -124,12 +108,10 @@ export default function ActivityGrid() {
                 );
             })}
 
-            {/* Add Button as the last item if you want it inline, OR keep it separate. 
-                The design has it separate at bottom. We'll stick to separate "Add" button usually,
-                but if list is empty: */}
+            {/* Empty State */}
             {state.activities.length === 0 && (
-                <div style={{ gridColumn: '1/-1', textAlign: 'center', color: '#5d4037', padding: '40px', background: 'rgba(255,255,255,0.5)', borderRadius: '16px' }}>
-                    <p style={{ fontWeight: 'bold' }}>No activities start yet!</p>
+                <div style={{ gridColumn: '1/-1', textAlign: 'center', color: '#8d6e63', padding: '40px', background: 'rgba(255,255,255,0.6)', borderRadius: '24px' }}>
+                    <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>暂无活动，请点击下方按钮添加！</p>
                 </div>
             )}
         </div>

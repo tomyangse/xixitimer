@@ -87,117 +87,120 @@ body {
   gap: 20px;
 }
 
-/* --- Components: Stitched Cards --- */
+/* --- Components: Knitted Cards (Redesigned) --- */
 
 .activity-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 20px;
+  /* Landscape cards: roughly 300px wide min */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 50px 30px;
+  /* Large vertical gap for overlapping icons */
+  padding: 40px 20px 20px 20px;
+  grid-auto-rows: 1fr;
+  /* Equal height */
 }
 
-.stitched-card {
+/* Card Container */
+.knit-card-container {
   position: relative;
-  background-color: var(--card-blue);
-  border-radius: var(--radius-lg);
-  padding: 20px;
-  color: white;
-  box-shadow: var(--shadow-cozy);
+  width: 100%;
+  aspect-ratio: 1.6/1;
+  /* Landscape aspect ratio */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.1s, filter 0.1s;
+  border-radius: 20px;
+  filter: drop-shadow(0 6px 10px rgba(93, 64, 55, 0.15));
+  /* Background image injected inline */
+}
+
+.knit-card-container:active {
+  transform: scale(0.97);
+}
+
+/* Internal Layout */
+.knit-card-content {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  transition: transform 0.2s ease;
-  cursor: pointer;
-  border: none;
-  /* Fabric Texture */
-  background-image: repeating-linear-gradient(45deg,
-      rgba(255, 255, 255, 0.1) 0px,
-      rgba(255, 255, 255, 0.1) 2px,
-      transparent 2px,
-      transparent 8px);
+  padding: 30px 20px 15px 20px;
+  /* Top padding clears the badge */
+  box-sizing: border-box;
 }
 
-/* The "Stitch" Effect - using pseudo-element */
-.stitched-card::after {
-  content: '';
+/* Floating Icon Badge */
+.card-icon-patch {
   position: absolute;
-  top: 6px;
-  left: 6px;
-  right: 6px;
-  bottom: 6px;
-  border: 2px dashed var(--stitch-color);
-  border-radius: 18px;
-  /* Slightly smaller radius */
-  pointer-events: none;
-}
-
-.stitched-card:active {
-  transform: scale(0.96);
-}
-
-/* Card Variants */
-.card-blue {
-  background-color: var(--card-blue);
-}
-
-.card-red {
-  background-color: var(--card-red);
-}
-
-.card-green {
-  background-color: var(--card-green);
-}
-
-.card-purple {
-  background-color: var(--card-purple);
-}
-
-.card-icon {
-  font-size: 3rem;
-  margin-bottom: 10px;
-  background: rgba(255, 255, 255, 0.2);
-  width: 60px;
-  height: 60px;
+  top: -35px;
+  /* Pull significantly up */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 70px;
+  background-color: #fdf6e3;
+  /* Cream background */
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid rgba(255, 255, 255, 0.4);
+  font-size: 2.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 5px solid #fff;
+  z-index: 10;
 }
 
-.card-title {
-  font-size: 1.2rem;
+/* Title */
+.card-title-shadow {
+  font-family: 'M PLUS Rounded 1c', sans-serif;
+  font-size: 1.6rem;
   font-weight: 800;
-  margin-bottom: 5px;
-  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.1);
-}
-
-.card-time {
-  font-size: 0.9rem;
-  opacity: 0.9;
-  font-weight: 600;
-}
-
-/* --- Progress Bar (Slot style) --- */
-.progress-slot {
-  width: 100%;
-  height: 12px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   margin-top: 10px;
-  overflow: hidden;
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+  margin-bottom: 5px;
+  letter-spacing: 0.5px;
 }
 
-.progress-fill {
-  height: 100%;
-  background: white;
-  /* Or gold */
-  width: 0%;
-  border-radius: 10px;
-  transition: width 0.3s ease;
-  box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+/* Time Pill */
+.card-time-pill {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.15);
+  padding: 4px 14px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+/* Energy Bar Slot */
+.energy-bar-track {
+  width: 85%;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 6px;
+  margin-top: auto;
+  /* Push to bottom if needed */
+  margin-bottom: 10px;
+}
+
+.energy-bar-fill {
+  display: flex;
+  gap: 4px;
+  color: #ffd700;
+  font-size: 14px;
+  text-shadow: 0 0 6px #ffab00;
+  letter-spacing: 2px;
 }
 
 /* --- Reward Section (Leather Patch) --- */
@@ -496,9 +499,38 @@ body {
   transition: all 0.1s;
 }
 
+
 .stop-btn-large:active {
   transform: translateY(4px);
   box-shadow: 0 2px 0 #6f4c3e, 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Knitted Add Button --- */
+.add-btn-knit {
+  background: url('/assets/btn_knit_brown.png') no-repeat center center;
+  background-size: 100% 100%;
+  width: 200px;
+  height: 60px;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 800;
+  cursor: pointer;
+  text-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'M PLUS Rounded 1c', 'Nunito', sans-serif;
+  transition: transform 0.1s, filter 0.1s;
+  /* Removed white box shadow/border from here since image handles it */
+}
+
+.add-btn-knit:hover {
+  filter: brightness(1.1);
+}
+
+.add-btn-knit:active {
+  transform: scale(0.95);
 }
 
 /* --- Stats View (Phase 5) --- */

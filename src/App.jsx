@@ -130,22 +130,7 @@ function AppContent() {
               <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', marginBottom: '20px' }}>
                 <button
                   onClick={() => setShowSettings(true)}
-                  style={{
-                    background: `url('/assets/btn_knit_brown.png') no-repeat center center`,
-                    backgroundSize: 'contain',
-                    width: '200px',
-                    height: '60px',
-                    border: 'none',
-                    color: 'white',
-                    fontSize: '1.2rem',
-                    fontWeight: 'bold',
-                    cursor: 'pointer',
-                    textShadow: '0 2px 2px rgba(0,0,0,0.3)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontFamily: 'M PLUS Rounded 1c, Nunito, sans-serif'
-                  }}
+                  className="add-btn-knit animate-pop"
                 >
                   添加活动
                 </button>
