@@ -105,8 +105,8 @@ body {
 /* Card Container */
 .knit-card-container {
   position: relative;
-  width: 400px;
-  height: 400px;
+  width: 300px;
+  height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -129,9 +129,9 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 160px 16px 20px 36px;
-  /* 160px top to clear art, extra left padding to shift center right? No, extra right padding shifts center left */
-  padding-right: 36px;
+  padding: 120px 12px 16px 24px;
+  /* 120px top to clear art */
+  padding-right: 24px;
   /* Shift content left by adding more padding on right */
   box-sizing: border-box;
 }
@@ -166,7 +166,7 @@ body {
 /* Title */
 .card-title-shadow {
   font-family: 'M PLUS Rounded 1c', sans-serif;
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 800;
   color: #fff9db;
   /* Updated to match My Rewards creamy text */
