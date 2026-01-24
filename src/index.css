@@ -87,33 +87,45 @@ body {
   gap: 20px;
 }
 
-/* --- Components: Knitted Cards (Redesigned) --- */
+/* --- Components: Knitted Cards (Horizontal Scroll) --- */
 
 .activity-grid {
-  display: grid;
-  /* Force 2 columns on mobile (min ~150px) */
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 40px 15px;
-  /* Vertical gap 40px for badges, Horiz gap 15px */
-  padding: 40px 15px 20px 15px;
-  grid-auto-rows: 1fr;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 40px 20px 30px 20px;
+  /* Right padding for scroll end */
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  /* Smooth scrolling on iOS */
+  /* Hide scrollbar for cleaner look */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+/* Hide scrollbar for Chrome/Safari */
+.activity-grid::-webkit-scrollbar {
+  display: none;
 }
 
 /* Card Container */
 .knit-card-container {
   position: relative;
-  width: 100%;
-  aspect-ratio: 1.4/1;
-  /* Slightly less wide to fit 2 cols comfortably */
+  flex: 0 0 260px;
+  /* Fixed width, don't shrink */
+  aspect-ratio: 1.5/1;
+  /* Comfortable landscape */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
   cursor: pointer;
   transition: transform 0.1s, filter 0.1s;
-  border-radius: 16px;
+  border-radius: 20px;
   filter: drop-shadow(0 4px 6px rgba(93, 64, 55, 0.15));
-  /* background-size: 100% 100%; set inline */
+  scroll-snap-align: center;
+  /* Snap to center */
 }
 
 .knit-card-container:active {
