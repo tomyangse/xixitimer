@@ -213,27 +213,49 @@ function AppContent() {
           className={`nav-item ${currentView === 'home' ? 'active' : ''}`}
           onClick={() => setCurrentView('home')}
         >
-          {/* Use leather home icon if active or always? Design shows leather icon. */}
-          {currentView === 'home' ? (
-            <img src="/assets/icon_nav_home.png" alt="Home" style={{ width: '40px', height: '40px', marginBottom: '-5px' }} />
-          ) : (
-            <span className="nav-icon" style={{ filter: 'grayscale(100%)', opacity: 0.6 }}>🏠</span>
-          )}
+          <img
+            src="/assets/icon_nav_home.png"
+            alt="Home"
+            style={{
+              width: '40px',
+              height: '40px',
+              marginBottom: '-5px',
+              filter: currentView === 'home' ? 'none' : 'grayscale(100%) opacity(0.6)'
+            }}
+          />
           <span style={{ marginTop: '4px' }}>主页</span>
         </div>
         <div
           className={`nav-item ${currentView === 'stats' ? 'active' : ''}`}
           onClick={() => setCurrentView('stats')}
         >
-          <span className="nav-icon">📊</span>
-          <span>统计</span>
+          <img
+            src="/assets/icon_nav_stats.png"
+            alt="Stats"
+            style={{
+              width: '40px',
+              height: '40px',
+              marginBottom: '-5px',
+              filter: currentView === 'stats' ? 'none' : 'grayscale(100%) opacity(0.6)'
+            }}
+          />
+          <span style={{ marginTop: '4px' }}>统计</span>
         </div>
         <div
           className={`nav-item ${currentView === 'me' ? 'active' : ''}`}
           onClick={() => setCurrentView('me')}
         >
-          <span className="nav-icon">👤</span>
-          <span>我的</span>
+          <img
+            src="/assets/icon_nav_user.png"
+            alt="Me"
+            style={{
+              width: '40px',
+              height: '40px',
+              marginBottom: '-5px',
+              filter: currentView === 'me' ? 'none' : 'grayscale(100%) opacity(0.6)'
+            }}
+          />
+          <span style={{ marginTop: '4px' }}>我的</span>
         </div>
       </nav>
     </div>
