@@ -95,14 +95,14 @@ export default function ActivityGrid() {
                         <div className="knit-card-content">
                             <div className="card-title-shadow">{activity.name}</div>
 
-                            <div className="card-time-pill">
-                                {formatDuration(duration)}
+                            <div className="card-time-label">
+                                今天：{formatDuration(duration)}
                             </div>
 
                             {/* Recessed Energy Bar */}
                             <div className="energy-bar-track">
                                 <div className="energy-bar-fill">
-                                    ⚡⚡⚡
+                                    ⚡ ★★★★★
                                 </div>
                             </div>
                         </div>

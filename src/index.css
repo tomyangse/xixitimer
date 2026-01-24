@@ -87,45 +87,29 @@ body {
   gap: 20px;
 }
 
-/* --- Components: Knitted Cards (Horizontal Scroll) --- */
+/* --- Components: Knitted Cards (3-Column Grid) --- */
 
 .activity-grid {
-  display: flex;
-  flex-direction: row;
-  overflow-x: auto;
-  gap: 20px;
-  padding: 40px 20px 30px 20px;
-  /* Right padding for scroll end */
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  /* Smooth scrolling on iOS */
-  /* Hide scrollbar for cleaner look */
-  scrollbar-width: none;
-  /* Firefox */
-}
-
-/* Hide scrollbar for Chrome/Safari */
-.activity-grid::-webkit-scrollbar {
-  display: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 35px 12px 20px 12px;
 }
 
 /* Card Container */
 .knit-card-container {
   position: relative;
-  flex: 0 0 260px;
-  /* Fixed width, don't shrink */
-  aspect-ratio: 1.5/1;
-  /* Comfortable landscape */
+  width: 100%;
+  aspect-ratio: 1/1.1;
+  /* Slightly taller than wide */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
   cursor: pointer;
   transition: transform 0.1s, filter 0.1s;
-  border-radius: 20px;
-  filter: drop-shadow(0 4px 6px rgba(93, 64, 55, 0.15));
-  scroll-snap-align: center;
-  /* Snap to center */
+  border-radius: 16px;
+  filter: drop-shadow(0 4px 6px rgba(93, 64, 55, 0.2));
 }
 
 .knit-card-container:active {
@@ -148,46 +132,43 @@ body {
 /* Floating Icon Badge */
 .card-icon-patch {
   position: absolute;
-  top: -25px;
+  top: -20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   background-color: #fdf6e3;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
-  border: 4px solid #fff;
+  font-size: 1.8rem;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+  border: 3px solid #fff;
   z-index: 10;
 }
 
 /* Title */
 .card-title-shadow {
   font-family: 'M PLUS Rounded 1c', sans-serif;
-  font-size: 1.1rem;
-  /* Smaller to fit 2 cols */
+  font-size: 0.95rem;
   font-weight: 800;
   color: #fff;
   text-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
-  margin-top: 5px;
-  margin-bottom: 4px;
-  letter-spacing: 0.5px;
+  margin-top: 0;
+  margin-bottom: 2px;
+  letter-spacing: 0.3px;
   text-align: center;
   line-height: 1.2;
 }
 
-/* Time Pill */
-.card-time-pill {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.95);
-  font-weight: 700;
-  background: rgba(0, 0, 0, 0.15);
-  padding: 3px 10px;
-  border-radius: 10px;
-  margin-bottom: 8px;
+/* Time Sub-label */
+.card-time-label {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  margin-bottom: 6px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 /* Energy Bar Slot */
