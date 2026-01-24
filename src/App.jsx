@@ -117,7 +117,7 @@ function AppContent() {
                       </div>
                     );
                   })}
-                  {/* Fallback for unallocated time or if no rewards defined yet */}
+                  {/* Fallback for unallocated time */}
                   {state.rewards.length === 0 && (
                     <div className="reward-total">
                       {formatDuration(totalRewardTime)} <span style={{ fontSize: '0.6em', fontWeight: 'normal' }}>({rewardName})</span>
@@ -125,6 +125,32 @@ function AppContent() {
                   )}
                 </div>
               </div>
+
+              {/* Separate Add Activity Button (Mockup Style) */}
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', marginBottom: '20px' }}>
+                <button
+                  onClick={() => setShowSettings(true)}
+                  style={{
+                    background: `url('/assets/btn_knit_brown.png') no-repeat center center`,
+                    backgroundSize: 'contain',
+                    width: '200px',
+                    height: '60px',
+                    border: 'none',
+                    color: 'white',
+                    fontSize: '1.2rem',
+                    fontWeight: 'bold',
+                    cursor: 'pointer',
+                    textShadow: '0 2px 2px rgba(0,0,0,0.3)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontFamily: 'M PLUS Rounded 1c, Nunito, sans-serif'
+                  }}
+                >
+                  添加活动
+                </button>
+              </div>
+
               {/* <div className="reward-coin">®️</div> Removed coin to make space for list */}
             </div>
           </>
@@ -210,22 +236,27 @@ function AppContent() {
           className={`nav-item ${currentView === 'home' ? 'active' : ''}`}
           onClick={() => setCurrentView('home')}
         >
-          <span className="nav-icon">🏠</span>
-          <span>Home</span>
+          {/* Use leather home icon if active or always? Design shows leather icon. */}
+          {currentView === 'home' ? (
+            <img src="/assets/icon_nav_home.png" alt="Home" style={{ width: '40px', height: '40px', marginBottom: '-5px' }} />
+          ) : (
+            <span className="nav-icon" style={{ filter: 'grayscale(100%)', opacity: 0.6 }}>🏠</span>
+          )}
+          <span style={{ marginTop: '4px' }}>主页</span>
         </div>
         <div
           className={`nav-item ${currentView === 'stats' ? 'active' : ''}`}
           onClick={() => setCurrentView('stats')}
         >
           <span className="nav-icon">📊</span>
-          <span>Stats</span>
+          <span>统计</span>
         </div>
         <div
           className={`nav-item ${currentView === 'me' ? 'active' : ''}`}
           onClick={() => setCurrentView('me')}
         >
           <span className="nav-icon">👤</span>
-          <span>Me</span>
+          <span>我的</span>
         </div>
       </nav>
     </div>

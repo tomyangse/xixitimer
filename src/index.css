@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;800&family=Nunito:wght@400;600;700;900&display=swap');
 
 :root {
   /* Cozy Palette */
@@ -502,6 +502,41 @@ body {
 }
 
 /* --- Stats View (Phase 5) --- */
+body {
+  margin: 0;
+  font-family: 'M PLUS Rounded 1c', 'Nunito', sans-serif;
+  /* Soft rounded font */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #fdf6e3;
+  /* Fallback color */
+  background-image: url('/assets/bg_main.png');
+  background-size: cover;
+  background-position: center bottom;
+  background-attachment: fixed;
+  color: #5d4037;
+  /* Warm brown text */
+  min-height: 100vh;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* App Container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  /* Removed background-color to let body bg show through */
+  box-shadow: none;
+  /* Remove shadow to blend with fullscreen bg */
+}
+
 .stats-container {
   padding: 10px;
   max-width: 600px;

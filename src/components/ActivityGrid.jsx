@@ -49,6 +49,15 @@ export default function ActivityGrid() {
         }
     };
 
+    const getCardImage = (index) => {
+        const images = [
+            '/assets/card_knit_blue.png',
+            '/assets/card_knit_brown.png',
+            '/assets/card_knit_green.png'
+        ];
+        return images[index % images.length];
+    };
+
     return (
         <div className="activity-grid">
             {state.activities.map((activity, index) => {
@@ -60,35 +69,67 @@ export default function ActivityGrid() {
                     duration += (now - state.activeSession.startTime);
                 }
 
-                return (
-                    <button
-                        key={activity.id}
-                        className={`stitched-card card-color-${index % 5} ${isActive ? 'animate-pop' : ''}`}
-                        onClick={() => handleCardClick(activity.id)}
-                    >
-                        <div className="card-icon">{activity.icon}</div>
-                        <div className="card-title">{activity.name}</div>
-                        <div className="card-time">Today: {formatDuration(duration)}</div>
+                const bgImage = getCardImage(index);
 
-                        {/* Progress Slot Visual */}
-                        <div className="progress-slot">
-                            <div
-                                className="progress-fill"
-                                style={{
-                                    width: isActive ? '100%' : '0%',
-                                    opacity: isActive ? 1 : 0,
-                                    transition: 'width 2s linear' // Fake progress for visual feedback
-                                }}
-                            />
+                return (
+                    <div
+                        key={activity.id}
+                        className={`knit-card-container ${isActive ? 'animate-pop' : ''}`}
+                        onClick={() => handleCardClick(activity.id)}
+                        style={{
+                            backgroundImage: `url(${bgImage})`,
+                            backgroundSize: 'contain',
+                            backgroundRepeat: 'no-repeat',
+                            backgroundPosition: 'center',
+                            // The image aspect ratio is roughly square or 4:3. We enforce a ratio.
+                        }}
+                    >
+                        {/* Checkmark Badge if Active */}
+                        {isActive && (
+                            <div style={{
+                                position: 'absolute',
+                                top: '-5px',
+                                right: '-5px',
+                                background: '#81c784',
+                                borderRadius: '50%',
+                                width: '24px',
+                                height: '24px',
+                                border: '2px solid white',
+                                boxShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                            }}>
+                                ✅
+                            </div>
+                        )}
+
+                        <div className="knit-card-content">
+                            {/* Icon (on a little paper/leather patch style) */}
+                            <div className="card-icon-patch">
+                                {activity.icon}
+                            </div>
+
+                            <div className="card-title-shadow">{activity.name}</div>
+
+                            <div className="card-time-pill">
+                                今天: {formatDuration(duration)}
+                            </div>
+
+                            {/* Energy Bar (Dark pill with glowing yellow progress) */}
+                            <div className="energy-bar-track">
+                                <div className="energy-bar-fill">
+                                    ⚡⚡⚡
+                                </div>
+                            </div>
                         </div>
-                        {isActive && <div style={{ fontSize: '0.8rem', marginTop: '5px' }}>⚡ Active</div>}
-                    </button>
+                    </div>
                 );
             })}
+
+            {/* Add Button as the last item if you want it inline, OR keep it separate. 
+                The design has it separate at bottom. We'll stick to separate "Add" button usually,
+                but if list is empty: */}
             {state.activities.length === 0 && (
-                <div style={{ gridColumn: '1/-1', textAlign: 'center', color: 'var(--text-secondary)', padding: '40px' }}>
-                    <p>No activities yet!</p>
-                    <p>Tap ⚙️ to add some.</p>
+                <div style={{ gridColumn: '1/-1', textAlign: 'center', color: '#5d4037', padding: '40px', background: 'rgba(255,255,255,0.5)', borderRadius: '16px' }}>
+                    <p style={{ fontWeight: 'bold' }}>No activities start yet!</p>
                 </div>
             )}
         </div>
