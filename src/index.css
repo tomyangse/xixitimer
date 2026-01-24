@@ -102,11 +102,8 @@ body {
 /* Card Container */
 .knit-card-container {
   position: relative;
-  width: 100%;
-  aspect-ratio: 1/1.2;
-  /* Taller cards to fill more vertical space */
-  min-height: 180px;
-  /* Ensure minimum size */
+  width: 200px;
+  height: 200px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -136,19 +133,19 @@ body {
 /* Floating Icon Badge */
 .card-icon-patch {
   position: absolute;
-  top: -80px;
+  top: -28px;
   left: 50%;
   transform: translateX(-50%);
-  width: 200px;
-  height: 200px;
+  width: 60px;
+  height: 60px;
   background-color: #fdf6e3;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 6rem;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  border: 6px solid #fff;
+  font-size: 2.2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  border: 4px solid #fff;
   z-index: 10;
 }
 
