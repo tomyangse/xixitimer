@@ -129,9 +129,10 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  /* Start from top but push down with padding */
-  padding: 90px 16px 20px 16px;
-  /* Push text down to visual center */
+  padding: 160px 16px 20px 36px;
+  /* 160px top to clear art, extra left padding to shift center right? No, extra right padding shifts center left */
+  padding-right: 36px;
+  /* Shift content left by adding more padding on right */
   box-sizing: border-box;
 }
 
@@ -139,7 +140,8 @@ body {
 .card-icon-patch {
   position: absolute;
   top: -40px;
-  left: 50%;
+  left: 47.5%;
+  /* Shift slightly left from 50% to align with background art */
   transform: translateX(-50%);
   width: 100px;
   height: 100px;
