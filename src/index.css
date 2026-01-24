@@ -161,7 +161,8 @@ body {
   font-family: 'M PLUS Rounded 1c', sans-serif;
   font-size: 1.8rem;
   font-weight: 800;
-  color: #fff;
+  color: #fff9db;
+  /* Updated to match My Rewards creamy text */
   text-shadow: 0 3px 5px rgba(0, 0, 0, 0.35);
   margin-top: 0;
   margin-bottom: 5px;
@@ -173,7 +174,8 @@ body {
 /* Time Sub-label */
 .card-time-label {
   font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.95);
+  color: #fff9db;
+  /* Updated to match My Rewards creamy text */
   font-weight: 700;
   margin-bottom: 12px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
