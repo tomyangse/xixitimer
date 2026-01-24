@@ -69,6 +69,8 @@ export default function ActivityGrid() {
                     duration += (now - state.activeSession.startTime);
                 }
 
+                const bgImage = getCardImage(index);
+
                 return (
                     <div
                         key={activity.id}
@@ -76,7 +78,7 @@ export default function ActivityGrid() {
                         onClick={() => handleCardClick(activity.id)}
                         style={{
                             backgroundImage: `url(${bgImage})`,
-                            backgroundSize: '100% 100%', /* Stretch to fill completely */
+                            backgroundSize: '100% 100%',
                             backgroundRepeat: 'no-repeat',
                         }}
                     >
