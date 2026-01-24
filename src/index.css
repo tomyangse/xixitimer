@@ -97,6 +97,8 @@ body {
   padding: 60px 40px 30px 40px;
   width: 100%;
   box-sizing: border-box;
+  justify-items: center;
+  /* Center cards in their columns */
 }
 
 /* Card Container */
