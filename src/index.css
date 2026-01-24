@@ -92,24 +92,24 @@ body {
 .activity-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  padding: 35px 12px 20px 12px;
+  gap: 16px;
+  padding: 45px 16px 25px 16px;
 }
 
 /* Card Container */
 .knit-card-container {
   position: relative;
   width: 100%;
-  aspect-ratio: 1/1.1;
-  /* Slightly taller than wide */
+  aspect-ratio: 1/0.9;
+  /* Landscape rectangle like mockup */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
   cursor: pointer;
   transition: transform 0.1s, filter 0.1s;
-  border-radius: 16px;
-  filter: drop-shadow(0 4px 6px rgba(93, 64, 55, 0.2));
+  border-radius: 20px;
+  filter: drop-shadow(0 5px 8px rgba(93, 64, 55, 0.25));
 }
 
 .knit-card-container:active {
@@ -124,51 +124,50 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 25px 10px 10px 10px;
-  /* Top padding clears badge */
+  padding: 30px 8px 12px 8px;
   box-sizing: border-box;
 }
 
 /* Floating Icon Badge */
 .card-icon-patch {
   position: absolute;
-  top: -20px;
+  top: -28px;
   left: 50%;
   transform: translateX(-50%);
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   background-color: #fdf6e3;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
-  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
-  border: 3px solid #fff;
+  font-size: 2.2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  border: 4px solid #fff;
   z-index: 10;
 }
 
 /* Title */
 .card-title-shadow {
   font-family: 'M PLUS Rounded 1c', sans-serif;
-  font-size: 0.95rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: #fff;
-  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
   margin-top: 0;
-  margin-bottom: 2px;
-  letter-spacing: 0.3px;
+  margin-bottom: 3px;
+  letter-spacing: 0.5px;
   text-align: center;
   line-height: 1.2;
 }
 
 /* Time Sub-label */
 .card-time-label {
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 600;
-  margin-bottom: 6px;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
 }
 
 /* Energy Bar Slot */
