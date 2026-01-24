@@ -92,13 +92,14 @@ body {
 
 .activity-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, auto);
+  /* Fit content columns */
+  justify-content: center;
+  /* Center the entire grid group on screen */
   gap: 30px;
   padding: 60px 40px 30px 40px;
   width: 100%;
   box-sizing: border-box;
-  justify-items: center;
-  /* Center cards in their columns */
 }
 
 /* Card Container */
