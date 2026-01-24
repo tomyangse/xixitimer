@@ -93,9 +93,8 @@ body {
 .activity-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  padding: 50px 20px 25px 20px;
-  /* More spacing, edge-to-edge */
+  gap: 30px;
+  padding: 60px 40px 30px 40px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -104,16 +103,18 @@ body {
 .knit-card-container {
   position: relative;
   width: 100%;
-  aspect-ratio: 1/0.9;
-  /* Landscape rectangle like mockup */
+  aspect-ratio: 1/1.2;
+  /* Taller cards to fill more vertical space */
+  min-height: 180px;
+  /* Ensure minimum size */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
   cursor: pointer;
   transition: transform 0.1s, filter 0.1s;
-  border-radius: 20px;
-  filter: drop-shadow(0 5px 8px rgba(93, 64, 55, 0.25));
+  border-radius: 24px;
+  filter: drop-shadow(0 6px 10px rgba(93, 64, 55, 0.3));
 }
 
 .knit-card-container:active {
