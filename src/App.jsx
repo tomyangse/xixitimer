@@ -94,14 +94,38 @@ function AppContent() {
           <>
             <ActivityGrid />
             {/* Leather Patch Reward Section Moved to Bottom/Main */}
+            {/* Leather Patch Reward Section Moved to Bottom/Main */}
             <div className="reward-section">
-              <div className="reward-info">
-                <h3>⭐ My Reward</h3>
-                <div className="reward-total">
-                  {formatDuration(totalRewardTime)} <span style={{ fontSize: '0.6em', fontWeight: 'normal' }}>({rewardName})</span>
+              <div className="reward-info" style={{ width: '100%' }}>
+                <h3 style={{ marginBottom: '10px' }}>⭐ My Rewards</h3>
+
+                {/* Reward Balances List */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {state.rewards.map(reward => {
+                    const rewardTotal = todaysLogs
+                      .filter(log => log.rewardId === reward.id)
+                      .reduce((acc, log) => acc + (log.earnedReward || 0), 0);
+
+                    if (rewardTotal === 0) return null; // Optional: Hide zero balances
+
+                    return (
+                      <div key={reward.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed rgba(255,255,255,0.2)', paddingBottom: '4px' }}>
+                        <span style={{ fontSize: '1.2rem', color: '#faedcd' }}>{reward.icon} {reward.name}</span>
+                        <span className="reward-total" style={{ fontSize: '1.5rem' }}>
+                          {formatDuration(rewardTotal)}
+                        </span>
+                      </div>
+                    );
+                  })}
+                  {/* Fallback for unallocated time or if no rewards defined yet */}
+                  {state.rewards.length === 0 && (
+                    <div className="reward-total">
+                      {formatDuration(totalRewardTime)} <span style={{ fontSize: '0.6em', fontWeight: 'normal' }}>({rewardName})</span>
+                    </div>
+                  )}
                 </div>
               </div>
-              <div className="reward-coin">®️</div>
+              {/* <div className="reward-coin">®️</div> Removed coin to make space for list */}
             </div>
           </>
         )}

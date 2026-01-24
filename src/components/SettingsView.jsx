@@ -2,30 +2,35 @@ import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
 
 export default function SettingsView({ onClose }) {
-    const { state, updateSettings, addActivity, deleteActivity, toggleActivityReward, updateActivity, handleExport, handleImport, resetToday, user, logout } = useData();
-    const { settings } = state;
+    const { state, addReward, deleteReward, addActivity, deleteActivity, editActivity, resetToday, user, logout } = useData();
+    const { rewards } = state;
 
-    const [rewardName, setRewardName] = useState(settings?.rewardName || 'Roblox');
+    // Reward State
+    const [newRewardName, setNewRewardName] = useState('');
 
     // New Activity State
     const [isEditing, setIsEditing] = useState(null); // id of activity being edited
     const [actName, setActName] = useState('');
     const [actIcon, setActIcon] = useState('⭐');
-    const [earnsReward, setEarnsReward] = useState(true);
+
+    // Instead of boolean, we now select a reward ID or null
+    const [selectedRewardId, setSelectedRewardId] = useState(''); // '' means no reward
     const [actMult, setActMult] = useState(1);
 
     const icons = ['🎹', '📚', '⚽', '🎨', '🧩', '🚲', '🏊', '🧘', '💻'];
 
-    const handleSaveSettings = () => {
-        updateSettings({ rewardName });
-        onClose();
+    const handleAddReward = () => {
+        if (newRewardName.trim()) {
+            addReward(newRewardName);
+            setNewRewardName('');
+        }
     };
 
     const resetForm = () => {
         setIsEditing(null);
         setActName('');
         setActIcon('⭐');
-        setEarnsReward(true);
+        setSelectedRewardId(''); // Default to no reward
         setActMult(1);
     };
 
@@ -33,25 +38,30 @@ export default function SettingsView({ onClose }) {
         setIsEditing(act.id);
         setActName(act.name);
         setActIcon(act.icon);
-        setEarnsReward((act.rewardMultiplier || 0) > 0);
+        // If activity has a rewardId, set it. Otherwise check if it has a multiplier > 0 and try to default to first reward if exists?
+        // Better to rely on rewardId. If migrating, old activities might have null rewardId but multiplier > 0.
+        // The migration script should have set rewardId for all activities with multipliers.
+        setSelectedRewardId(act.rewardId || '');
         setActMult((act.rewardMultiplier && act.rewardMultiplier > 0) ? act.rewardMultiplier : 1);
     };
 
     const handleSaveActivity = (e) => {
         e.preventDefault();
         if (actName.trim()) {
-            const multiplier = earnsReward ? parseFloat(actMult) : 0;
+            const rewardId = selectedRewardId || null;
+            const multiplier = rewardId ? parseFloat(actMult) : 0;
 
             if (isEditing) {
                 editActivity(isEditing, {
                     name: actName,
                     icon: actIcon,
-                    rewardMultiplier: multiplier
+                    rewardMultiplier: multiplier,
+                    rewardId: rewardId
                 });
             } else {
                 const hue = Math.floor(Math.random() * 360);
                 const color = `hsl(${hue}, 70%, 80%)`;
-                addActivity(actName, color, actIcon, multiplier);
+                addActivity(actName, color, actIcon, multiplier, rewardId);
             }
             resetForm();
         }
@@ -59,14 +69,13 @@ export default function SettingsView({ onClose }) {
 
     const handleLogout = async () => {
         await logout();
-        // No need to redirect manually, App.jsx handles auth state
     };
 
     return (
         <div className="settings-container">
             <div className="settings-header">
                 <h2>⚙️ Settings</h2>
-                <button onClick={handleSaveSettings}>Done</button>
+                <button onClick={onClose}>Done</button>
             </div>
 
             {/* User Account Section */}
@@ -78,27 +87,48 @@ export default function SettingsView({ onClose }) {
                 </div>
             </div>
 
+            {/* Manage Rewards Section */}
             <div className="settings-section">
-                <label>Reward Name (e.g. Roblox, TV)</label>
-                <input
-                    type="text"
-                    value={rewardName}
-                    onChange={(e) => setRewardName(e.target.value)}
-                />
+                <h3>Manage Rewards</h3>
+                <div className="settings-activity-list" style={{ maxHeight: '150px' }}>
+                    {rewards.map(r => (
+                        <div key={r.id} className="settings-activity-item">
+                            <span>{r.icon} {r.name}</span>
+                            <button className="delete-btn-small" onClick={() => deleteReward(r.id)}>Delete</button>
+                        </div>
+                    ))}
+                    {rewards.length === 0 && <p style={{ color: '#999', fontSize: '0.9rem' }}>No rewards yet.</p>}
+                </div>
+                <div className="add-activity-in-settings" style={{ marginTop: '10px' }}>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                        <input
+                            placeholder="New Reward (e.g. YouTube)"
+                            value={newRewardName}
+                            onChange={(e) => setNewRewardName(e.target.value)}
+                        />
+                        <button className="add-btn-settings" onClick={handleAddReward} style={{ width: 'auto', whiteSpace: 'nowrap' }}>
+                            + Add
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <div className="settings-section">
                 <h3>Manage Activities</h3>
                 <div className="settings-activity-list">
-                    {state.activities.map(act => (
-                        <div key={act.id} className="settings-activity-item">
-                            <span>{act.icon} {act.name} {act.rewardMultiplier > 0 ? `(x${act.rewardMultiplier})` : '(No Reward)'}</span>
-                            <div className="item-actions">
-                                <button className="edit-btn-small" onClick={() => handleEditClick(act)}>Edit</button>
-                                <button className="delete-btn-small" onClick={() => deleteActivity(act.id)}>Delete</button>
+                    {state.activities.map(act => {
+                        const linkedReward = rewards.find(r => r.id === act.rewardId);
+                        const rewardLabel = linkedReward ? ` -> ${linkedReward.name}` : '';
+                        return (
+                            <div key={act.id} className="settings-activity-item">
+                                <span>{act.icon} {act.name} {act.rewardMultiplier > 0 ? `(x${act.rewardMultiplier}${rewardLabel})` : '(No Reward)'}</span>
+                                <div className="item-actions">
+                                    <button className="edit-btn-small" onClick={() => handleEditClick(act)}>Edit</button>
+                                    <button className="delete-btn-small" onClick={() => deleteActivity(act.id)}>Delete</button>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
 
                 <div className="add-activity-in-settings">
@@ -110,17 +140,28 @@ export default function SettingsView({ onClose }) {
                     />
 
                     <div className="reward-toggle-row">
-                        <label>
-                            <input
-                                type="checkbox"
-                                checked={earnsReward}
-                                onChange={e => setEarnsReward(e.target.checked)}
-                            />
-                            Earns Reward?
+                        <label style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
+                            <span style={{ fontWeight: 'bold' }}>Earns Reward:</span>
+                            <select
+                                value={selectedRewardId}
+                                onChange={(e) => setSelectedRewardId(e.target.value)}
+                                style={{
+                                    padding: '8px',
+                                    borderRadius: '8px',
+                                    border: '1px solid #ccc',
+                                    width: '100%',
+                                    fontFamily: 'Nunito'
+                                }}
+                            >
+                                <option value="">(None)</option>
+                                {rewards.map(r => (
+                                    <option key={r.id} value={r.id}>{r.icon} {r.name}</option>
+                                ))}
+                            </select>
                         </label>
                     </div>
 
-                    {earnsReward && (
+                    {selectedRewardId && (
                         <div className="multiplier-row">
                             <label>Multiplier:</label>
                             <input
@@ -169,44 +210,6 @@ export default function SettingsView({ onClose }) {
                 >
                     ONE-CLICK CLEAR TIME (Reset Today) ️
                 </button>
-            </div>
-
-            <div className="settings-section">
-                <h3>Data Backup</h3>
-                <div className="backup-controls" style={{ display: 'flex', gap: '10px' }}>
-                    <button className="export-btn" onClick={() => {
-                        const dataStr = JSON.stringify(state, null, 2);
-                        const blob = new Blob([dataStr], { type: "application/json" });
-                        const url = URL.createObjectURL(blob);
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.download = `kidstimer_backup_${new Date().toISOString().split('T')[0]}.json`;
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                    }}>⬇️ Export JSON</button>
-                    <label className="import-btn">
-                        ⬆️ Import JSON
-                        <input type="file" accept=".json" onChange={(e) => {
-                            const file = e.target.files[0];
-                            if (!file) return;
-                            const reader = new FileReader();
-                            reader.onload = (event) => {
-                                try {
-                                    const data = JSON.parse(event.target.result);
-                                    if (window.confirm("This will overwrite your current data. Are you sure?")) {
-                                        loadData(data);
-                                        onClose();
-                                        alert("Data imported successfully!");
-                                    }
-                                } catch (err) {
-                                    alert("Failed to parse file. Is it a valid JSON backup?");
-                                }
-                            };
-                            reader.readAsText(file);
-                        }} style={{ display: 'none' }} />
-                    </label>
-                </div>
             </div>
         </div>
     );

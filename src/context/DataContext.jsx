@@ -7,21 +7,24 @@ const DataContext = createContext();
 const initialState = {
   activities: [],
   logs: [],
+  rewards: [], // New state for rewards
   settings: {
-    rewardName: 'Roblox'
+    // rewardName is deprecated in favor of rewards table, but keeping for compatibility if needed or removed
   },
   activeSession: null,
-  user: null // Store user info
+  user: null
 };
 
 function reducer(state, action) {
   switch (action.type) {
     case 'LOAD_DATA':
       return { ...state, ...action.payload };
-    case 'SET_USER': // New action to set user
+    case 'SET_USER':
       return { ...state, user: action.payload };
-    case 'UPDATE_SETTINGS':
-      return { ...state, settings: { ...state.settings, ...action.payload } };
+    case 'ADD_REWARD':
+      return { ...state, rewards: [...state.rewards, action.payload] };
+    case 'DELETE_REWARD':
+      return { ...state, rewards: state.rewards.filter(r => r.id !== action.payload) };
     case 'ADD_ACTIVITY':
       return { ...state, activities: [...state.activities, action.payload] };
     case 'EDIT_ACTIVITY':
@@ -101,18 +104,15 @@ export function DataProvider({ children }) {
 
       dispatch({ type: 'SET_USER', payload: session.user });
 
-      // Fetch Settings
-      let { data: settings } = await supabase.from('user_settings').select('*').single();
-      if (!settings) {
-        const { data: newSettings } = await supabase.from('user_settings').insert([{ user_id: session.user.id }]).select().single();
-        settings = newSettings;
-      }
+      // Fetch Rewards
+      const { data: rewards } = await supabase.from('rewards').select('*').order('created_at');
 
       // Fetch Activities
       const { data: activities } = await supabase.from('activities').select('*').order('created_at');
       const mappedActivities = (activities || []).map(a => ({
         ...a,
-        rewardMultiplier: a.reward_multiplier
+        rewardMultiplier: a.reward_multiplier,
+        rewardId: a.reward_id // Add rewardId
       }));
 
       // Fetch Logs
@@ -120,6 +120,7 @@ export function DataProvider({ children }) {
       const mappedLogs = (logs || []).map(l => ({
         ...l,
         activityId: l.activity_id,
+        rewardId: l.reward_id, // Add rewardId
         startTime: parseInt(l.start_time),
         endTime: parseInt(l.end_time),
         earnedReward: l.earned_reward,
@@ -129,7 +130,7 @@ export function DataProvider({ children }) {
       dispatch({
         type: 'LOAD_DATA',
         payload: {
-          settings: { rewardName: settings?.reward_name || 'Roblox' },
+          rewards: rewards || [],
           activities: mappedActivities,
           logs: mappedLogs
         }
@@ -144,9 +145,7 @@ export function DataProvider({ children }) {
       if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
         fetchData();
       } else if (event === 'SIGNED_OUT') {
-        dispatch({ type: 'LOAD_DATA', payload: { settings: { rewardName: 'Roblox' }, activities: [], logs: [] } }); // Clear data on logout
-        // Optionally clear active session on logout if desired, but user might want to keep local timer running.
-        // For now, we keep activeSession separate as per design.
+        dispatch({ type: 'LOAD_DATA', payload: { rewards: [], activities: [], logs: [] } });
       }
     });
 
@@ -155,18 +154,27 @@ export function DataProvider({ children }) {
     };
   }, []);
 
-  const updateSettings = async (settings) => {
-    dispatch({ type: 'UPDATE_SETTINGS', payload: settings });
+  const addReward = async (name, icon = '🏆') => {
     const { data: { session } } = await supabase.auth.getSession();
-    if (session && settings.rewardName) {
-      await supabase.from('user_settings').upsert({
-        user_id: session.user.id,
-        reward_name: settings.rewardName
-      });
+    if (!session) return;
+
+    const { data } = await supabase.from('rewards').insert([{
+      user_id: session.user.id,
+      name,
+      icon
+    }]).select().single();
+
+    if (data) {
+      dispatch({ type: 'ADD_REWARD', payload: data });
     }
   };
 
-  const addActivity = async (name, color = '#FF6B6B', icon = '⭐', rewardMultiplier = 1) => {
+  const deleteReward = async (id) => {
+    dispatch({ type: 'DELETE_REWARD', payload: id });
+    await supabase.from('rewards').delete().eq('id', id);
+  };
+
+  const addActivity = async (name, color = '#FF6B6B', icon = '⭐', rewardMultiplier = 1, rewardId = null) => {
     const { data: { session } } = await supabase.auth.getSession();
     if (!session) return;
 
@@ -175,12 +183,20 @@ export function DataProvider({ children }) {
       name,
       color,
       icon,
-      reward_multiplier: rewardMultiplier
+      reward_multiplier: rewardMultiplier,
+      reward_id: rewardId
     };
 
     const { data } = await supabase.from('activities').insert([newActivity]).select().single();
     if (data) {
-      dispatch({ type: 'ADD_ACTIVITY', payload: { ...data, rewardMultiplier: data.reward_multiplier } });
+      dispatch({
+        type: 'ADD_ACTIVITY',
+        payload: {
+          ...data,
+          rewardMultiplier: data.reward_multiplier,
+          rewardId: data.reward_id
+        }
+      });
     }
   };
 
@@ -191,6 +207,7 @@ export function DataProvider({ children }) {
     if (updates.name) dbUpdates.name = updates.name;
     if (updates.icon) dbUpdates.icon = updates.icon;
     if (updates.rewardMultiplier !== undefined) dbUpdates.reward_multiplier = updates.rewardMultiplier;
+    if (updates.rewardId !== undefined) dbUpdates.reward_id = updates.rewardId; // Handle rewardId update
 
     await supabase.from('activities').update(dbUpdates).eq('id', id);
   };
@@ -217,10 +234,12 @@ export function DataProvider({ children }) {
     const activity = state.activities.find(a => a.id === activityId);
     const duration = endTime - startTime;
     const earnedReward = duration * (activity?.rewardMultiplier || 1);
+    const rewardId = activity?.rewardId; // Get rewardId from activity
 
     const newLog = {
       user_id: session.user.id,
       activity_id: activityId,
+      reward_id: rewardId, // Save reward_id directly to log
       start_time: startTime,
       end_time: endTime,
       duration,
@@ -234,6 +253,7 @@ export function DataProvider({ children }) {
       const displayLog = {
         ...data,
         activityId: data.activity_id,
+        rewardId: data.reward_id,
         startTime: parseInt(data.start_time),
         endTime: parseInt(data.end_time),
         earnedReward: data.earned_reward,
@@ -270,6 +290,8 @@ export function DataProvider({ children }) {
     <DataContext.Provider
       value={{
         state,
+        addReward,
+        deleteReward,
         addActivity,
         editActivity,
         deleteActivity,
@@ -278,9 +300,8 @@ export function DataProvider({ children }) {
         deleteLog,
         resetToday,
         loadData,
-        updateSettings,
-        logout, // Expose logout
-        user: state.user // Expose user info (we need to add this to state first)
+        logout,
+        user: state.user
       }}
     >
       {children}
