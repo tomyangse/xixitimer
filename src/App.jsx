@@ -126,15 +126,7 @@ function AppContent() {
                 </div>
               </div>
 
-              {/* Separate Add Activity Button (Mockup Style) */}
-              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px', marginBottom: '20px' }}>
-                <button
-                  onClick={() => setShowSettings(true)}
-                  className="add-btn-knit animate-pop"
-                >
-                  添加活动
-                </button>
-              </div>
+
 
               {/* <div className="reward-coin">®️</div> Removed coin to make space for list */}
             </div>
