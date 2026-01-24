@@ -40,9 +40,33 @@ export default function ActiveTimerOverlay() {
                         <div className="icon-main">{activity.icon}</div>
                         <div className="knitted-bar"></div>
                     </div>
+                    {/* Arrow between icons */}
+                    <div style={{ fontSize: '2rem', color: '#8d6e63', fontWeight: 'bold' }}>➜</div>
+
                     <div className="timer-icon-badge">
-                        <div className="icon-main">⭐</div>
-                        <div className="knitted-bar gold"></div>
+                        {(() => {
+                            const reward = state.rewards.find(r => r.id === activity.rewardId);
+                            // Fallback to default star if no specific reward linked (or reward deleted)
+                            // But usually we want to show generic reward if multiplier > 0
+
+                            if (reward) {
+                                return (
+                                    <>
+                                        <div className="icon-main" title={reward.name}>{reward.icon}</div>
+                                        <div className="knitted-bar gold"></div>
+                                        <div style={{ position: 'absolute', bottom: '-20px', fontSize: '0.8rem', color: '#5d4037', fontWeight: 'bold' }}>{reward.name}</div>
+                                    </>
+                                );
+                            } else {
+                                // Legacy/Default Case
+                                return (
+                                    <>
+                                        <div className="icon-main">⭐</div>
+                                        <div className="knitted-bar gold"></div>
+                                    </>
+                                );
+                            }
+                        })()}
                     </div>
                 </div>
 
