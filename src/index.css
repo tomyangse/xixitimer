@@ -137,7 +137,10 @@ body {
 }
 
 /* Floating Icon Badge */
+/* Floating Icon Badge - HIDDEN */
 .card-icon-patch {
+  display: none;
+  /* User requested removal of icons */
   position: absolute;
   top: -40px;
   left: 47.5%;
