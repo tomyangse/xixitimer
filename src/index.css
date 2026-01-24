@@ -81,10 +81,11 @@ body {
 
 .main-content {
   flex: 1;
-  padding: 20px;
+  padding: 10px 0;
+  /* Minimal horizontal padding to maximize width */
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 15px;
 }
 
 /* --- Components: Knitted Cards (3-Column Grid) --- */
@@ -92,8 +93,11 @@ body {
 .activity-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  padding: 45px 16px 25px 16px;
+  gap: 20px;
+  padding: 50px 20px 25px 20px;
+  /* More spacing, edge-to-edge */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* Card Container */
@@ -204,13 +208,17 @@ body {
   /* Creamy text */
   padding: 20px;
   border-radius: var(--radius-lg);
-  margin-top: 20px;
+  margin: 0 20px;
+  /* Match activity-grid horizontal padding */
   position: relative;
   box-shadow: var(--shadow-cozy);
   display: flex;
   align-items: center;
   justify-content: space-between;
   border: 3px solid #b08968;
+  width: calc(100% - 40px);
+  /* Full width minus margins */
+  box-sizing: border-box;
 }
 
 /* Leather Stitching */
