@@ -91,30 +91,29 @@ body {
 
 .activity-grid {
   display: grid;
-  /* Landscape cards: roughly 300px wide min */
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 50px 30px;
-  /* Large vertical gap for overlapping icons */
-  padding: 40px 20px 20px 20px;
+  /* Force 2 columns on mobile (min ~150px) */
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 40px 15px;
+  /* Vertical gap 40px for badges, Horiz gap 15px */
+  padding: 40px 15px 20px 15px;
   grid-auto-rows: 1fr;
-  /* Equal height */
 }
 
 /* Card Container */
 .knit-card-container {
   position: relative;
   width: 100%;
-  aspect-ratio: 1.6/1;
-  /* Landscape aspect ratio */
+  aspect-ratio: 1.4/1;
+  /* Slightly less wide to fit 2 cols comfortably */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
   cursor: pointer;
   transition: transform 0.1s, filter 0.1s;
-  border-radius: 20px;
-  filter: drop-shadow(0 6px 10px rgba(93, 64, 55, 0.15));
-  /* Background image injected inline */
+  border-radius: 16px;
+  filter: drop-shadow(0 4px 6px rgba(93, 64, 55, 0.15));
+  /* background-size: 100% 100%; set inline */
 }
 
 .knit-card-container:active {
@@ -129,78 +128,79 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 30px 20px 15px 20px;
-  /* Top padding clears the badge */
+  padding: 25px 10px 10px 10px;
+  /* Top padding clears badge */
   box-sizing: border-box;
 }
 
 /* Floating Icon Badge */
 .card-icon-patch {
   position: absolute;
-  top: -35px;
-  /* Pull significantly up */
+  top: -25px;
   left: 50%;
   transform: translateX(-50%);
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   background-color: #fdf6e3;
-  /* Cream background */
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border: 5px solid #fff;
+  font-size: 2.2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  border: 4px solid #fff;
   z-index: 10;
 }
 
 /* Title */
 .card-title-shadow {
   font-family: 'M PLUS Rounded 1c', sans-serif;
-  font-size: 1.6rem;
+  font-size: 1.1rem;
+  /* Smaller to fit 2 cols */
   font-weight: 800;
   color: #fff;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  margin-top: 10px;
-  margin-bottom: 5px;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+  margin-top: 5px;
+  margin-bottom: 4px;
   letter-spacing: 0.5px;
+  text-align: center;
+  line-height: 1.2;
 }
 
 /* Time Pill */
 .card-time-pill {
-  font-size: 1rem;
+  font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.95);
   font-weight: 700;
   background: rgba(0, 0, 0, 0.15);
-  padding: 4px 14px;
-  border-radius: 12px;
-  margin-bottom: 12px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  margin-bottom: 8px;
 }
 
 /* Energy Bar Slot */
 .energy-bar-track {
-  width: 85%;
-  height: 20px;
+  width: 90%;
+  height: 16px;
+  /* Thinner */
   background: rgba(0, 0, 0, 0.3);
-  border-radius: 15px;
+  border-radius: 10px;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: 0 6px;
+  padding: 0 4px;
   margin-top: auto;
-  /* Push to bottom if needed */
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .energy-bar-fill {
   display: flex;
-  gap: 4px;
+  gap: 3px;
   color: #ffd700;
-  font-size: 14px;
-  text-shadow: 0 0 6px #ffab00;
-  letter-spacing: 2px;
+  font-size: 12px;
+  text-shadow: 0 0 5px #ffab00;
+  letter-spacing: 1px;
 }
 
 /* --- Reward Section (Leather Patch) --- */
