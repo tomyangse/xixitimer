@@ -51,11 +51,24 @@ export default function ActiveTimerOverlay() {
 
                             if (reward) {
                                 return (
-                                    <>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                         <div className="icon-main" title={reward.name}>{reward.icon}</div>
                                         <div className="knitted-bar gold"></div>
-                                        <div style={{ position: 'absolute', bottom: '-20px', fontSize: '0.8rem', color: '#5d4037', fontWeight: 'bold' }}>{reward.name}</div>
-                                    </>
+                                        <div style={{
+                                            position: 'absolute',
+                                            left: '110%',
+                                            whiteSpace: 'nowrap',
+                                            fontSize: '1rem',
+                                            color: '#5d4037',
+                                            fontWeight: 'bold',
+                                            background: 'rgba(255, 255, 255, 0.8)',
+                                            padding: '4px 8px',
+                                            borderRadius: '8px',
+                                            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                                        }}>
+                                            {reward.name}
+                                        </div>
+                                    </div>
                                 );
                             } else {
                                 // Legacy/Default Case
