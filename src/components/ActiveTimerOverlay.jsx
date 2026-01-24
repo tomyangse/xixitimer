@@ -46,29 +46,34 @@ export default function ActiveTimerOverlay() {
                     <div className="timer-icon-badge">
                         {(() => {
                             const reward = state.rewards.find(r => r.id === activity.rewardId);
-                            // Fallback to default star if no specific reward linked (or reward deleted)
-                            // But usually we want to show generic reward if multiplier > 0
 
                             if (reward) {
                                 return (
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                        <div className="icon-main" title={reward.name}>{reward.icon}</div>
-                                        <div className="knitted-bar gold"></div>
-                                        <div style={{
-                                            position: 'absolute',
-                                            left: '110%',
-                                            whiteSpace: 'nowrap',
-                                            fontSize: '1rem',
-                                            color: '#5d4037',
-                                            fontWeight: 'bold',
-                                            background: 'rgba(255, 255, 255, 0.8)',
-                                            padding: '4px 8px',
-                                            borderRadius: '8px',
-                                            boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-                                        }}>
-                                            {reward.name}
+                                    <>
+                                        <div style={{ position: 'relative' }}>
+                                            <div className="icon-main" title={reward.name}>{reward.icon}</div>
+                                            <div style={{
+                                                position: 'absolute',
+                                                left: '100%',
+                                                top: '50%',
+                                                transform: 'translateY(-50%)',
+                                                marginLeft: '15px',
+                                                whiteSpace: 'nowrap',
+                                                fontSize: '1rem',
+                                                color: '#5d4037',
+                                                fontWeight: 'bold',
+                                                background: 'rgba(255, 255, 255, 0.9)',
+                                                padding: '6px 12px',
+                                                borderRadius: '12px',
+                                                boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                                                border: '2px solid #fff',
+                                                zIndex: 10
+                                            }}>
+                                                {reward.name}
+                                            </div>
                                         </div>
-                                    </div>
+                                        <div className="knitted-bar gold"></div>
+                                    </>
                                 );
                             } else {
                                 // Legacy/Default Case
@@ -98,7 +103,7 @@ export default function ActiveTimerOverlay() {
                 <button className="stop-btn-large" onClick={stopActivity}>
                     ⏹ Done
                 </button>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }
