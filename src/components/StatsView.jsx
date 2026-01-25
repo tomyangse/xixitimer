@@ -26,7 +26,12 @@ export default function StatsView() {
         const dates = [];
         const current = new Date(currentWeekMonday);
         for (let i = 0; i < 7; i++) {
-            dates.push(current.toISOString().split('T')[0]);
+            // Manually construct YYYY-MM-DD in local time to avoid UTC shift
+            const year = current.getFullYear();
+            const month = String(current.getMonth() + 1).padStart(2, '0');
+            const day = String(current.getDate()).padStart(2, '0');
+            dates.push(`${year}-${month}-${day}`);
+
             current.setDate(current.getDate() + 1);
         }
         return dates;
@@ -36,7 +41,14 @@ export default function StatsView() {
     const dailyStats = useMemo(() => {
         const stats = {};
         logs.forEach(log => {
-            const date = log.dateStr; // YYYY-MM-DD
+            // Use local date from startTime instead of stored UTC dateStr
+            // This ensures stats align with the user's local calendar view
+            const d = new Date(log.startTime);
+            const year = d.getFullYear();
+            const month = String(d.getMonth() + 1).padStart(2, '0');
+            const day = String(d.getDate()).padStart(2, '0');
+            const date = `${year}-${month}-${day}`;
+
             if (date) {
                 if (!stats[date]) stats[date] = {};
                 if (!stats[date][log.activityId]) stats[date][log.activityId] = 0;
