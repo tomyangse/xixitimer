@@ -49,7 +49,13 @@ export default function ActivityGrid() {
         }
     };
 
-    const getCardImage = (index) => {
+    // Fallback background images for activities without custom icons
+    const getCardImage = (activity, index) => {
+        // If activity has a custom icon image, use it as background
+        if (activity.icon && activity.icon.startsWith('/assets/card_')) {
+            return activity.icon;
+        }
+        // Fallback to default knit patterns
         const images = [
             '/assets/card_knit_blue.png',
             '/assets/card_knit_brown.png',
@@ -69,7 +75,7 @@ export default function ActivityGrid() {
                     duration += (now - state.activeSession.startTime);
                 }
 
-                const bgImage = getCardImage(index);
+                const bgImage = getCardImage(activity, index);
 
                 return (
                     <div
@@ -85,13 +91,6 @@ export default function ActivityGrid() {
                         {/* Checkmark Badge if Active */}
                         {isActive && (
                             <div className="active-badge">✅</div>
-                        )}
-
-                        {/* Activity Icon Badge */}
-                        {activity.icon && activity.icon.startsWith('/assets/') && (
-                            <div className="card-icon-patch">
-                                <img src={activity.icon} alt={activity.name} />
-                            </div>
                         )}
 
                         <div className="knit-card-content">
