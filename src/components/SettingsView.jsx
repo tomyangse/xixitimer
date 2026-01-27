@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useData } from '../context/DataContext';
+import { supabase } from '../supabaseClient';
 
 export default function SettingsView() {
     const { state, addReward, deleteReward, addActivity, deleteActivity, editActivity, resetToday, user, logout } = useData();
@@ -16,6 +17,30 @@ export default function SettingsView() {
     // Instead of boolean, we now select a reward ID or null
     const [selectedRewardId, setSelectedRewardId] = useState(''); // '' means no reward
     const [actMult, setActMult] = useState(1);
+
+    // Display Name State
+    const [displayName, setDisplayName] = useState('');
+    const [isUpdatingName, setIsUpdatingName] = useState(false);
+
+    useEffect(() => {
+        if (user?.user_metadata?.full_name) {
+            setDisplayName(user.user_metadata.full_name);
+        }
+    }, [user]);
+
+    const handleUpdateName = async () => {
+        if (!displayName.trim()) return;
+        setIsUpdatingName(true);
+        const { error } = await supabase.auth.updateUser({
+            data: { full_name: displayName }
+        });
+        if (error) {
+            alert('Error: ' + error.message);
+        } else {
+            alert('姓名已更新! ✨');
+        }
+        setIsUpdatingName(false);
+    };
 
     // Activity icon images
     const iconImages = [
@@ -90,6 +115,24 @@ export default function SettingsView() {
                 <div className="user-info">
                     <span className="user-email">{user?.email}</span>
                     <button className="logout-btn" onClick={handleLogout}>Log Out</button>
+                </div>
+                <div className="name-edit-row">
+                    <label>显示名称</label>
+                    <div className="name-input-group">
+                        <input
+                            type="text"
+                            value={displayName}
+                            onChange={(e) => setDisplayName(e.target.value)}
+                            placeholder="输入显示名称"
+                        />
+                        <button
+                            className="save-name-btn"
+                            onClick={handleUpdateName}
+                            disabled={isUpdatingName}
+                        >
+                            {isUpdatingName ? '保存中...' : '保存'}
+                        </button>
+                    </div>
                 </div>
             </div>
 
