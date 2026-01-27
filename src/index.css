@@ -636,6 +636,14 @@ code {
   /* Remove shadow to blend with fullscreen bg */
 }
 
+/* Main Content Area */
+.main-content {
+  flex: 1;
+  padding-bottom: 90px;
+  /* Space for fixed bottom nav (70px) + extra margin */
+  overflow-y: auto;
+}
+
 .stats-container {
   padding: 10px;
   max-width: 600px;
