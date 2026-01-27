@@ -1315,3 +1315,50 @@ code {
 .reset-btn:active {
   transform: translateY(0);
 }
+
+/* ==================== BOTTOM NAVIGATION ==================== */
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: rgba(253, 246, 227, 0.95);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid rgba(139, 90, 43, 0.15);
+  box-shadow: 0 -4px 20px rgba(93, 64, 55, 0.1);
+  z-index: 1000;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-radius: 12px;
+}
+
+.nav-item:hover {
+  background: rgba(212, 165, 116, 0.15);
+}
+
+.nav-item.active {
+  color: #5d4037;
+}
+
+.nav-item span {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #8d6e63;
+}
+
+.nav-item.active span {
+  color: #5d4037;
+}
