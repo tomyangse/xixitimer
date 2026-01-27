@@ -44,6 +44,18 @@ body {
   color: var(--text-primary);
   font-family: var(--font-family);
   min-height: 100vh;
+
+  /* Hide scrollbar but allow scrolling */
+  overflow-y: auto;
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
+}
+
+body::-webkit-scrollbar {
+  display: none;
+  /* Chrome/Safari */
 }
 
 #root {
