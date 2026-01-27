@@ -593,9 +593,12 @@ code {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
+  overflow-x: hidden;
+  /* Prevent page-wide horizontal scroll */
   /* Removed background-color to let body bg show through */
   box-shadow: none;
   /* Remove shadow to blend with fullscreen bg */
