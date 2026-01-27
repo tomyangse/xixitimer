@@ -171,6 +171,28 @@ body::-webkit-scrollbar {
   transform: scale(0.97);
 }
 
+/* Activity Icon Badge */
+.card-icon-patch {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #fdf6e3;
+  border: 4px solid rgba(212, 165, 116, 0.5);
+  box-shadow: 0 4px 12px rgba(93, 64, 55, 0.3);
+  overflow: hidden;
+  z-index: 10;
+}
+
+.card-icon-patch img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* Internal Layout */
 .knit-card-content {
   width: 100%;
@@ -1154,29 +1176,41 @@ code {
 .icon-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   margin: 15px 0;
 }
 
-.icon-row span {
-  font-size: 1.5rem;
-  padding: 8px;
-  border-radius: 10px;
+.icon-option {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.8);
-  border: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.9);
+  border: 3px solid transparent;
   transition: all 0.2s;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(139, 90, 43, 0.15);
 }
 
-.icon-row span:hover {
-  background: rgba(212, 165, 116, 0.3);
+.icon-option img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.icon-option:hover {
   transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(139, 90, 43, 0.25);
 }
 
-.icon-row span.selected {
-  background: #d4a574;
-  border-color: #8b5a2b;
+.icon-option.selected {
+  border-color: #d4a574;
   transform: scale(1.15);
+  box-shadow: 0 4px 15px rgba(212, 165, 116, 0.5);
 }
 
 /* Form Buttons */

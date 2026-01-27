@@ -11,13 +11,20 @@ export default function SettingsView({ onClose }) {
     // New Activity State
     const [isEditing, setIsEditing] = useState(null); // id of activity being edited
     const [actName, setActName] = useState('');
-    const [actIcon, setActIcon] = useState('⭐');
+    const [actIcon, setActIcon] = useState('/assets/card_piano.png');
 
     // Instead of boolean, we now select a reward ID or null
     const [selectedRewardId, setSelectedRewardId] = useState(''); // '' means no reward
     const [actMult, setActMult] = useState(1);
 
-    const icons = ['🎹', '📚', '⚽', '🎨', '🧩', '🚲', '🏊', '🧘', '💻'];
+    // Activity icon images
+    const iconImages = [
+        { path: '/assets/card_piano.png', label: 'Piano' },
+        { path: '/assets/card_book.png', label: 'Book' },
+        { path: '/assets/card_football.png', label: 'Football' },
+        { path: '/assets/card_paiting.png', label: 'Painting' },
+        { path: '/assets/card_ipad.png', label: 'iPad' },
+    ];
 
     const handleAddReward = () => {
         if (newRewardName.trim()) {
@@ -29,7 +36,7 @@ export default function SettingsView({ onClose }) {
     const resetForm = () => {
         setIsEditing(null);
         setActName('');
-        setActIcon('⭐');
+        setActIcon('/assets/card_piano.png');
         setSelectedRewardId(''); // Default to no reward
         setActMult(1);
     };
@@ -175,14 +182,15 @@ export default function SettingsView({ onClose }) {
                     )}
 
                     <div className="icon-row">
-                        {icons.map(icon => (
-                            <span
-                                key={icon}
-                                className={actIcon === icon ? 'selected' : ''}
-                                onClick={() => setActIcon(icon)}
+                        {iconImages.map(icon => (
+                            <div
+                                key={icon.path}
+                                className={`icon-option ${actIcon === icon.path ? 'selected' : ''}`}
+                                onClick={() => setActIcon(icon.path)}
+                                title={icon.label}
                             >
-                                {icon}
-                            </span>
+                                <img src={icon.path} alt={icon.label} />
+                            </div>
                         ))}
                     </div>
 

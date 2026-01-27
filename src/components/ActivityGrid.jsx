@@ -87,11 +87,12 @@ export default function ActivityGrid() {
                             <div className="active-badge">✅</div>
                         )}
 
-                        {/* Icon Badge (Now absolutely positioned by CSS) */}
-                        {/* Icon Badge REMOVED */}{/* 
-                        <div className="card-icon-patch">
-                            {activity.icon}
-                        </div> */}
+                        {/* Activity Icon Badge */}
+                        {activity.icon && activity.icon.startsWith('/assets/') && (
+                            <div className="card-icon-patch">
+                                <img src={activity.icon} alt={activity.name} />
+                            </div>
+                        )}
 
                         <div className="knit-card-content">
                             <div className="card-title-shadow">{activity.name}</div>
