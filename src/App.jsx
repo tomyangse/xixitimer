@@ -86,7 +86,7 @@ function AppContent() {
         <div className="header-title">
           你好, {displayName || '朋友'}! <span className="weather-icon">⛅</span>
         </div>
-        <button className="settings-btn" onClick={() => setShowSettings(true)}>⚙️</button>
+        <button className="settings-btn" onClick={() => setShowSettings(true)}>🧶</button>
       </header>
 
       <main className="main-content">

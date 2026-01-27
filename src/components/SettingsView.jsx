@@ -74,7 +74,7 @@ export default function SettingsView({ onClose }) {
     return (
         <div className="settings-container">
             <div className="settings-header">
-                <h2>⚙️ Settings</h2>
+                <h2>🧶 Settings</h2>
                 <button onClick={onClose}>Done</button>
             </div>
 
