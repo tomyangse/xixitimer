@@ -5,6 +5,14 @@ export default function StatsView() {
     const { state } = useData();
     const { logs, activities } = state;
 
+    // Helper to render icon (image or emoji)
+    const renderIcon = (icon) => {
+        if (icon && icon.startsWith('/assets/')) {
+            return <img src={icon} alt="" style={{ width: '28px', height: '28px', objectFit: 'cover', borderRadius: '6px' }} />;
+        }
+        return <span style={{ fontSize: '1.5rem' }}>{icon}</span>;
+    };
+
     // State for week navigation (0 = current week, -1 = last week, etc.)
     const [weekOffset, setWeekOffset] = useState(0);
 
@@ -146,7 +154,7 @@ export default function StatsView() {
                                         return (
                                             <div key={actId} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px', background: 'rgba(0,0,0,0.02)', borderRadius: '10px' }}>
                                                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                                    <span style={{ fontSize: '1.5rem' }}>{activityIcon}</span>
+                                                    {renderIcon(activityIcon)}
                                                     <span style={{ fontWeight: '600', color: '#5d4037' }}>{activityName}</span>
                                                 </div>
                                                 <span style={{ fontFamily: 'Nunito', fontWeight: 'bold', color: '#8d6e63' }}>

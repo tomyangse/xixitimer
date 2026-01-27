@@ -37,7 +37,13 @@ export default function ActiveTimerOverlay() {
                 {/* Icons Row */}
                 <div className="timer-icons-row">
                     <div className="timer-icon-badge">
-                        <div className="icon-main">{activity.icon}</div>
+                        <div className="icon-main">
+                            {activity.icon && activity.icon.startsWith('/assets/') ? (
+                                <img src={activity.icon} alt={activity.name} style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '10px' }} />
+                            ) : (
+                                activity.icon
+                            )}
+                        </div>
                         <div className="knitted-bar"></div>
                     </div>
                     {/* Arrow between icons */}

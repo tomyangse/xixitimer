@@ -51,6 +51,14 @@ export default function SettingsView() {
         { path: '/assets/card_ipad.png', label: 'iPad' },
     ];
 
+    // Helper to render icon (image or emoji)
+    const renderIcon = (icon) => {
+        if (icon && icon.startsWith('/assets/')) {
+            return <img src={icon} alt="" style={{ width: '24px', height: '24px', objectFit: 'cover', borderRadius: '4px', verticalAlign: 'middle', marginRight: '8px' }} />;
+        }
+        return <span style={{ marginRight: '8px' }}>{icon}</span>;
+    };
+
     const handleAddReward = () => {
         if (newRewardName.trim()) {
             addReward(newRewardName);
@@ -170,7 +178,7 @@ export default function SettingsView() {
                         const rewardLabel = linkedReward ? ` -> ${linkedReward.name}` : '';
                         return (
                             <div key={act.id} className="settings-activity-item">
-                                <span>{act.icon} {act.name} {act.rewardMultiplier > 0 ? `(x${act.rewardMultiplier}${rewardLabel})` : '(No Reward)'}</span>
+                                <span>{renderIcon(act.icon)}{act.name} {act.rewardMultiplier > 0 ? `(x${act.rewardMultiplier}${rewardLabel})` : '(No Reward)'}</span>
                                 <div className="item-actions">
                                     <button className="edit-btn-small" onClick={() => handleEditClick(act)}>Edit</button>
                                     <button className="delete-btn-small" onClick={() => deleteActivity(act.id)}>Delete</button>

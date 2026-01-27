@@ -31,6 +31,14 @@ export default function SummaryView() {
         return `${minutes}m`;
     };
 
+    // Helper to render icon (image or emoji)
+    const renderIcon = (icon) => {
+        if (icon && icon.startsWith('/assets/')) {
+            return <img src={icon} alt="" style={{ width: '20px', height: '20px', objectFit: 'cover', borderRadius: '4px', verticalAlign: 'middle', marginRight: '5px' }} />;
+        }
+        return <span style={{ marginRight: '5px' }}>{icon}</span>;
+    };
+
     return (
         <div className="summary-section">
             {totalRewardTime > 0 && (
@@ -47,7 +55,7 @@ export default function SummaryView() {
                     if (!activity) return null; // Activity deleted?
                     return (
                         <div key={actId} className="summary-pill" style={{ backgroundColor: activity.color }}>
-                            <span>{activity.icon} {activity.name}</span>
+                            <span>{renderIcon(activity.icon)}{activity.name}</span>
                             <strong>{formatDuration(duration)}</strong>
                         </div>
                     );
@@ -61,7 +69,7 @@ export default function SummaryView() {
                     if (!activity) return null;
                     return (
                         <div key={log.id} className="log-item">
-                            <span>{activity.icon} {activity.name}</span>
+                            <span>{renderIcon(activity.icon)}{activity.name}</span>
                             <span>{formatDuration(log.duration)}</span>
                             <span className="log-date">{log.dateStr}</span>
                             <button className="small-delete" onClick={() => {

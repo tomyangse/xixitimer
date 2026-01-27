@@ -39,7 +39,13 @@ export default function ActiveTimer() {
     return (
         <div className="active-timer-overlay">
             <div className="timer-card" style={{ borderColor: activity.color }}>
-                <div className="timer-icon">{activity.icon}</div>
+                <div className="timer-icon">
+                    {activity.icon && activity.icon.startsWith('/assets/') ? (
+                        <img src={activity.icon} alt={activity.name} style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '8px' }} />
+                    ) : (
+                        activity.icon
+                    )}
+                </div>
                 <h2>{activity.name}</h2>
                 {activity.rewardMultiplier > 1 && (
                     <div className="timer-badge" style={{ color: activity.color }}>
