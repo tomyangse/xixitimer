@@ -906,3 +906,341 @@ code {
   transform: translateY(4px);
   box-shadow: 0 2px 0 #6f4c3e, 0 5px 5px rgba(0, 0, 0, 0.2);
 }
+
+/* ==================== SETTINGS VIEW STYLES ==================== */
+
+.settings-container {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  padding-bottom: 100px;
+}
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #d4a574 0%, #c4956a 100%);
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(139, 90, 43, 0.3);
+}
+
+.settings-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.settings-header button {
+  background: #fff;
+  color: #8b5a2b;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.2s;
+}
+
+.settings-header button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.settings-section {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 15px rgba(139, 90, 43, 0.15);
+  border: 2px solid rgba(212, 165, 116, 0.3);
+}
+
+.settings-section h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+  color: #5d4037;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-section h3::before {
+  content: '🧶';
+  font-size: 1.2rem;
+}
+
+.account-section h3::before {
+  content: '👤';
+}
+
+.settings-section h4 {
+  margin: 15px 0 10px 0;
+  font-size: 1rem;
+  color: #6d4c41;
+  font-weight: 600;
+}
+
+/* User Info */
+.user-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background: rgba(212, 165, 116, 0.2);
+  border-radius: 12px;
+}
+
+.user-email {
+  font-weight: 600;
+  color: #5d4037;
+}
+
+.logout-btn {
+  background: #e57373;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background: #ef5350;
+  transform: translateY(-1px);
+}
+
+/* Activity/Reward List */
+.settings-activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.settings-activity-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background: linear-gradient(135deg, #fdf6e3 0%, #f5e6d3 100%);
+  border-radius: 12px;
+  border: 1px solid rgba(139, 90, 43, 0.15);
+  transition: all 0.2s;
+}
+
+.settings-activity-item:hover {
+  transform: translateX(3px);
+  box-shadow: 0 2px 8px rgba(139, 90, 43, 0.15);
+}
+
+.settings-activity-item span {
+  font-weight: 600;
+  color: #5d4037;
+  font-size: 0.95rem;
+}
+
+.item-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.edit-btn-small,
+.delete-btn-small {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+.edit-btn-small {
+  background: #81c784;
+  color: white;
+}
+
+.edit-btn-small:hover {
+  background: #66bb6a;
+}
+
+.delete-btn-small {
+  background: #e57373;
+  color: white;
+}
+
+.delete-btn-small:hover {
+  background: #ef5350;
+}
+
+/* Add Activity Form */
+.add-activity-in-settings {
+  margin-top: 15px;
+  padding: 15px;
+  background: rgba(212, 165, 116, 0.15);
+  border-radius: 15px;
+}
+
+.add-activity-in-settings input[type="text"],
+.add-activity-in-settings input[type="number"] {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid rgba(139, 90, 43, 0.2);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: 'Nunito', sans-serif;
+  background: white;
+  color: #5d4037;
+  margin-bottom: 10px;
+  transition: border-color 0.2s;
+}
+
+.add-activity-in-settings input:focus {
+  outline: none;
+  border-color: #d4a574;
+}
+
+.add-activity-in-settings select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid rgba(139, 90, 43, 0.2);
+  border-radius: 12px;
+  font-size: 1rem;
+  font-family: 'Nunito', sans-serif;
+  background: white;
+  color: #5d4037;
+  cursor: pointer;
+}
+
+.reward-toggle-row {
+  margin-bottom: 10px;
+}
+
+.reward-toggle-row label span {
+  font-weight: 600;
+  color: #6d4c41;
+  font-size: 0.95rem;
+}
+
+.multiplier-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.multiplier-row label {
+  font-weight: 600;
+  color: #6d4c41;
+}
+
+.multiplier-row input {
+  width: 70px !important;
+  text-align: center;
+}
+
+/* Icon Picker */
+.icon-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 15px 0;
+}
+
+.icon-row span {
+  font-size: 1.5rem;
+  padding: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.8);
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.icon-row span:hover {
+  background: rgba(212, 165, 116, 0.3);
+  transform: scale(1.1);
+}
+
+.icon-row span.selected {
+  background: #d4a574;
+  border-color: #8b5a2b;
+  transform: scale(1.15);
+}
+
+/* Form Buttons */
+.form-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.add-btn-settings {
+  flex: 1;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #81c784 0%, #66bb6a 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgba(102, 187, 106, 0.3);
+  transition: all 0.2s;
+}
+
+.add-btn-settings:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 187, 106, 0.4);
+}
+
+.cancel-btn-settings {
+  padding: 12px 20px;
+  background: #bdbdbd;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancel-btn-settings:hover {
+  background: #9e9e9e;
+}
+
+/* Reset Button */
+.reset-btn {
+  width: 100%;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, #ffb74d 0%, #ffa726 100%);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+  transition: all 0.2s;
+}
+
+.reset-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(255, 152, 0, 0.4);
+}
+
+.reset-btn:active {
+  transform: translateY(0);
+}
