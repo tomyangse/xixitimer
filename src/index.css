@@ -30,6 +30,25 @@
   box-sizing: border-box;
 }
 
+/* Hide all scrollbars globally */
+html,
+body,
+#root,
+.app-container {
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE/Edge */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+#root::-webkit-scrollbar,
+.app-container::-webkit-scrollbar {
+  display: none;
+  /* Chrome/Safari */
+}
+
 body {
   margin: 0;
   padding: 0;
