@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useData } from '../context/DataContext';
 
-export default function SettingsView({ onClose }) {
+export default function SettingsView() {
     const { state, addReward, deleteReward, addActivity, deleteActivity, editActivity, resetToday, user, logout } = useData();
     const { rewards } = state;
 
@@ -81,8 +81,7 @@ export default function SettingsView({ onClose }) {
     return (
         <div className="settings-container">
             <div className="settings-header">
-                <h2>🧶 Settings</h2>
-                <button onClick={onClose}>Done</button>
+                <h2>🧶 我的设置</h2>
             </div>
 
             {/* User Account Section */}
