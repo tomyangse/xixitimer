@@ -97,8 +97,9 @@ body {
   gap: 30px;
   padding: 60px 40px 30px 40px;
   width: 100%;
+  /* Revert to full width */
   box-sizing: border-box;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: x proximity;
   -webkit-overflow-scrolling: touch;
 
   /* Start from left, allow scrolling */
@@ -132,6 +133,8 @@ body {
   flex-shrink: 0;
   scroll-snap-align: center;
 }
+
+
 
 .knit-card-container:active {
   transform: scale(0.97);
@@ -590,7 +593,7 @@ code {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  max-width: 600px;
+  max-width: 1200px;
   margin: 0 auto;
   position: relative;
   /* Removed background-color to let body bg show through */
