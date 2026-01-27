@@ -91,15 +91,27 @@ body {
 /* --- Components: Knitted Cards (3-Column Grid) --- */
 
 .activity-grid {
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  /* Fit content columns */
-  justify-content: center;
-  /* Center the entire grid group on screen */
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
   gap: 30px;
   padding: 60px 40px 30px 40px;
   width: 100%;
   box-sizing: border-box;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+
+  /* Start from left, allow scrolling */
+  justify-content: flex-start;
+  align-items: center;
+
+  /* Hide scrollbar */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.activity-grid::-webkit-scrollbar {
+  display: none;
 }
 
 /* Card Container */
@@ -115,6 +127,10 @@ body {
   transition: transform 0.1s, filter 0.1s;
   border-radius: 36px;
   filter: drop-shadow(0 8px 14px rgba(93, 64, 55, 0.35));
+
+  /* Flex item behavior */
+  flex-shrink: 0;
+  scroll-snap-align: center;
 }
 
 .knit-card-container:active {
