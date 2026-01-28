@@ -5,6 +5,7 @@ import SettingsView from './components/SettingsView';
 import Auth from './components/Auth';
 import ActiveTimerOverlay from './components/ActiveTimerOverlay';
 import StatsView from './components/StatsView';
+import GoalMentorPopup from './components/GoalMentorPopup';
 import { supabase } from './supabaseClient';
 
 function AppContent() {
@@ -45,6 +46,19 @@ function AppContent() {
   const [displayName, setDisplayName] = useState('');
   const [editingName, setEditingName] = useState('');
   const [isUpdatingProfile, setIsUpdatingProfile] = useState(false);
+  const [showMentor, setShowMentor] = useState(false);
+
+  // Check if we should show mentor popup (on every page load if goals exist)
+  useEffect(() => {
+    if (session && state.activities.length > 0) {
+      // Check if we have any goals set
+      const hasGoals = state.activities.some(a => a.isGoalEnabled && a.weeklyGoalSessions > 0);
+
+      if (hasGoals) {
+        setShowMentor(true);
+      }
+    }
+  }, [session, state.activities]);
 
   useEffect(() => {
     if (session?.user?.user_metadata?.full_name) {
@@ -78,6 +92,11 @@ function AppContent() {
     <div className="app-container">
       {/* Active Timer Overlay */}
       <ActiveTimerOverlay />
+
+      {/* Goal Mentor Popup */}
+      {showMentor && (
+        <GoalMentorPopup onClose={() => setShowMentor(false)} />
+      )}
 
       <header className="app-header">
         <div className="header-title">

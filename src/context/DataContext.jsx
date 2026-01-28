@@ -50,7 +50,7 @@ function reducer(state, action) {
     case 'STOP_SESSION':
       return {
         ...state,
-        logs: [...state.logs, action.payload.log],
+        logs: action.payload.log ? [...state.logs, action.payload.log] : state.logs,
         activeSession: null,
       };
     case 'DELETE_LOG':
@@ -112,7 +112,10 @@ export function DataProvider({ children }) {
       const mappedActivities = (activities || []).map(a => ({
         ...a,
         rewardMultiplier: a.reward_multiplier,
-        rewardId: a.reward_id // Add rewardId
+        rewardId: a.reward_id,
+        weeklyGoalSessions: a.weekly_goal_sessions || 0,
+        goalDurationMinutes: a.goal_duration_minutes || 0,
+        isGoalEnabled: a.is_goal_enabled || false
       }));
 
       // Fetch Logs
@@ -207,7 +210,11 @@ export function DataProvider({ children }) {
     if (updates.name) dbUpdates.name = updates.name;
     if (updates.icon) dbUpdates.icon = updates.icon;
     if (updates.rewardMultiplier !== undefined) dbUpdates.reward_multiplier = updates.rewardMultiplier;
-    if (updates.rewardId !== undefined) dbUpdates.reward_id = updates.rewardId; // Handle rewardId update
+    if (updates.rewardId !== undefined) dbUpdates.reward_id = updates.rewardId;
+    // Goal fields
+    if (updates.weeklyGoalSessions !== undefined) dbUpdates.weekly_goal_sessions = updates.weeklyGoalSessions;
+    if (updates.goalDurationMinutes !== undefined) dbUpdates.goal_duration_minutes = updates.goalDurationMinutes;
+    if (updates.isGoalEnabled !== undefined) dbUpdates.is_goal_enabled = updates.isGoalEnabled;
 
     await supabase.from('activities').update(dbUpdates).eq('id', id);
   };
@@ -233,6 +240,17 @@ export function DataProvider({ children }) {
 
     const activity = state.activities.find(a => a.id === activityId);
     const duration = endTime - startTime;
+
+    // Ignore sessions shorter than 1 minute (60,000 ms)
+    if (duration < 60000) {
+      alert("时间太短，不计入统计哦 (需超过1分钟) ⏰");
+      dispatch({
+        type: 'STOP_SESSION',
+        payload: { log: null },
+      });
+      return;
+    }
+
     const earnedReward = duration * (activity?.rewardMultiplier || 1);
     const rewardId = activity?.rewardId; // Get rewardId from activity
 

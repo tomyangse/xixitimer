@@ -1370,3 +1370,288 @@ code {
 .nav-item.active span {
   color: #5d4037;
 }
+
+/* ==================== GOAL MENTOR POPUP ==================== */
+
+.mentor-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(93, 64, 55, 0.6);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.mentor-popup {
+  background: linear-gradient(145deg, #fdf6e3 0%, #f5ebe0 100%);
+  border-radius: 24px;
+  max-width: 420px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(93, 64, 55, 0.3);
+  border: 3px solid rgba(212, 165, 116, 0.4);
+}
+
+.mentor-header {
+  background: linear-gradient(135deg, #d4a574 0%, #c49660 100%);
+  padding: 20px;
+  border-radius: 21px 21px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mentor-avatar {
+  font-size: 2.5rem;
+}
+
+.mentor-header h2 {
+  color: white;
+  font-size: 1.5rem;
+  margin: 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  flex: 1;
+}
+
+.mentor-voice-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mentor-voice-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.mentor-voice-btn.speaking {
+  animation: pulse 1s infinite;
+  background: rgba(102, 187, 106, 0.4);
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.mentor-loading {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(212, 165, 116, 0.3);
+  border-top-color: #d4a574;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 15px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.mentor-loading p {
+  color: #8d6e63;
+  font-size: 1rem;
+}
+
+.mentor-no-goals {
+  padding: 30px 20px;
+  text-align: center;
+  color: #8d6e63;
+}
+
+.mentor-no-goals p {
+  margin: 8px 0;
+}
+
+/* Progress Section */
+.mentor-progress-section {
+  padding: 20px;
+}
+
+.mentor-progress-section h3 {
+  color: #5d4037;
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+}
+
+.progress-item {
+  background: white;
+  padding: 12px 15px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(93, 64, 55, 0.1);
+}
+
+.progress-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.progress-icon {
+  font-size: 1.2rem;
+}
+
+.progress-name {
+  flex: 1;
+  font-weight: 600;
+  color: #5d4037;
+}
+
+.progress-count {
+  font-size: 0.9rem;
+  color: #8d6e63;
+  font-weight: 600;
+}
+
+.progress-bar-container {
+  height: 8px;
+  background: rgba(212, 165, 116, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #81c784 0%, #66bb6a 100%);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+/* Advice Section */
+.mentor-advice-section {
+  padding: 0 20px 20px;
+}
+
+.advice-card {
+  display: flex;
+  gap: 12px;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  align-items: flex-start;
+}
+
+.advice-card.summary {
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+}
+
+.advice-card.suggestion {
+  background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+}
+
+.advice-card.encouragement {
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+}
+
+.advice-emoji {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.advice-card p {
+  margin: 0;
+  color: #5d4037;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.mentor-close-btn {
+  display: block;
+  width: calc(100% - 40px);
+  margin: 0 20px 20px;
+  padding: 15px;
+  background: linear-gradient(135deg, #81c784 0%, #66bb6a 100%);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 15px rgba(102, 187, 106, 0.4);
+}
+
+.mentor-close-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 187, 106, 0.5);
+}
+
+/* Goal Settings in SettingsView */
+.goal-settings-group {
+  margin-top: 15px;
+  padding: 15px;
+  background: rgba(129, 199, 132, 0.1);
+  border-radius: 12px;
+  border: 2px dashed rgba(102, 187, 106, 0.3);
+}
+
+.goal-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.goal-toggle-row label {
+  flex: 1;
+  font-weight: 600;
+  color: #5d4037;
+}
+
+.goal-toggle-row input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #66bb6a;
+}
+
+.goal-inputs-row {
+  display: flex;
+  gap: 10px;
+}
+
+.goal-input-group {
+  flex: 1;
+}
+
+.goal-input-group label {
+  display: block;
+  font-size: 0.85rem;
+  color: #8d6e63;
+  margin-bottom: 5px;
+}
+
+.goal-input-group input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 2px solid rgba(139, 90, 43, 0.2);
+  border-radius: 8px;
+  font-size: 1rem;
+  text-align: center;
+}

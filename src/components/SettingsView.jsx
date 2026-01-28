@@ -18,6 +18,11 @@ export default function SettingsView() {
     const [selectedRewardId, setSelectedRewardId] = useState(''); // '' means no reward
     const [actMult, setActMult] = useState(1);
 
+    // Goal settings state
+    const [goalEnabled, setGoalEnabled] = useState(false);
+    const [goalSessions, setGoalSessions] = useState(3);
+    const [goalMinutes, setGoalMinutes] = useState(20);
+
     // Display Name State
     const [displayName, setDisplayName] = useState('');
     const [isUpdatingName, setIsUpdatingName] = useState(false);
@@ -83,6 +88,10 @@ export default function SettingsView() {
         // The migration script should have set rewardId for all activities with multipliers.
         setSelectedRewardId(act.rewardId || '');
         setActMult((act.rewardMultiplier && act.rewardMultiplier > 0) ? act.rewardMultiplier : 1);
+        // Load goal settings
+        setGoalEnabled(act.isGoalEnabled || false);
+        setGoalSessions(act.weeklyGoalSessions || 3);
+        setGoalMinutes(act.goalDurationMinutes || 20);
     };
 
     const handleSaveActivity = (e) => {
@@ -96,7 +105,10 @@ export default function SettingsView() {
                     name: actName,
                     icon: actIcon,
                     rewardMultiplier: multiplier,
-                    rewardId: rewardId
+                    rewardId: rewardId,
+                    isGoalEnabled: goalEnabled,
+                    weeklyGoalSessions: parseInt(goalSessions) || 0,
+                    goalDurationMinutes: parseInt(goalMinutes) || 0
                 });
             } else {
                 const hue = Math.floor(Math.random() * 360);
@@ -242,6 +254,42 @@ export default function SettingsView() {
                                 <img src={icon.path} alt={icon.label} />
                             </div>
                         ))}
+                    </div>
+
+                    {/* Goal Settings Section */}
+                    <div className="goal-settings-group">
+                        <div className="goal-toggle-row">
+                            <label>🎯 启用周目标</label>
+                            <input
+                                type="checkbox"
+                                checked={goalEnabled}
+                                onChange={(e) => setGoalEnabled(e.target.checked)}
+                            />
+                        </div>
+                        {goalEnabled && (
+                            <div className="goal-inputs-row">
+                                <div className="goal-input-group">
+                                    <label>每周次数</label>
+                                    <input
+                                        type="number"
+                                        min="1"
+                                        max="14"
+                                        value={goalSessions}
+                                        onChange={(e) => setGoalSessions(e.target.value)}
+                                    />
+                                </div>
+                                <div className="goal-input-group">
+                                    <label>每次分钟</label>
+                                    <input
+                                        type="number"
+                                        min="5"
+                                        max="120"
+                                        value={goalMinutes}
+                                        onChange={(e) => setGoalMinutes(e.target.value)}
+                                    />
+                                </div>
+                            </div>
+                        )}
                     </div>
 
                     <div className="form-buttons">
