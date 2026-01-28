@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useData } from '../context/DataContext';
 import { supabase } from '../supabaseClient';
+import { useTranslation } from 'react-i18next';
 
-export default function SettingsView() {
-    const { state, addReward, deleteReward, addActivity, deleteActivity, editActivity, resetToday, user, logout } = useData();
+export default function SettingsView({ onClose }) {
+    const { t } = useTranslation();
+    const { state, addReward, deleteReward, addActivity, deleteActivity, editActivity, resetToday, user, logout, syncData } = useData();
     const { rewards } = state;
 
     // Reward State
@@ -42,7 +44,7 @@ export default function SettingsView() {
         if (error) {
             alert('Error: ' + error.message);
         } else {
-            alert('姓名已更新! ✨');
+            alert(t('settings.nameUpdated'));
         }
         setIsUpdatingName(false);
     };
@@ -126,31 +128,61 @@ export default function SettingsView() {
     return (
         <div className="settings-container">
             <div className="settings-header">
-                <h2>🧶 我的设置</h2>
+                <h2>{t('settings.title')}</h2>
             </div>
 
             {/* User Account Section */}
             <div className="settings-section account-section">
-                <h3>Account</h3>
+                <h3>{t('settings.account')}</h3>
                 <div className="user-info">
                     <span className="user-email">{user?.email}</span>
-                    <button className="logout-btn" onClick={handleLogout}>Log Out</button>
+                    <button className="logout-btn" onClick={handleLogout}>{t('settings.logout')}</button>
                 </div>
+
+                <div style={{ margin: '10px 0', borderTop: '1px dashed #eee', paddingTop: '10px' }}>
+                    <button
+                        onClick={async () => {
+                            const btn = document.getElementById('sync-btn');
+                            if (btn) btn.innerText = 'Syncing...';
+                            await syncData();
+                            if (btn) btn.innerText = t('settings.sync');
+                            alert('Synced! ✅');
+                        }}
+                        id="sync-btn"
+                        style={{
+                            width: '100%',
+                            padding: '8px',
+                            background: '#e3f2fd',
+                            color: '#1565c0',
+                            border: 'none',
+                            borderRadius: '8px',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '5px'
+                        }}
+                    >
+                        ☁️ {t('settings.sync')}
+                    </button>
+                </div>
+
                 <div className="name-edit-row">
-                    <label>显示名称</label>
+                    <label>{t('settings.displayName')}</label>
                     <div className="name-input-group">
                         <input
                             type="text"
                             value={displayName}
                             onChange={(e) => setDisplayName(e.target.value)}
-                            placeholder="输入显示名称"
+                            placeholder={t('settings.displayName')}
                         />
                         <button
                             className="save-name-btn"
                             onClick={handleUpdateName}
                             disabled={isUpdatingName}
                         >
-                            {isUpdatingName ? '保存中...' : '保存'}
+                            {isUpdatingName ? t('settings.saving') : t('settings.save')}
                         </button>
                     </div>
                 </div>
@@ -158,7 +190,7 @@ export default function SettingsView() {
 
             {/* Manage Rewards Section */}
             <div className="settings-section">
-                <h3>Manage Rewards</h3>
+                <h3>{t('settings.manageRewards')}</h3>
                 <div className="settings-activity-list" style={{ maxHeight: '150px' }}>
                     {rewards.map(r => (
                         <div key={r.id} className="settings-activity-item">
@@ -171,26 +203,26 @@ export default function SettingsView() {
                 <div className="add-activity-in-settings" style={{ marginTop: '10px' }}>
                     <div style={{ display: 'flex', gap: '8px' }}>
                         <input
-                            placeholder="New Reward (e.g. YouTube)"
+                            placeholder={t('settings.addRewardPlaceholder')}
                             value={newRewardName}
                             onChange={(e) => setNewRewardName(e.target.value)}
                         />
                         <button className="add-btn-settings" onClick={handleAddReward} style={{ width: 'auto', whiteSpace: 'nowrap' }}>
-                            + Add
+                            + {t('settings.add')}
                         </button>
                     </div>
                 </div>
             </div>
 
             <div className="settings-section">
-                <h3>Manage Activities</h3>
+                <h3>{t('settings.manageActivities')}</h3>
                 <div className="settings-activity-list">
                     {state.activities.map(act => {
                         const linkedReward = rewards.find(r => r.id === act.rewardId);
                         const rewardLabel = linkedReward ? ` -> ${linkedReward.name}` : '';
                         return (
                             <div key={act.id} className="settings-activity-item">
-                                <span>{renderIcon(act.icon)}{act.name} {act.rewardMultiplier > 0 ? `(x${act.rewardMultiplier}${rewardLabel})` : '(No Reward)'}</span>
+                                <span>{renderIcon(act.icon)}{act.name} {act.rewardMultiplier > 0 ? `(x${act.rewardMultiplier}${rewardLabel})` : t('settings.none')}</span>
                                 <div className="item-actions">
                                     <button className="edit-btn-small" onClick={() => handleEditClick(act)}>Edit</button>
                                     <button className="delete-btn-small" onClick={() => deleteActivity(act.id)}>Delete</button>
@@ -201,16 +233,16 @@ export default function SettingsView() {
                 </div>
 
                 <div className="add-activity-in-settings">
-                    <h4>{isEditing ? 'Edit Activity' : 'Add New Activity'}</h4>
+                    <h4>{isEditing ? t('settings.editActivity') : t('settings.addActivity')}</h4>
                     <input
-                        placeholder="Name"
+                        placeholder={t('settings.namePlaceholder')}
                         value={actName}
                         onChange={e => setActName(e.target.value)}
                     />
 
                     <div className="reward-toggle-row">
                         <label style={{ display: 'flex', flexDirection: 'column', gap: '5px', width: '100%' }}>
-                            <span style={{ fontWeight: 'bold' }}>Earns Reward:</span>
+                            <span style={{ fontWeight: 'bold' }}>{t('settings.earnsReward')}</span>
                             <select
                                 value={selectedRewardId}
                                 onChange={(e) => setSelectedRewardId(e.target.value)}
@@ -222,7 +254,7 @@ export default function SettingsView() {
                                     fontFamily: 'Nunito'
                                 }}
                             >
-                                <option value="">(None)</option>
+                                <option value="">{t('settings.none')}</option>
                                 {rewards.map(r => (
                                     <option key={r.id} value={r.id}>{r.icon} {r.name}</option>
                                 ))}
@@ -232,7 +264,7 @@ export default function SettingsView() {
 
                     {selectedRewardId && (
                         <div className="multiplier-row">
-                            <label>Multiplier:</label>
+                            <label>{t('settings.multiplier')}</label>
                             <input
                                 type="number"
                                 step="0.1"
@@ -259,13 +291,13 @@ export default function SettingsView() {
                                     onChange={(e) => setGoalEnabled(e.target.checked)}
                                     style={{ width: '20px', height: '20px' }}
                                 />
-                                <span style={{ fontWeight: 'bold', color: '#2e7d32' }}>🎯 启用周目标 (Enable Goals)</span>
+                                <span style={{ fontWeight: 'bold', color: '#2e7d32' }}>{t('settings.enableGoals')}</span>
                             </label>
                         </div>
                         {goalEnabled && (
                             <div className="goal-inputs-row" style={{ marginTop: '10px' }}>
                                 <div className="goal-input-group">
-                                    <label>每周次数 (Sessions/Week)</label>
+                                    <label>{t('settings.sessionsPerWeek')}</label>
                                     <input
                                         type="number"
                                         min="1"
@@ -275,7 +307,7 @@ export default function SettingsView() {
                                     />
                                 </div>
                                 <div className="goal-input-group">
-                                    <label>每次时长 (Minutes/Session)</label>
+                                    <label>{t('settings.minutesPerSession')}</label>
                                     <input
                                         type="number"
                                         min="5"
@@ -289,7 +321,7 @@ export default function SettingsView() {
                     </div>
 
                     <div className="icon-row" style={{ marginTop: '15px' }}>
-                        <p style={{ width: '100%', marginBottom: '5px', fontWeight: 'bold', color: '#5d4037' }}>Choose Icon:</p>
+                        <p style={{ width: '100%', marginBottom: '5px', fontWeight: 'bold', color: '#5d4037' }}>{t('settings.chooseIcon')}</p>
                         {iconImages.map(icon => (
                             <div
                                 key={icon.path}
@@ -304,27 +336,27 @@ export default function SettingsView() {
 
                     <div className="form-buttons">
                         <button className="add-btn-settings" onClick={handleSaveActivity}>
-                            {isEditing ? 'Save Changes' : '+ Add Activity'}
+                            {isEditing ? t('settings.saveChanges') : `+ ${t('settings.add')}`}
                         </button>
                         {isEditing && (
-                            <button className="cancel-btn-settings" onClick={resetForm}>Cancel</button>
+                            <button className="cancel-btn-settings" onClick={resetForm}>{t('settings.cancel')}</button>
                         )}
                     </div>
                 </div>
             </div>
             <div className="settings-section">
-                <h3>Reset Data</h3>
+                <h3>{t('settings.resetData')}</h3>
                 <p style={{ fontSize: '0.9rem', color: '#666' }}>Reset today's timer to 0m.</p>
                 <button
                     className="reset-btn"
                     onClick={() => {
-                        if (window.confirm("Are you sure you want to reset today's time?")) {
+                        if (window.confirm(t('settings.resetConfirm'))) {
                             resetToday();
-                            onClose();
+                            onClose(); // Warning: onClose is not defined in scope, checking if it was passed props
                         }
                     }}
                 >
-                    ONE-CLICK CLEAR TIME (Reset Today) ️
+                    {t('settings.resetToday')} ️
                 </button>
             </div>
         </div>

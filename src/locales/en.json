@@ -1,0 +1,71 @@
+{
+    "app": {
+        "title": "Kids Timer Assistant",
+        "greeting": "Hello",
+        "week": "Week",
+        "monday": "Mon",
+        "tuesday": "Tue",
+        "wednesday": "Wed",
+        "thursday": "Thu",
+        "friday": "Fri",
+        "saturday": "Sat",
+        "sunday": "Sun"
+    },
+    "nav": {
+        "timer": "Timer",
+        "stats": "Stats",
+        "settings": "Settings",
+        "summary": "Summary"
+    },
+    "activity": {
+        "today": "Today",
+        "noActivities": "No activities yet, add one below!",
+        "activeBadge": "Active"
+    },
+    "settings": {
+        "title": "My Settings",
+        "account": "Account",
+        "logout": "Log Out",
+        "displayName": "Display Name",
+        "save": "Save",
+        "saving": "Saving...",
+        "manageRewards": "Manage Rewards",
+        "manageActivities": "Manage Activities",
+        "addRewardPlaceholder": "New Reward (e.g. YouTube)",
+        "add": "Add",
+        "editActivity": "Edit Activity",
+        "addActivity": "Add New Activity",
+        "namePlaceholder": "Name",
+        "earnsReward": "Earns Reward:",
+        "none": "(None)",
+        "multiplier": "Multiplier:",
+        "chooseIcon": "Choose Icon:",
+        "goalSettings": "🎯 Weekly Goals",
+        "enableGoals": "Enable Goals",
+        "sessionsPerWeek": "Sessions/Week",
+        "minutesPerSession": "Minutes/Session",
+        "saveChanges": "Save Changes",
+        "cancel": "Cancel",
+        "resetData": "Reset Data",
+        "resetToday": "Reset Today's Time",
+        "resetConfirm": "Are you sure you want to reset today's time?",
+        "nameUpdated": "Name updated! ✨",
+        "sync": "Cloud Sync"
+    },
+    "stats": {
+        "weeklyStats": "Weekly Stats",
+        "today": "Today",
+        "total": "Total",
+        "noRecords": "No records yet",
+        "deleteConfirm": "Are you sure you want to delete this log? (Cannot be undone)"
+    },
+    "mentor": {
+        "loading": "Thinking about your progress...",
+        "noGoals": "No goals set yet! Go to settings to set goals.",
+        "overallProgress": "Weekly Progress",
+        "adviceTitle": "Advice for You",
+        "clickToSpeak": "Click to listen",
+        "autoPlayBlocked": "Click speaker icon to listen!",
+        "close": "Got it!"
+    }
+}

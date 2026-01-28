@@ -1,0 +1,71 @@
+{
+    "app": {
+        "title": "Børne Timer Assistent",
+        "greeting": "Hej",
+        "week": "Uge",
+        "monday": "Man",
+        "tuesday": "Tir",
+        "wednesday": "Ons",
+        "thursday": "Tor",
+        "friday": "Fre",
+        "saturday": "Lør",
+        "sunday": "Søn"
+    },
+    "nav": {
+        "timer": "Timer",
+        "stats": "Statistik",
+        "settings": "Indstillinger",
+        "summary": "Oversigt"
+    },
+    "activity": {
+        "today": "I dag",
+        "noActivities": "Ingen aktiviteter endnu, tilføj en nedenfor!",
+        "activeBadge": "Aktiv"
+    },
+    "settings": {
+        "title": "Mine Indstillinger",
+        "account": "Konto",
+        "logout": "Log ud",
+        "displayName": "Visningsnavn",
+        "save": "Gem",
+        "saving": "Gemmer...",
+        "manageRewards": "Håndter Belønninger",
+        "manageActivities": "Håndter Aktiviteter",
+        "addRewardPlaceholder": "Ny Belønning",
+        "add": "Tilføj",
+        "editActivity": "Rediger Aktivitet",
+        "addActivity": "Tilføj Ny Aktivitet",
+        "namePlaceholder": "Navn",
+        "earnsReward": "Optjener Belønning:",
+        "none": "(Ingen)",
+        "multiplier": "Multiplikator:",
+        "chooseIcon": "Vælg Ikon:",
+        "goalSettings": "🎯 Ugentlige Mål",
+        "enableGoals": "Aktiver Mål",
+        "sessionsPerWeek": "Sessioner/Uge",
+        "minutesPerSession": "Minutter/Session",
+        "saveChanges": "Gem Ændringer",
+        "cancel": "Annuller",
+        "resetData": "Nulstil Data",
+        "resetToday": "Nulstil I Dag",
+        "resetConfirm": "Er du sikker på, du vil nulstille dagens tid?",
+        "nameUpdated": "Navn opdateret! ✨",
+        "sync": "Sky Synkronisering"
+    },
+    "stats": {
+        "weeklyStats": "Ugentlig Statistik",
+        "today": "I dag",
+        "total": "Total",
+        "noRecords": "Ingen poster endnu",
+        "deleteConfirm": "Er du sikker på, du vil slette denne post? (Kan ikke fortrydes)"
+    },
+    "mentor": {
+        "loading": "Tænker over dine fremskridt...",
+        "noGoals": "Ingen mål sat endnu! Gå til indstillinger.",
+        "overallProgress": "Ugentlig Fremgang",
+        "adviceTitle": "Råd til dig",
+        "clickToSpeak": "Klik for at lytte",
+        "autoPlayBlocked": "Klik på ikonet for at lytte!",
+        "close": "Forstået!"
+    }
+}

@@ -1,0 +1,71 @@
+{
+    "app": {
+        "title": "Lasten Ajastin Avustaja",
+        "greeting": "Hei",
+        "week": "Viikko",
+        "monday": "Ma",
+        "tuesday": "Ti",
+        "wednesday": "Ke",
+        "thursday": "To",
+        "friday": "Pe",
+        "saturday": "La",
+        "sunday": "Su"
+    },
+    "nav": {
+        "timer": "Ajastin",
+        "stats": "Tilastot",
+        "settings": "Asetukset",
+        "summary": "Yhteenveto"
+    },
+    "activity": {
+        "today": "Tänään",
+        "noActivities": "Ei aktiviteetteja vielä, lisää yksi alla!",
+        "activeBadge": "Aktiivinen"
+    },
+    "settings": {
+        "title": "Omat Asetukset",
+        "account": "Tili",
+        "logout": "Kirjaudu Ulos",
+        "displayName": "Näyttönimi",
+        "save": "Tallenna",
+        "saving": "Tallennetaan...",
+        "manageRewards": "Hallitse Palkintoja",
+        "manageActivities": "Hallitse Aktiviteetteja",
+        "addRewardPlaceholder": "Uusi Palkinto",
+        "add": "Lisää",
+        "editActivity": "Muokkaa Aktiviteettia",
+        "addActivity": "Lisää Uusi Aktiviteetti",
+        "namePlaceholder": "Nimi",
+        "earnsReward": "Ansaitsee Palkinnon:",
+        "none": "(Ei mitään)",
+        "multiplier": "Kerroin:",
+        "chooseIcon": "Valitse Kuvake:",
+        "goalSettings": "🎯 Viikkotavoitteet",
+        "enableGoals": "Ota Tavoitteet Käyttöön",
+        "sessionsPerWeek": "Kertaa/Viikko",
+        "minutesPerSession": "Minuuttia/Kerta",
+        "saveChanges": "Tallenna Muutokset",
+        "cancel": "Peruuta",
+        "resetData": "Nollaa Tiedot",
+        "resetToday": "Nollaa Tänään",
+        "resetConfirm": "Haluatko varmasti nollata tämän päivän ajan?",
+        "nameUpdated": "Nimi päivitetty! ✨",
+        "sync": "Pilvisynkronointi"
+    },
+    "stats": {
+        "weeklyStats": "Viikkotilastot",
+        "today": "Tänään",
+        "total": "Yhteensä",
+        "noRecords": "Ei merkintöjä vielä",
+        "deleteConfirm": "Haluatko varmasti poistaa tämän merkinnän? (Ei voi perua)"
+    },
+    "mentor": {
+        "loading": "Mietitään edistymistäsi...",
+        "noGoals": "Ei tavoitteita vielä! Mene asetuksiin.",
+        "overallProgress": "Viikon Edistyminen",
+        "adviceTitle": "Neuvo sinulle",
+        "clickToSpeak": "Klikkaa kuunnellaksesi",
+        "autoPlayBlocked": "Klikkaa kuvaketta kuunnellaksesi!",
+        "close": "Selvä!"
+    }
+}

@@ -1,0 +1,71 @@
+{
+    "app": {
+        "title": "Assistente Timer Bambini",
+        "greeting": "Ciao",
+        "week": "Settimana",
+        "monday": "Lun",
+        "tuesday": "Mar",
+        "wednesday": "Mer",
+        "thursday": "Gio",
+        "friday": "Ven",
+        "saturday": "Sab",
+        "sunday": "Dom"
+    },
+    "nav": {
+        "timer": "Timer",
+        "stats": "Statistiche",
+        "settings": "Impostazioni",
+        "summary": "Riepilogo"
+    },
+    "activity": {
+        "today": "Oggi",
+        "noActivities": "Nessuna attività, aggiungine una!",
+        "activeBadge": "Attivo"
+    },
+    "settings": {
+        "title": "Le Mie Impostazioni",
+        "account": "Account",
+        "logout": "Esci",
+        "displayName": "Nome visualizzato",
+        "save": "Salva",
+        "saving": "Salvataggio...",
+        "manageRewards": "Gestisci Premi",
+        "manageActivities": "Gestisci Attività",
+        "addRewardPlaceholder": "Nuovo Premio",
+        "add": "Aggiungi",
+        "editActivity": "Modifica Attività",
+        "addActivity": "Aggiungi Attività",
+        "namePlaceholder": "Nome",
+        "earnsReward": "Guadagna Premio:",
+        "none": "(Nessuno)",
+        "multiplier": "Moltiplicatore:",
+        "chooseIcon": "Scegli Icona:",
+        "goalSettings": "🎯 Obiettivi Settimanali",
+        "enableGoals": "Abilita Obiettivi",
+        "sessionsPerWeek": "Sessioni/Settimana",
+        "minutesPerSession": "Minuti/Sessione",
+        "saveChanges": "Salva Modifiche",
+        "cancel": "Annulla",
+        "resetData": "Reimposta Dati",
+        "resetToday": "Reimposta Oggi",
+        "resetConfirm": "Sei sicuro di voler reimpostare il tempo di oggi?",
+        "nameUpdated": "Nome aggiornato! ✨",
+        "sync": "Sincronizzazione Cloud"
+    },
+    "stats": {
+        "weeklyStats": "Statistiche Settimanali",
+        "today": "Oggi",
+        "total": "Totale",
+        "noRecords": "Nessun record ancora",
+        "deleteConfirm": "Sei sicuro di voler eliminare questo registro? (Irreversibile)"
+    },
+    "mentor": {
+        "loading": "Analizzando i tuoi progressi...",
+        "noGoals": "Nessun obiettivo! Vai nelle impostazioni.",
+        "overallProgress": "Progresso Settimanale",
+        "adviceTitle": "Consiglio per te",
+        "clickToSpeak": "Clicca per ascoltare",
+        "autoPlayBlocked": "Clicca sull'icona per ascoltare!",
+        "close": "Capito!"
+    }
+}

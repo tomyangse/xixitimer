@@ -1,0 +1,71 @@
+{
+    "app": {
+        "title": "Kinder Timer Assistent",
+        "greeting": "Hallo",
+        "week": "Woche",
+        "monday": "Mo",
+        "tuesday": "Di",
+        "wednesday": "Mi",
+        "thursday": "Do",
+        "friday": "Fr",
+        "saturday": "Sa",
+        "sunday": "So"
+    },
+    "nav": {
+        "timer": "Timer",
+        "stats": "Statistik",
+        "settings": "Einst.",
+        "summary": "Zusammenfassung"
+    },
+    "activity": {
+        "today": "Heute",
+        "noActivities": "Noch keine Aktivitäten, füge eine hinzu!",
+        "activeBadge": "Aktiv"
+    },
+    "settings": {
+        "title": "Meine Einstellungen",
+        "account": "Konto",
+        "logout": "Abmelden",
+        "displayName": "Anzeigename",
+        "save": "Speichern",
+        "saving": "Speichern...",
+        "manageRewards": "Belohnungen verwalten",
+        "manageActivities": "Aktivitäten verwalten",
+        "addRewardPlaceholder": "Neue Belohnung",
+        "add": "Hinzufügen",
+        "editActivity": "Aktivität bearbeiten",
+        "addActivity": "Neue Aktivität",
+        "namePlaceholder": "Name",
+        "earnsReward": "Verdient Belohnung:",
+        "none": "(Keine)",
+        "multiplier": "Multiplikator:",
+        "chooseIcon": "Symbol wählen:",
+        "goalSettings": "🎯 Wochenziele",
+        "enableGoals": "Ziele aktivieren",
+        "sessionsPerWeek": "Sitzungen/Woche",
+        "minutesPerSession": "Minuten/Sitzung",
+        "saveChanges": "Änderungen speichern",
+        "cancel": "Abbrechen",
+        "resetData": "Daten zurücksetzen",
+        "resetToday": "Heute zurücksetzen",
+        "resetConfirm": "Bist du sicher, dass du die heutige Zeit zurücksetzen möchtest?",
+        "nameUpdated": "Name aktualisiert! ✨",
+        "sync": "Cloud Sync"
+    },
+    "stats": {
+        "weeklyStats": "Wochenstatistik",
+        "today": "Heute",
+        "total": "Gesamt",
+        "noRecords": "Noch keine Einträge",
+        "deleteConfirm": "Möchtest du diesen Eintrag wirklich löschen? (Kann nicht rückgängig gemacht werden)"
+    },
+    "mentor": {
+        "loading": "Analysiere deinen Fortschritt...",
+        "noGoals": "Noch keine Ziele! Gehe zu den Einstellungen.",
+        "overallProgress": "Wochenfortschritt",
+        "adviceTitle": "Ratschlag für dich",
+        "clickToSpeak": "Klicken zum Hören",
+        "autoPlayBlocked": "Klicke auf das Symbol zum Hören!",
+        "close": "Verstanden!"
+    }
+}

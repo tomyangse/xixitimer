@@ -1,0 +1,71 @@
+{
+    "app": {
+        "title": "Barne Timer Assistent",
+        "greeting": "Hei",
+        "week": "Uke",
+        "monday": "Man",
+        "tuesday": "Tir",
+        "wednesday": "Ons",
+        "thursday": "Tor",
+        "friday": "Fre",
+        "saturday": "Lør",
+        "sunday": "Søn"
+    },
+    "nav": {
+        "timer": "Tidtaker",
+        "stats": "Statistikk",
+        "settings": "Innstillinger",
+        "summary": "Sammendrag"
+    },
+    "activity": {
+        "today": "I dag",
+        "noActivities": "Ingen aktiviteter ennå, legg til en nedenfor!",
+        "activeBadge": "Aktiv"
+    },
+    "settings": {
+        "title": "Mine Innstillinger",
+        "account": "Konto",
+        "logout": "Logg ut",
+        "displayName": "Visningsnavn",
+        "save": "Lagre",
+        "saving": "Lagrer...",
+        "manageRewards": "Administrer Belønninger",
+        "manageActivities": "Administrer Aktiviteter",
+        "addRewardPlaceholder": "Ny Belønning",
+        "add": "Legg til",
+        "editActivity": "Rediger Aktivitet",
+        "addActivity": "Legg til Ny Aktivitet",
+        "namePlaceholder": "Navn",
+        "earnsReward": "Tjener Belønning:",
+        "none": "(Ingen)",
+        "multiplier": "Multiplikator:",
+        "chooseIcon": "Velg Ikon:",
+        "goalSettings": "🎯 Ukentlige Mål",
+        "enableGoals": "Aktiver Mål",
+        "sessionsPerWeek": "Økter/Uke",
+        "minutesPerSession": "Minutter/Økt",
+        "saveChanges": "Lagre Endringer",
+        "cancel": "Avbryt",
+        "resetData": "Tilbakestill Data",
+        "resetToday": "Tilbakestill I Dag",
+        "resetConfirm": "Er du sikker på at du vil tilbakestille dagens tid?",
+        "nameUpdated": "Navn oppdatert! ✨",
+        "sync": "Sky Synkronisering"
+    },
+    "stats": {
+        "weeklyStats": "Ukentlig Statistikk",
+        "today": "I dag",
+        "total": "Totalt",
+        "noRecords": "Ingen oppføringer ennå",
+        "deleteConfirm": "Er du sikker på at du vil slette denne oppføringen? (Kan ikke angres)"
+    },
+    "mentor": {
+        "loading": "Tenker på fremgangen din...",
+        "noGoals": "Ingen mål satt ennå! Gå til innstillinger.",
+        "overallProgress": "Ukentlig Fremgang",
+        "adviceTitle": "Råd til deg",
+        "clickToSpeak": "Klikk for å lytte",
+        "autoPlayBlocked": "Klikk på ikonet for å lytte!",
+        "close": "Den er grei!"
+    }
+}

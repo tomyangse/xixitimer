@@ -1,0 +1,71 @@
+{
+    "app": {
+        "title": "Barnens Timer Assistent",
+        "greeting": "Hej",
+        "week": "Vecka",
+        "monday": "Mån",
+        "tuesday": "Tis",
+        "wednesday": "Ons",
+        "thursday": "Tor",
+        "friday": "Fre",
+        "saturday": "Lör",
+        "sunday": "Sön"
+    },
+    "nav": {
+        "timer": "Tidtagare",
+        "stats": "Statistik",
+        "settings": "Inställningar",
+        "summary": "Översikt"
+    },
+    "activity": {
+        "today": "Idag",
+        "noActivities": "Inga aktiviteter än, lägg till en nedan!",
+        "activeBadge": "Aktiv"
+    },
+    "settings": {
+        "title": "Mina Inställningar",
+        "account": "Konto",
+        "logout": "Logga ut",
+        "displayName": "Visningsnamn",
+        "save": "Spara",
+        "saving": "Sparar...",
+        "manageRewards": "Hantera Belöningar",
+        "manageActivities": "Hantera Aktiviteter",
+        "addRewardPlaceholder": "Ny Belöning (t.ex. YouTube)",
+        "add": "Lägg till",
+        "editActivity": "Redigera Aktivitet",
+        "addActivity": "Lägg till Ny Aktivitet",
+        "namePlaceholder": "Namn",
+        "earnsReward": "Ger Belöning:",
+        "none": "(Ingen)",
+        "multiplier": "Multiplikator:",
+        "chooseIcon": "Välj Ikon:",
+        "goalSettings": "🎯 Veckomål",
+        "enableGoals": "Aktivera Mål",
+        "sessionsPerWeek": "Tillfällen/Vecka",
+        "minutesPerSession": "Minuter/Tillfälle",
+        "saveChanges": "Spara Ändringar",
+        "cancel": "Avbryt",
+        "resetData": "Återställ Data",
+        "resetToday": "Återställ Dagens Tid",
+        "resetConfirm": "Är du säker på att du vill återställa dagens tid?",
+        "nameUpdated": "Namnet uppdaterat! ✨",
+        "sync": "Moln Synk"
+    },
+    "stats": {
+        "weeklyStats": "Veckostatistik",
+        "today": "Idag",
+        "total": "Totalt",
+        "noRecords": "Inga poster än",
+        "deleteConfirm": "Är du säker på att du vill ta bort denna post? (Kan inte ångras)"
+    },
+    "mentor": {
+        "loading": "Tänker på dina framsteg...",
+        "noGoals": "Inga mål inställda än! Gå till inställningar för att sätta mål.",
+        "overallProgress": "Veckans Framsteg",
+        "adviceTitle": "Råd till Dig",
+        "clickToSpeak": "Klicka för att lyssna",
+        "autoPlayBlocked": "Klicka på högtalaren för att lyssna!",
+        "close": "Uppfattat!"
+    }
+}

@@ -92,61 +92,61 @@ export function DataProvider({ children }) {
     }
   }, [state.activeSession]);
 
-  // Load Data from Supabase
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+  // Fetch Data function
+  const syncData = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
 
-      if (!session) {
-        dispatch({ type: 'SET_USER', payload: null });
-        return;
+    if (!session) {
+      dispatch({ type: 'SET_USER', payload: null });
+      return;
+    }
+
+    dispatch({ type: 'SET_USER', payload: session.user });
+
+    // Fetch Rewards
+    const { data: rewards } = await supabase.from('rewards').select('*').order('created_at');
+
+    // Fetch Activities
+    const { data: activities } = await supabase.from('activities').select('*').order('created_at');
+    const mappedActivities = (activities || []).map(a => ({
+      ...a,
+      rewardMultiplier: a.reward_multiplier,
+      rewardId: a.reward_id,
+      weeklyGoalSessions: a.weekly_goal_sessions || 0,
+      goalDurationMinutes: a.goal_duration_minutes || 0,
+      isGoalEnabled: a.is_goal_enabled || false
+    }));
+
+    // Fetch Logs
+    const { data: logs } = await supabase.from('logs').select('*');
+    const mappedLogs = (logs || []).map(l => ({
+      ...l,
+      activityId: l.activity_id,
+      rewardId: l.reward_id,
+      startTime: parseInt(l.start_time),
+      endTime: parseInt(l.end_time),
+      earnedReward: l.earned_reward,
+      dateStr: l.date_str
+    }));
+
+    dispatch({
+      type: 'LOAD_DATA',
+      payload: {
+        rewards: rewards || [],
+        activities: mappedActivities,
+        logs: mappedLogs
       }
+    });
+  };
 
-      dispatch({ type: 'SET_USER', payload: session.user });
-
-      // Fetch Rewards
-      const { data: rewards } = await supabase.from('rewards').select('*').order('created_at');
-
-      // Fetch Activities
-      const { data: activities } = await supabase.from('activities').select('*').order('created_at');
-      const mappedActivities = (activities || []).map(a => ({
-        ...a,
-        rewardMultiplier: a.reward_multiplier,
-        rewardId: a.reward_id,
-        weeklyGoalSessions: a.weekly_goal_sessions || 0,
-        goalDurationMinutes: a.goal_duration_minutes || 0,
-        isGoalEnabled: a.is_goal_enabled || false
-      }));
-
-      // Fetch Logs
-      const { data: logs } = await supabase.from('logs').select('*');
-      const mappedLogs = (logs || []).map(l => ({
-        ...l,
-        activityId: l.activity_id,
-        rewardId: l.reward_id, // Add rewardId
-        startTime: parseInt(l.start_time),
-        endTime: parseInt(l.end_time),
-        earnedReward: l.earned_reward,
-        dateStr: l.date_str
-      }));
-
-      dispatch({
-        type: 'LOAD_DATA',
-        payload: {
-          rewards: rewards || [],
-          activities: mappedActivities,
-          logs: mappedLogs
-        }
-      });
-    };
-
-    // Initial fetch
-    fetchData();
+  // Load Data from Supabase on mount
+  useEffect(() => {
+    syncData();
 
     // Listen for auth changes to re-fetch data
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
-        fetchData();
+        syncData();
       } else if (event === 'SIGNED_OUT') {
         dispatch({ type: 'LOAD_DATA', payload: { rewards: [], activities: [], logs: [] } });
       }
@@ -318,6 +318,7 @@ export function DataProvider({ children }) {
         deleteLog,
         resetToday,
         loadData,
+        syncData,
         logout,
         user: state.user
       }}

@@ -7,10 +7,15 @@ import ActiveTimerOverlay from './components/ActiveTimerOverlay';
 import StatsView from './components/StatsView';
 import GoalMentorPopup from './components/GoalMentorPopup';
 import { supabase } from './supabaseClient';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from './components/LanguageSwitcher';
 
 function AppContent() {
+  const { t } = useTranslation();
   const { state } = useData();
   const [session, setSession] = useState(null);
+
+  // ... (keep useEffects and state logic same)
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -51,9 +56,7 @@ function AppContent() {
   // Check if we should show mentor popup (on every page load if goals exist)
   useEffect(() => {
     if (session && state.activities.length > 0) {
-      // Check if we have any goals set
       const hasGoals = state.activities.some(a => a.isGoalEnabled && a.weeklyGoalSessions > 0);
-
       if (hasGoals) {
         setShowMentor(true);
       }
@@ -86,8 +89,6 @@ function AppContent() {
     return <Auth />;
   }
 
-
-
   return (
     <div className="app-container">
       {/* Active Timer Overlay */}
@@ -98,21 +99,20 @@ function AppContent() {
         <GoalMentorPopup onClose={() => setShowMentor(false)} />
       )}
 
-      <header className="app-header">
+      <header className="app-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div className="header-title">
-          你好, {displayName || '朋友'}! <span className="weather-icon">⛅</span>
+          {t('app.greeting')}, {displayName || 'Friend'}! <span className="weather-icon">⛅</span>
         </div>
+        <LanguageSwitcher />
       </header>
 
       <main className="main-content">
         {currentView === 'home' && (
           <>
             <ActivityGrid />
-            {/* Leather Patch Reward Section Moved to Bottom/Main */}
-            {/* Leather Patch Reward Section Moved to Bottom/Main */}
             <div className="reward-section">
               <div className="reward-info" style={{ width: '100%' }}>
-                <h3 style={{ marginBottom: '10px' }}>⭐ My Rewards</h3>
+                <h3 style={{ marginBottom: '10px' }}>⭐ {t('settings.manageRewards')}</h3>
 
                 {/* Reward Balances List */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -140,10 +140,6 @@ function AppContent() {
                   )}
                 </div>
               </div>
-
-
-
-              {/* <div className="reward-coin">®️</div> Removed coin to make space for list */}
             </div>
           </>
         )}
@@ -169,7 +165,7 @@ function AppContent() {
               filter: currentView === 'home' ? 'none' : 'grayscale(100%) opacity(0.6)'
             }}
           />
-          <span style={{ marginTop: '4px' }}>主页</span>
+          <span style={{ marginTop: '4px' }}>{t('nav.timer')}</span>
         </div>
         <div
           className={`nav-item ${currentView === 'stats' ? 'active' : ''}`}
@@ -185,7 +181,7 @@ function AppContent() {
               filter: currentView === 'stats' ? 'none' : 'grayscale(100%) opacity(0.6)'
             }}
           />
-          <span style={{ marginTop: '4px' }}>统计</span>
+          <span style={{ marginTop: '4px' }}>{t('nav.stats')}</span>
         </div>
         <div
           className={`nav-item ${currentView === 'me' ? 'active' : ''}`}
@@ -201,7 +197,7 @@ function AppContent() {
               filter: currentView === 'me' ? 'none' : 'grayscale(100%) opacity(0.6)'
             }}
           />
-          <span style={{ marginTop: '4px' }}>我的</span>
+          <span style={{ marginTop: '4px' }}>{t('nav.settings')}</span>
         </div>
       </nav>
     </div>

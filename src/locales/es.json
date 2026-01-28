@@ -1,0 +1,71 @@
+{
+    "app": {
+        "title": "Asistente de Temporizador para Niños",
+        "greeting": "Hola",
+        "week": "Semana",
+        "monday": "Lun",
+        "tuesday": "Mar",
+        "wednesday": "Mié",
+        "thursday": "Jue",
+        "friday": "Vie",
+        "saturday": "Sáb",
+        "sunday": "Dom"
+    },
+    "nav": {
+        "timer": "Temporizador",
+        "stats": "Estadísticas",
+        "settings": "Ajustes",
+        "summary": "Resumen"
+    },
+    "activity": {
+        "today": "Hoy",
+        "noActivities": "¡No hay actividades, añade una abajo!",
+        "activeBadge": "Activo"
+    },
+    "settings": {
+        "title": "Mis Ajustes",
+        "account": "Cuenta",
+        "logout": "Cerrar sesión",
+        "displayName": "Nombre visible",
+        "save": "Guardar",
+        "saving": "Guardando...",
+        "manageRewards": "Gestionar Recompensas",
+        "manageActivities": "Gestionar Actividades",
+        "addRewardPlaceholder": "Nueva Recompensa",
+        "add": "Añadir",
+        "editActivity": "Editar Actividad",
+        "addActivity": "Añadir Nueva Actividad",
+        "namePlaceholder": "Nombre",
+        "earnsReward": "Gana Recompensa:",
+        "none": "(Ninguna)",
+        "multiplier": "Multiplicador:",
+        "chooseIcon": "Elige Icono:",
+        "goalSettings": "🎯 Metas Semanales",
+        "enableGoals": "Activar Metas",
+        "sessionsPerWeek": "Sesiones/Semana",
+        "minutesPerSession": "Minutos/Sesión",
+        "saveChanges": "Guardar Cambios",
+        "cancel": "Cancelar",
+        "resetData": "Restablecer Datos",
+        "resetToday": "Restablecer Hoy",
+        "resetConfirm": "¿Seguro que quieres restablecer el tiempo de hoy?",
+        "nameUpdated": "¡Nombre actualizado! ✨",
+        "sync": "Sincronización Nube"
+    },
+    "stats": {
+        "weeklyStats": "Estad. Semanales",
+        "today": "Hoy",
+        "total": "Total",
+        "noRecords": "Sin registros aún",
+        "deleteConfirm": "¿Seguro que quieres borrar este registro? (No se puede deshacer)"
+    },
+    "mentor": {
+        "loading": "Pensando en tu progreso...",
+        "noGoals": "¡Sin metas! Ve a ajustes para configurarlas.",
+        "overallProgress": "Progreso Semanal",
+        "adviceTitle": "Consejo para ti",
+        "clickToSpeak": "Clic para escuchar",
+        "autoPlayBlocked": "¡Haz clic en el icono para escuchar!",
+        "close": "¡Entendido!"
+    }
+}

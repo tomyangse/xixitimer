@@ -1,0 +1,71 @@
+{
+    "app": {
+        "title": "Assistant Minuteur pour Enfants",
+        "greeting": "Bonjour",
+        "week": "Semaine",
+        "monday": "Lun",
+        "tuesday": "Mar",
+        "wednesday": "Mer",
+        "thursday": "Jeu",
+        "friday": "Ven",
+        "saturday": "Sam",
+        "sunday": "Dim"
+    },
+    "nav": {
+        "timer": "Minuteur",
+        "stats": "Stats",
+        "settings": "Réglages",
+        "summary": "Résumé"
+    },
+    "activity": {
+        "today": "Aujourd'hui",
+        "noActivities": "Pas d'activités, ajoutez-en une !",
+        "activeBadge": "Actif"
+    },
+    "settings": {
+        "title": "Mes Réglages",
+        "account": "Compte",
+        "logout": "Se déconnecter",
+        "displayName": "Nom d'affichage",
+        "save": "Enregistrer",
+        "saving": "Enregistrement...",
+        "manageRewards": "Gérer les récompenses",
+        "manageActivities": "Gérer les activités",
+        "addRewardPlaceholder": "Nouvelle récompense",
+        "add": "Ajouter",
+        "editActivity": "Modifier l'activité",
+        "addActivity": "Ajouter une activité",
+        "namePlaceholder": "Nom",
+        "earnsReward": "Gagne une récompense :",
+        "none": "(Aucune)",
+        "multiplier": "Multiplicateur :",
+        "chooseIcon": "Choisir une icône :",
+        "goalSettings": "🎯 Objectifs hebdos",
+        "enableGoals": "Activer les objectifs",
+        "sessionsPerWeek": "Sessions/Semaine",
+        "minutesPerSession": "Minutes/Session",
+        "saveChanges": "Enregistrer les modifications",
+        "cancel": "Annuler",
+        "resetData": "Réinitialiser les données",
+        "resetToday": "Réinitialiser aujourd'hui",
+        "resetConfirm": "Voulez-vous vraiment réinitialiser le temps d'aujourd'hui ?",
+        "nameUpdated": "Nom mis à jour ! ✨",
+        "sync": "Synchro Cloud"
+    },
+    "stats": {
+        "weeklyStats": "Stats Hebdomadaires",
+        "today": "Aujourd'hui",
+        "total": "Total",
+        "noRecords": "Pas encore d'enregistrements",
+        "deleteConfirm": "Voulez-vous vraiment supprimer cette entrée ? (Irréversible)"
+    },
+    "mentor": {
+        "loading": "Analyse de vos progrès...",
+        "noGoals": "Pas d'objectifs ! Allez dans les réglages.",
+        "overallProgress": "Progrès Hebdo",
+        "adviceTitle": "Conseils pour toi",
+        "clickToSpeak": "Cliquer pour écouter",
+        "autoPlayBlocked": "Cliquez sur l'icône pour écouter !",
+        "close": "Compris !"
+    }
+}

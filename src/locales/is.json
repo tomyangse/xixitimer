@@ -1,0 +1,71 @@
+{
+    "app": {
+        "title": "Barnatímamælir",
+        "greeting": "Halló",
+        "week": "Vika",
+        "monday": "Mán",
+        "tuesday": "Þri",
+        "wednesday": "Mið",
+        "thursday": "Fim",
+        "friday": "Fös",
+        "saturday": "Lau",
+        "sunday": "Sun"
+    },
+    "nav": {
+        "timer": "Tímamælir",
+        "stats": "Tölfræði",
+        "settings": "Stillingar",
+        "summary": "Yfirlit"
+    },
+    "activity": {
+        "today": "Í dag",
+        "noActivities": "Engar æfingar ennþá, bættu við einni hér að neðan!",
+        "activeBadge": "Virkt"
+    },
+    "settings": {
+        "title": "Mínar Stillingar",
+        "account": "Reikningur",
+        "logout": "Skrá út",
+        "displayName": "Birtingarnafn",
+        "save": "Vista",
+        "saving": "Vistar...",
+        "manageRewards": "Stjórna Verðlaunum",
+        "manageActivities": "Stjórna Æfingum",
+        "addRewardPlaceholder": "Ný Verðlaun",
+        "add": "Bæta við",
+        "editActivity": "Breyta Æfingu",
+        "addActivity": "Bæta við Nýrri Æfingu",
+        "namePlaceholder": "Nafn",
+        "earnsReward": "Vinnur sér inn verðlaun:",
+        "none": "(Engin)",
+        "multiplier": "Margfeldi:",
+        "chooseIcon": "Veldu Tákn:",
+        "goalSettings": "🎯 Vikuleg Markmið",
+        "enableGoals": "Virkja Markmið",
+        "sessionsPerWeek": "Skipti/Viku",
+        "minutesPerSession": "Mínútur/Skipti",
+        "saveChanges": "Vista Breytingar",
+        "cancel": "Hætta við",
+        "resetData": "Endurstilla Gögn",
+        "resetToday": "Endurstilla Í Dag",
+        "resetConfirm": "Ertu viss um að þú viljir endurstilla tímann í dag?",
+        "nameUpdated": "Nafn uppfært! ✨",
+        "sync": "Skýjasamstilling"
+    },
+    "stats": {
+        "weeklyStats": "Vikuleg Tölfræði",
+        "today": "Í dag",
+        "total": "Samtals",
+        "noRecords": "Engar skráningar ennþá",
+        "deleteConfirm": "Ertu viss um að þú viljir eyða þessari færslu? (Ekki hægt að afturkalla)"
+    },
+    "mentor": {
+        "loading": "Hugsa um framfarir þínar...",
+        "noGoals": "Engin markmið sett enn! Farðu í stillingar.",
+        "overallProgress": "Vikulegar Framfarir",
+        "adviceTitle": "Ráð fyrir þig",
+        "clickToSpeak": "Smelltu til að hlusta",
+        "autoPlayBlocked": "Smelltu á táknið til að hlusta!",
+        "close": "Skildi það!"
+    }
+}

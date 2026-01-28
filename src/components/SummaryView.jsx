@@ -1,7 +1,9 @@
 import React from 'react';
 import { useData } from '../context/DataContext';
+import { useTranslation } from 'react-i18next';
 
 export default function SummaryView() {
+    const { t } = useTranslation();
     const { state, deleteLog } = useData();
 
     // Group logs by date
@@ -43,11 +45,12 @@ export default function SummaryView() {
         <div className="summary-section">
             {totalRewardTime > 0 && (
                 <div className="reward-banner">
-                    <h3>🎉 Total Roblox Time Earned: {formatDuration(totalRewardTime)}</h3>
+                    {/* Note: Translating dynamic sentence might need interpolation, but simple concat for now */}
+                    <h3>🎉 {t('stats.total')} {t('settings.manageRewards')}: {formatDuration(totalRewardTime)}</h3>
                 </div>
             )}
-            <h3>Today's Summary ({todayStr})</h3>
-            {Object.keys(totals).length === 0 && <p className="empty-text">No activities yet today.</p>}
+            <h3>{t('stats.today')} ({todayStr})</h3>
+            {Object.keys(totals).length === 0 && <p className="empty-text">{t('activity.noActivities')}</p>}
 
             <div className="summary-totals">
                 {Object.entries(totals).map(([actId, duration]) => {
@@ -62,7 +65,7 @@ export default function SummaryView() {
                 })}
             </div>
 
-            <h4>Recent Logs</h4>
+            <h4>{t('stats.weeklyStats')} / Recent</h4>
             <div className="logs-list">
                 {[...state.logs].reverse().slice(0, 10).map(log => {
                     const activity = state.activities.find(a => a.id === log.activityId);
@@ -73,7 +76,7 @@ export default function SummaryView() {
                             <span>{formatDuration(log.duration)}</span>
                             <span className="log-date">{log.dateStr}</span>
                             <button className="small-delete" onClick={() => {
-                                if (confirm('Delete this entry?')) deleteLog(log.id);
+                                if (confirm(t('stats.deleteConfirm'))) deleteLog(log.id);
                             }}>×</button>
                         </div>
                     )

@@ -1,73 +1,59 @@
 import React, { useMemo, useState } from 'react';
 import { useData } from '../context/DataContext';
+import { useTranslation } from 'react-i18next';
 
 export default function StatsView() {
+    const { t, i18n } = useTranslation();
     const { state, deleteLog } = useData();
     const { logs, activities } = state;
 
-    // State for expanded activity details
-    const [expandedActivity, setExpandedActivity] = useState(null);
-
-    // Helper to render icon (image or emoji)
-    const renderIcon = (icon) => {
-        if (icon && icon.startsWith('/assets/')) {
-            return <img src={icon} alt="" style={{ width: '28px', height: '28px', objectFit: 'cover', borderRadius: '6px' }} />;
-        }
-        return <span style={{ fontSize: '1.5rem' }}>{icon}</span>;
+    // Helper to get locale string for date/time formatting
+    const getDateLocale = () => {
+        if (i18n.language.startsWith('zh')) return 'zh-CN';
+        if (i18n.language.startsWith('sv')) return 'sv-SE';
+        return 'en-US';
     };
 
-    // State for week navigation (0 = current week, -1 = last week, etc.)
     const [weekOffset, setWeekOffset] = useState(0);
+    const [expandedActivity, setExpandedActivity] = useState(null);
 
-    // Helper: Get Monday of the week for a given offset
+    // Calculate current week's Monday based on offset
     const currentWeekMonday = useMemo(() => {
         const d = new Date();
         const day = d.getDay();
-        const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Adjust to Monday
-        const monday = new Date(d.setDate(diff));
-        monday.setHours(0, 0, 0, 0);
-
-        // Apply offset
-        monday.setDate(monday.getDate() + (weekOffset * 7));
-        return monday;
+        const diff = d.getDate() - day + (day === 0 ? -6 : 1); // adjust when day is sunday
+        d.setDate(diff + (weekOffset * 7));
+        d.setHours(0, 0, 0, 0);
+        return d; // This is a Date object
     }, [weekOffset]);
 
-    // Helper: Generate array of 7 date strings (YYYY-MM-DD) for the selected week
+    // Generate array of date strings for the week
     const weekDates = useMemo(() => {
         const dates = [];
-        const current = new Date(currentWeekMonday);
+        const d = new Date(currentWeekMonday);
         for (let i = 0; i < 7; i++) {
-            // Manually construct YYYY-MM-DD in local time to avoid UTC shift
-            const year = current.getFullYear();
-            const month = String(current.getMonth() + 1).padStart(2, '0');
-            const day = String(current.getDate()).padStart(2, '0');
-            dates.push(`${year}-${month}-${day}`);
-
-            current.setDate(current.getDate() + 1);
+            dates.push(d.toISOString().split('T')[0]);
+            d.setDate(d.getDate() + 1);
         }
         return dates;
     }, [currentWeekMonday]);
 
-    // Aggregate logs by date -> activityId
+    // Group logs by date and activity
     const dailyStats = useMemo(() => {
-        const stats = {};
-        logs.forEach(log => {
-            // Use local date from startTime instead of stored UTC dateStr
-            // This ensures stats align with the user's local calendar view
-            const d = new Date(log.startTime);
-            const year = d.getFullYear();
-            const month = String(d.getMonth() + 1).padStart(2, '0');
-            const day = String(d.getDate()).padStart(2, '0');
-            const date = `${year}-${month}-${day}`;
+        const stats = {}; // { '2023-10-27': { 'actId1': 30000, 'actId2': 10000 } }
 
-            if (date) {
-                if (!stats[date]) stats[date] = {};
-                if (!stats[date][log.activityId]) stats[date][log.activityId] = 0;
-                stats[date][log.activityId] += log.duration;
+        // Filter logs that fall within this week
+        // Optimization: We could filter logs by range first, but iterating all logs isn't too expensive for MVP
+        logs.forEach(log => {
+            // Simple string check if log date is in weekDates
+            if (weekDates.includes(log.dateStr)) {
+                if (!stats[log.dateStr]) stats[log.dateStr] = {};
+                if (!stats[log.dateStr][log.activityId]) stats[log.dateStr][log.activityId] = 0;
+                stats[log.dateStr][log.activityId] += log.duration;
             }
         });
         return stats;
-    }, [logs]);
+    }, [logs, weekDates]);
 
     const formatDuration = (ms) => {
         const minutes = Math.floor(ms / 60000);
@@ -76,23 +62,31 @@ export default function StatsView() {
         return `${minutes}m`;
     };
 
+    // Helper to render icon (image or emoji)
+    const renderIcon = (icon) => {
+        if (icon && icon.startsWith('/assets/')) {
+            return <img src={icon} alt="" style={{ width: '20px', height: '20px', objectFit: 'cover', borderRadius: '4px', verticalAlign: 'middle', marginRight: '5px' }} />;
+        }
+        return <span style={{ marginRight: '5px' }}>{icon}</span>;
+    };
+
     const formatDateDisplay = (dateStr) => {
         const date = new Date(dateStr);
         // Display format: "Mon, Jan 24"
-        return date.toLocaleDateString('zh-CN', { weekday: 'short', month: 'numeric', day: 'numeric' });
+        return date.toLocaleDateString(getDateLocale(), { weekday: 'short', month: 'numeric', day: 'numeric' });
     };
 
     const getWeekRangeDisplay = () => {
         const start = new Date(currentWeekMonday);
         const end = new Date(currentWeekMonday);
         end.setDate(end.getDate() + 6);
-        return `${start.toLocaleDateString('zh-CN', { month: 'numeric', day: 'numeric' })} - ${end.toLocaleDateString('zh-CN', { month: 'numeric', day: 'numeric' })}`;
+        return `${start.toLocaleDateString(getDateLocale(), { month: 'numeric', day: 'numeric' })} - ${end.toLocaleDateString(getDateLocale(), { month: 'numeric', day: 'numeric' })}`;
     };
 
     return (
         <div className="stats-container animate-fade-in" style={{ paddingBottom: '30px' }}>
             <div className="stats-header" style={{ marginBottom: '20px' }}>
-                <h2 style={{ textAlign: 'center', color: '#5d4037', marginBottom: '10px' }}>📊 每周统计</h2>
+                <h2 style={{ textAlign: 'center', color: '#5d4037', marginBottom: '10px' }}>📊 {t('stats.weeklyStats')}</h2>
 
                 {/* Week Navigator */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', background: 'rgba(255,255,255,0.6)', padding: '10px', borderRadius: '20px' }}>
@@ -136,11 +130,11 @@ export default function StatsView() {
                                     <span style={{ fontWeight: '800', fontSize: '1.1rem', color: '#5d4037' }}>
                                         {formatDateDisplay(dateStr)}
                                     </span>
-                                    {isToday && <span style={{ fontSize: '0.8rem', background: '#ffe082', padding: '2px 8px', borderRadius: '10px', color: '#bf360c' }}>今天</span>}
+                                    {isToday && <span style={{ fontSize: '0.8rem', background: '#ffe082', padding: '2px 8px', borderRadius: '10px', color: '#bf360c' }}>{t('stats.today')}</span>}
                                 </div>
                                 {hasData && (
                                     <span style={{ fontWeight: 'bold', color: '#8d6e63', background: '#efebe9', padding: '4px 10px', borderRadius: '12px' }}>
-                                        总计: {formatDuration(dayTotal)}
+                                        {t('stats.total')}: {formatDuration(dayTotal)}
                                     </span>
                                 )}
                             </div>
@@ -226,7 +220,7 @@ export default function StatsView() {
                                                                     <button
                                                                         onClick={(e) => {
                                                                             e.stopPropagation();
-                                                                            if (window.confirm('确定要删除这条记录吗？(无法撤销)')) {
+                                                                            if (window.confirm(t('stats.deleteConfirm'))) {
                                                                                 deleteLog(log.id);
                                                                             }
                                                                         }}
@@ -243,7 +237,7 @@ export default function StatsView() {
                                                                             cursor: 'pointer',
                                                                             fontSize: '12px'
                                                                         }}
-                                                                        title="删除这条记录"
+                                                                        title="Delete this record"
                                                                     >
                                                                         🗑️
                                                                     </button>
@@ -258,7 +252,7 @@ export default function StatsView() {
                                 </div>
                             ) : (
                                 <div style={{ fontSize: '0.9rem', color: '#bcaaa4', fontStyle: 'italic', paddingLeft: '5px' }}>
-                                    暂无活动记录
+                                    {t('stats.noRecords')}
                                 </div>
                             )}
                         </div>

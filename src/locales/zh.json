@@ -1,0 +1,71 @@
+{
+    "app": {
+        "title": "儿童时间管理助手",
+        "greeting": "你好",
+        "week": "周",
+        "monday": "周一",
+        "tuesday": "周二",
+        "wednesday": "周三",
+        "thursday": "周四",
+        "friday": "周五",
+        "saturday": "周六",
+        "sunday": "周日"
+    },
+    "nav": {
+        "timer": "计时",
+        "stats": "统计",
+        "settings": "设置",
+        "summary": "周总结"
+    },
+    "activity": {
+        "today": "今天",
+        "noActivities": "暂无活动，请点击下方按钮添加！",
+        "activeBadge": "进行中"
+    },
+    "settings": {
+        "title": "我的设置",
+        "account": "账户",
+        "logout": "退出登录",
+        "displayName": "显示名称",
+        "save": "保存",
+        "saving": "保存中...",
+        "manageRewards": "管理奖励",
+        "manageActivities": "管理活动",
+        "addRewardPlaceholder": "新奖励 (例如: 看电视)",
+        "add": "添加",
+        "editActivity": "编辑活动",
+        "addActivity": "添加新活动",
+        "namePlaceholder": "名称",
+        "earnsReward": "获得奖励:",
+        "none": "(无)",
+        "multiplier": "倍率:",
+        "chooseIcon": "选择图标:",
+        "goalSettings": "🎯 周目标设置",
+        "enableGoals": "启用周目标",
+        "sessionsPerWeek": "每周次数",
+        "minutesPerSession": "每次时长",
+        "saveChanges": "保存更改",
+        "cancel": "取消",
+        "resetData": "重置数据",
+        "resetToday": "一键清空今日数据 (重置)",
+        "resetConfirm": "确定要重置今天的计时数据吗？",
+        "nameUpdated": "姓名已更新! ✨",
+        "sync": "同步到云端"
+    },
+    "stats": {
+        "weeklyStats": "每周统计",
+        "today": "今天",
+        "total": "总计",
+        "noRecords": "暂无活动记录",
+        "deleteConfirm": "确定要删除这条记录吗？(无法撤销)"
+    },
+    "mentor": {
+        "loading": "小智正在思考你的进度...",
+        "noGoals": "还没设置周目标哦！去设置里给活动定个小目标吧。",
+        "overallProgress": "本周进度",
+        "adviceTitle": "小智给你的建议",
+        "clickToSpeak": "点击听小智说话",
+        "autoPlayBlocked": "点击上面的喇叭听我说哦！",
+        "close": "好的，我知道啦！"
+    }
+}

@@ -1,0 +1,71 @@
+{
+    "app": {
+        "title": "키즈 타이머 도우미",
+        "greeting": "안녕",
+        "week": "주",
+        "monday": "월",
+        "tuesday": "화",
+        "wednesday": "수",
+        "thursday": "목",
+        "friday": "금",
+        "saturday": "토",
+        "sunday": "일"
+    },
+    "nav": {
+        "timer": "타이머",
+        "stats": "통계",
+        "settings": "설정",
+        "summary": "요약"
+    },
+    "activity": {
+        "today": "오늘",
+        "noActivities": "활동이 없습니다. 아래에서 추가하세요!",
+        "activeBadge": "활동 중"
+    },
+    "settings": {
+        "title": "설정",
+        "account": "계정",
+        "logout": "로그아웃",
+        "displayName": "표시 이름",
+        "save": "저장",
+        "saving": "저장 중...",
+        "manageRewards": "보상 관리",
+        "manageActivities": "활동 관리",
+        "addRewardPlaceholder": "새 보상",
+        "add": "추가",
+        "editActivity": "활동 편집",
+        "addActivity": "새 활동 추가",
+        "namePlaceholder": "이름",
+        "earnsReward": "보상 획득:",
+        "none": "(없음)",
+        "multiplier": "배율:",
+        "chooseIcon": "아이콘 선택:",
+        "goalSettings": "🎯 주간 목표",
+        "enableGoals": "목표 활성화",
+        "sessionsPerWeek": "회/주",
+        "minutesPerSession": "분/회",
+        "saveChanges": "변경 사항 저장",
+        "cancel": "취소",
+        "resetData": "데이터 초기화",
+        "resetToday": "오늘 시간 초기화",
+        "resetConfirm": "오늘 시간을 초기화하시겠습니까?",
+        "nameUpdated": "이름이 업데이트되었습니다! ✨",
+        "sync": "클라우드 동기화"
+    },
+    "stats": {
+        "weeklyStats": "주간 통계",
+        "today": "오늘",
+        "total": "합계",
+        "noRecords": "아직 기록 없음",
+        "deleteConfirm": "이 기록을 삭제하시겠습니까? (취소 불가)"
+    },
+    "mentor": {
+        "loading": "진행 상황 분석 중...",
+        "noGoals": "설정된 목표가 없습니다! 설정으로 이동하세요.",
+        "overallProgress": "주간 진행 상황",
+        "adviceTitle": "조언",
+        "clickToSpeak": "듣기",
+        "autoPlayBlocked": "아이콘을 클릭하여 들으세요!",
+        "close": "알겠어요!"
+    }
+}

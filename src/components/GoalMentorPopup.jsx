@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useData } from '../context/DataContext';
 import { getGoalMentorAdvice } from '../geminiClient';
 import { speak } from '../ttsClient';
+import { useTranslation } from 'react-i18next';
 
 export default function GoalMentorPopup({ onClose }) {
+    const { t, i18n } = useTranslation();
     const { state } = useData();
     const { activities, logs } = state;
 
@@ -69,18 +71,19 @@ export default function GoalMentorPopup({ onClose }) {
             setProgressData(progress);
 
             // Generate goals data string for AI
+            // We should ideally translate this description for the AI or trust AI to understand, 
+            // but the prompt is more important. Let's keep data raw and clear.
             const goalsDataStr = progress.map(p =>
-                `- ${p.name}: 目标每周${p.targetSessions}次（每次${Math.round(p.targetTotalMinutes / p.targetSessions)}分钟），已完成${p.completedSessions}次，共${p.totalMinutes}分钟`
+                `- ${p.name}: target ${p.targetSessions}/week, done ${p.completedSessions}`
             ).join('\n');
 
             // Get day info
-            const dayNames = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
-            const dayOfWeek = dayNames[now.getDay()];
-            const daysLeft = 7 - (dayOfWeekNum === 0 ? 7 : dayOfWeekNum);
-            const dateStr = `${now.getMonth() + 1}月${now.getDate()}日`;
+            const dateStr = now.toLocaleDateString();
+            const dayOfWeek = now.toLocaleDateString(i18n.language, { weekday: 'long' });
 
-            // Call Gemini API
-            const result = await getGoalMentorAdvice(goalsDataStr, dateStr, dayOfWeek, daysLeft);
+            // Call Gemini API with language
+            // Updated geminiClient.js will need to handle the language argument
+            const result = await getGoalMentorAdvice(goalsDataStr, dateStr, dayOfWeek, 7, i18n.language);
             setAdvice(result);
             setLoading(false);
 
@@ -104,7 +107,7 @@ export default function GoalMentorPopup({ onClose }) {
         };
 
         loadAdvice();
-    }, [activities, logs]);
+    }, [activities, logs, i18n.language]);
 
     // Helper to render activity icon
     const renderIcon = (icon) => {
@@ -152,7 +155,7 @@ export default function GoalMentorPopup({ onClose }) {
                         <button
                             className={`mentor-voice-btn ${isSpeaking ? 'speaking' : ''}`}
                             onClick={handleSpeak}
-                            title={isSpeaking ? '停止播放' : '语音播放'}
+                            title={isSpeaking ? t('mentor.autoPlayBlocked') : t('mentor.clickToSpeak')}
                         >
                             {isSpeaking ? '🔊' : '🔈'}
                         </button>
@@ -162,24 +165,23 @@ export default function GoalMentorPopup({ onClose }) {
                 {loading ? (
                     <div className="mentor-loading">
                         <div className="loading-spinner"></div>
-                        <p>正在分析你的目标进度...</p>
+                        <p>{t('mentor.loading')}</p>
                     </div>
                 ) : progressData.length === 0 ? (
                     <div className="mentor-no-goals">
-                        <p>还没有设置任何目标哦！</p>
-                        <p>去"我的设置"中为活动设置周目标吧 🎯</p>
+                        <p>{t('mentor.noGoals')}</p>
                     </div>
                 ) : (
                     <>
                         {/* Progress Section */}
                         <div className="mentor-progress-section">
-                            <h3>📊 本周进度</h3>
+                            <h3>📊 {t('mentor.overallProgress')}</h3>
                             {progressData.map((item, idx) => (
                                 <div key={idx} className="progress-item">
                                     <div className="progress-header">
                                         <span className="progress-icon">{renderIcon(item.icon)}</span>
                                         <span className="progress-name">{item.name}</span>
-                                        <span className="progress-count">{item.completedSessions}/{item.targetSessions}次</span>
+                                        <span className="progress-count">{item.completedSessions}/{item.targetSessions}</span>
                                     </div>
                                     <div className="progress-bar-container">
                                         <div
@@ -212,7 +214,7 @@ export default function GoalMentorPopup({ onClose }) {
                 )}
 
                 <button className="mentor-close-btn" onClick={onClose}>
-                    开始今天的学习！
+                    {t('mentor.close')}
                 </button>
             </div>
         </div>

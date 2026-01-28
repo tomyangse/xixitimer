@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react';
 import { useData } from '../context/DataContext';
+import { useTranslation } from 'react-i18next';
 
 export default function ActivityGrid() {
+    const { t } = useTranslation();
     const { state, startActivity, stopActivity, deleteActivity } = useData();
     const [now, setNow] = React.useState(Date.now());
 
@@ -97,7 +99,7 @@ export default function ActivityGrid() {
                             <div className="card-title-shadow">{activity.name}</div>
 
                             <div className="card-time-label">
-                                今天：{formatDuration(duration)}
+                                {t('activity.today')}：{formatDuration(duration)}
                             </div>
 
                             {/* Recessed Energy Bar / Weekly Goal */}
@@ -152,7 +154,7 @@ export default function ActivityGrid() {
             {/* Empty State */}
             {state.activities.length === 0 && (
                 <div style={{ gridColumn: '1/-1', textAlign: 'center', color: '#8d6e63', padding: '40px', background: 'rgba(255,255,255,0.6)', borderRadius: '24px' }}>
-                    <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>暂无活动，请点击下方按钮添加！</p>
+                    <p style={{ fontWeight: 'bold', fontSize: '1.2rem' }}>{t('activity.noActivities')}</p>
                 </div>
             )}
         </div>
