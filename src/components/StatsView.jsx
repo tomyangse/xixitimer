@@ -2,8 +2,11 @@ import React, { useMemo, useState } from 'react';
 import { useData } from '../context/DataContext';
 
 export default function StatsView() {
-    const { state } = useData();
+    const { state, deleteLog } = useData();
     const { logs, activities } = state;
+
+    // State for expanded activity details
+    const [expandedActivity, setExpandedActivity] = useState(null);
 
     // Helper to render icon (image or emoji)
     const renderIcon = (icon) => {
@@ -151,15 +154,104 @@ export default function StatsView() {
                                         const activityName = activity ? activity.name : 'Unknown Activity';
                                         const activityIcon = activity ? activity.icon : '❓';
 
+                                        // Check if this activity is currently expanded
+                                        const isExpanded = expandedActivity &&
+                                            expandedActivity.date === dateStr &&
+                                            expandedActivity.id === actId;
+
                                         return (
-                                            <div key={actId} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px', background: 'rgba(0,0,0,0.02)', borderRadius: '10px' }}>
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                                    {renderIcon(activityIcon)}
-                                                    <span style={{ fontWeight: '600', color: '#5d4037' }}>{activityName}</span>
+                                            <div key={actId}>
+                                                {/* Activity Row - Click to toggle expansion */}
+                                                <div
+                                                    onClick={() => {
+                                                        if (isExpanded) {
+                                                            setExpandedActivity(null);
+                                                        } else {
+                                                            setExpandedActivity({ date: dateStr, id: actId });
+                                                        }
+                                                    }}
+                                                    style={{
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'space-between',
+                                                        padding: '8px 12px',
+                                                        background: isExpanded ? '#fff3e0' : 'rgba(0,0,0,0.02)',
+                                                        borderRadius: '10px',
+                                                        cursor: 'pointer',
+                                                        transition: 'background 0.2s',
+                                                        border: isExpanded ? '1px solid #ffe0b2' : '1px solid transparent'
+                                                    }}
+                                                >
+                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                                        {renderIcon(activityIcon)}
+                                                        <span style={{ fontWeight: '600', color: '#5d4037' }}>{activityName}</span>
+                                                        <span style={{ fontSize: '0.8rem', color: '#8d6e63', marginLeft: '5px' }}>
+                                                            {isExpanded ? '▼' : '▶'}
+                                                        </span>
+                                                    </div>
+                                                    <span style={{ fontFamily: 'Nunito', fontWeight: 'bold', color: '#8d6e63' }}>
+                                                        {formatDuration(duration)}
+                                                    </span>
                                                 </div>
-                                                <span style={{ fontFamily: 'Nunito', fontWeight: 'bold', color: '#8d6e63' }}>
-                                                    {formatDuration(duration)}
-                                                </span>
+
+                                                {/* Expanded Details - Log Entries */}
+                                                {isExpanded && (
+                                                    <div className="log-details-list" style={{
+                                                        marginTop: '5px',
+                                                        marginLeft: '15px',
+                                                        borderLeft: '2px solid #ffe0b2',
+                                                        paddingLeft: '10px'
+                                                    }}>
+                                                        {logs.filter(l => {
+                                                            const d = new Date(l.startTime);
+                                                            const lDate = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+                                                            return lDate === dateStr && String(l.activityId) === String(actId);
+                                                        }).map(log => (
+                                                            <div key={log.id} style={{
+                                                                display: 'flex',
+                                                                justifyContent: 'space-between',
+                                                                alignItems: 'center',
+                                                                padding: '6px 0',
+                                                                borderBottom: '1px dashed #eee',
+                                                                fontSize: '0.9rem',
+                                                                color: '#6d4c41'
+                                                            }}>
+                                                                <span>
+                                                                    {new Date(log.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                                    {' - '}
+                                                                    {new Date(log.endTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                                </span>
+                                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                                    <span style={{ fontWeight: 'bold' }}>{formatDuration(log.duration)}</span>
+                                                                    <button
+                                                                        onClick={(e) => {
+                                                                            e.stopPropagation();
+                                                                            if (window.confirm('确定要删除这条记录吗？(无法撤销)')) {
+                                                                                deleteLog(log.id);
+                                                                            }
+                                                                        }}
+                                                                        style={{
+                                                                            border: 'none',
+                                                                            background: '#ffcdd2',
+                                                                            color: '#c62828',
+                                                                            borderRadius: '6px',
+                                                                            width: '24px',
+                                                                            height: '24px',
+                                                                            display: 'flex',
+                                                                            alignItems: 'center',
+                                                                            justifyContent: 'center',
+                                                                            cursor: 'pointer',
+                                                                            fontSize: '12px'
+                                                                        }}
+                                                                        title="删除这条记录"
+                                                                    >
+                                                                        🗑️
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                )}
                                             </div>
                                         );
                                     })}
