@@ -243,33 +243,29 @@ export default function SettingsView() {
                         </div>
                     )}
 
-                    <div className="icon-row">
-                        {iconImages.map(icon => (
-                            <div
-                                key={icon.path}
-                                className={`icon-option ${actIcon === icon.path ? 'selected' : ''}`}
-                                onClick={() => setActIcon(icon.path)}
-                                title={icon.label}
-                            >
-                                <img src={icon.path} alt={icon.label} />
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Goal Settings Section */}
-                    <div className="goal-settings-group">
+                    {/* Goal Settings Section - Moved up for better visibility */}
+                    <div className="goal-settings-group" style={{
+                        marginTop: '15px',
+                        padding: '12px',
+                        background: '#f1f8e9',
+                        borderRadius: '12px',
+                        border: '2px solid #a5d6a7'
+                    }}>
                         <div className="goal-toggle-row">
-                            <label>🎯 启用周目标</label>
-                            <input
-                                type="checkbox"
-                                checked={goalEnabled}
-                                onChange={(e) => setGoalEnabled(e.target.checked)}
-                            />
+                            <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
+                                <input
+                                    type="checkbox"
+                                    checked={goalEnabled}
+                                    onChange={(e) => setGoalEnabled(e.target.checked)}
+                                    style={{ width: '20px', height: '20px' }}
+                                />
+                                <span style={{ fontWeight: 'bold', color: '#2e7d32' }}>🎯 启用周目标 (Enable Goals)</span>
+                            </label>
                         </div>
                         {goalEnabled && (
-                            <div className="goal-inputs-row">
+                            <div className="goal-inputs-row" style={{ marginTop: '10px' }}>
                                 <div className="goal-input-group">
-                                    <label>每周次数</label>
+                                    <label>每周次数 (Sessions/Week)</label>
                                     <input
                                         type="number"
                                         min="1"
@@ -279,7 +275,7 @@ export default function SettingsView() {
                                     />
                                 </div>
                                 <div className="goal-input-group">
-                                    <label>每次分钟</label>
+                                    <label>每次时长 (Minutes/Session)</label>
                                     <input
                                         type="number"
                                         min="5"
@@ -290,6 +286,20 @@ export default function SettingsView() {
                                 </div>
                             </div>
                         )}
+                    </div>
+
+                    <div className="icon-row" style={{ marginTop: '15px' }}>
+                        <p style={{ width: '100%', marginBottom: '5px', fontWeight: 'bold', color: '#5d4037' }}>Choose Icon:</p>
+                        {iconImages.map(icon => (
+                            <div
+                                key={icon.path}
+                                className={`icon-option ${actIcon === icon.path ? 'selected' : ''}`}
+                                onClick={() => setActIcon(icon.path)}
+                                title={icon.label}
+                            >
+                                <img src={icon.path} alt={icon.label} />
+                            </div>
+                        ))}
                     </div>
 
                     <div className="form-buttons">

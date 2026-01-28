@@ -100,11 +100,49 @@ export default function ActivityGrid() {
                                 今天：{formatDuration(duration)}
                             </div>
 
-                            {/* Recessed Energy Bar */}
+                            {/* Recessed Energy Bar / Weekly Goal */}
                             <div className="energy-bar-track">
-                                <div className="energy-bar-fill">
-                                    ⚡ ★★★★★
-                                </div>
+                                {activity.isGoalEnabled ? (
+                                    <div className="energy-bar-fill" style={{ width: '100%', justifyContent: 'flex-start', paddingLeft: '8px' }}>
+                                        <span style={{ fontSize: '0.9rem', marginRight: '4px' }}>⚡</span>
+                                        {Array.from({ length: Math.max(activity.weeklyGoalSessions || 3, 1) }).map((_, i) => {
+                                            // Calculate completed sessions for this week
+                                            const today = new Date();
+                                            const day = today.getDay();
+                                            const diff = today.getDate() - day + (day === 0 ? -6 : 1); // Monday
+                                            const monday = new Date(today.setDate(diff));
+                                            monday.setHours(0, 0, 0, 0);
+
+                                            // Filter logs for this week and this activity
+                                            const weekLogs = state.logs.filter(l => {
+                                                const lDate = new Date(l.startTime);
+                                                return l.activityId === activity.id && lDate >= monday;
+                                            });
+                                            const completedCount = weekLogs.length;
+
+                                            const isFilled = i < completedCount;
+                                            return (
+                                                <span key={i} style={{
+                                                    color: isFilled ? '#ffeb3b' : 'rgba(255,255,255,0.3)',
+                                                    textShadow: isFilled ? '0 0 5px rgba(255, 235, 59, 0.5)' : 'none',
+                                                    fontSize: '1rem',
+                                                    marginRight: '1px'
+                                                }}>★</span>
+                                            );
+                                        })}
+                                    </div>
+                                ) : (
+                                    <div className="energy-bar-fill">
+                                        {/* Show multiplier if no goal set, or keep static stars? User asked to "let these stars be dynamic", implies replacing them. 
+                                            If no goal, maybe just show multiplier text? 
+                                            Let's show multiplier with a lightning bolt.
+                                         */}
+                                        <span style={{ fontSize: '0.9rem' }}>⚡</span>
+                                        <span style={{ fontSize: '0.9rem', fontWeight: 'bold', marginLeft: '4px', color: '#ffeb3b' }}>
+                                            x{activity.rewardMultiplier || 1}
+                                        </span>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

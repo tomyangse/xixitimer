@@ -1655,3 +1655,22 @@ code {
   font-size: 1rem;
   text-align: center;
 }
+
+/* Energy Bar / Weekly Goal Stars */
+.energy-bar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  margin-top: 8px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.energy-bar-fill {
+  display: flex;
+  align-items: center;
+  color: white;
+  width: 100%;
+}
