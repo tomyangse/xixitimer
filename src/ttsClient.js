@@ -2,20 +2,21 @@
 const GOOGLE_TTS_API_KEY = import.meta.env.VITE_GOOGLE_TTS_API_KEY;
 
 // Voice map for supported languages
+// Voice map for supported languages - Upgraded to Wavenet/Neural for natural sounding speech
 const VOICE_MAP = {
-    'en': { languageCode: 'en-US', name: 'en-US-Journey-F', gender: 'FEMALE' },
-    'zh': { languageCode: 'cmn-CN', name: 'cmn-CN-Standard-A', gender: 'FEMALE' },
-    'sv': { languageCode: 'sv-SE', name: 'sv-SE-Standard-A', gender: 'FEMALE' },
-    'fr': { languageCode: 'fr-FR', name: 'fr-FR-Standard-A', gender: 'FEMALE' },
-    'de': { languageCode: 'de-DE', name: 'de-DE-Standard-A', gender: 'FEMALE' },
-    'es': { languageCode: 'es-ES', name: 'es-ES-Standard-A', gender: 'FEMALE' },
-    'it': { languageCode: 'it-IT', name: 'it-IT-Standard-A', gender: 'FEMALE' },
-    'da': { languageCode: 'da-DK', name: 'da-DK-Standard-A', gender: 'FEMALE' },
-    'no': { languageCode: 'nb-NO', name: 'nb-NO-Standard-A', gender: 'FEMALE' },
-    'fi': { languageCode: 'fi-FI', name: 'fi-FI-Standard-A', gender: 'FEMALE' },
-    'is': { languageCode: 'is-IS', name: 'is-IS-Standard-A', gender: 'FEMALE' },
-    'ja': { languageCode: 'ja-JP', name: 'ja-JP-Standard-A', gender: 'FEMALE' },
-    'ko': { languageCode: 'ko-KR', name: 'ko-KR-Standard-A', gender: 'FEMALE' }
+    'en': { languageCode: 'en-US', name: 'en-US-Neural2-F', gender: 'FEMALE' },     // Upgrade to Neural2 for English
+    'zh': { languageCode: 'cmn-CN', name: 'cmn-CN-Wavenet-A', gender: 'FEMALE' },    // Better Chinese Wavenet
+    'sv': { languageCode: 'sv-SE', name: 'sv-SE-Wavenet-A', gender: 'FEMALE' },
+    'fr': { languageCode: 'fr-FR', name: 'fr-FR-Wavenet-A', gender: 'FEMALE' },
+    'de': { languageCode: 'de-DE', name: 'de-DE-Wavenet-A', gender: 'FEMALE' },
+    'es': { languageCode: 'es-ES', name: 'es-ES-Wavenet-A', gender: 'FEMALE' },
+    'it': { languageCode: 'it-IT', name: 'it-IT-Wavenet-A', gender: 'FEMALE' },
+    'da': { languageCode: 'da-DK', name: 'da-DK-Wavenet-A', gender: 'FEMALE' },
+    'no': { languageCode: 'nb-NO', name: 'nb-NO-Wavenet-A', gender: 'FEMALE' },
+    'fi': { languageCode: 'fi-FI', name: 'fi-FI-Wavenet-A', gender: 'FEMALE' },
+    'is': { languageCode: 'is-IS', name: 'is-IS-Standard-A', gender: 'FEMALE' },      // Iceland only has Standard
+    'ja': { languageCode: 'ja-JP', name: 'ja-JP-Wavenet-A', gender: 'FEMALE' },
+    'ko': { languageCode: 'ko-KR', name: 'ko-KR-Wavenet-A', gender: 'FEMALE' }
 };
 
 /**
