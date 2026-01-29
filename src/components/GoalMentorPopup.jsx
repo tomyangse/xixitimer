@@ -16,6 +16,8 @@ export default function GoalMentorPopup({ onClose }) {
     const audioRef = useRef(null);
 
     useEffect(() => {
+        let isMounted = true;
+
         const loadAdvice = async () => {
             // Calculate week boundaries
             const now = new Date();
@@ -32,7 +34,7 @@ export default function GoalMentorPopup({ onClose }) {
             const goalActivities = activities.filter(a => a.isGoalEnabled && a.weeklyGoalSessions > 0);
 
             if (goalActivities.length === 0) {
-                setLoading(false);
+                if (isMounted) setLoading(false);
                 return;
             }
 
@@ -68,7 +70,7 @@ export default function GoalMentorPopup({ onClose }) {
                 };
             });
 
-            setProgressData(progress);
+            if (isMounted) setProgressData(progress);
 
             // Generate goals data string for AI
             // We should ideally translate this description for the AI or trust AI to understand, 
@@ -83,30 +85,51 @@ export default function GoalMentorPopup({ onClose }) {
 
             // Call Gemini API with language
             // Updated geminiClient.js will need to handle the language argument
-            const result = await getGoalMentorAdvice(goalsDataStr, dateStr, dayOfWeek, 7, i18n.language);
-            setAdvice(result);
-            setLoading(false);
+            try {
+                const result = await getGoalMentorAdvice(goalsDataStr, dateStr, dayOfWeek, 7, i18n.language);
 
-            // Auto-play voice when advice is ready
-            if (result) {
-                const text = `${result.summary} ${result.suggestion} ${result.encouragement}`;
-                // Pre-load audio but don't force play if browser blocks it
-                const audio = await speak(text);
-                if (audio) {
-                    audioRef.current = audio;
-                    try {
-                        await audio.play();
-                        setIsSpeaking(true);
-                        audio.onended = () => setIsSpeaking(false);
-                    } catch (e) {
-                        console.log("Auto-play blocked by browser, waiting for user interaction");
-                        setIsSpeaking(false); // Play failed, so not speaking
+                if (isMounted) {
+                    setAdvice(result);
+                    setLoading(false);
+
+                    // Auto-play voice when advice is ready
+                    if (result) {
+                        const text = `${result.summary} ${result.suggestion} ${result.encouragement}`;
+                        // Pre-load audio but don't force play if browser blocks it
+                        const audio = await speak(text);
+                        if (isMounted && audio) { // Check mounted again after async speak
+                            audioRef.current = audio;
+                            try {
+                                // Stop any existing audio first
+                                window.speechSynthesis.cancel();
+                                await audio.play();
+                                setIsSpeaking(true);
+                                audio.onended = () => {
+                                    if (isMounted) setIsSpeaking(false);
+                                };
+                            } catch (e) {
+                                console.log("Auto-play blocked by browser, waiting for user interaction");
+                                if (isMounted) setIsSpeaking(false);
+                            }
+                        }
                     }
                 }
+            } catch (err) {
+                if (isMounted) setLoading(false);
+                console.error("Error loading advice:", err);
             }
         };
 
         loadAdvice();
+
+        return () => {
+            isMounted = false;
+            // Cleanup audio on unmount or re-run
+            if (audioRef.current) {
+                audioRef.current.pause();
+            }
+            window.speechSynthesis.cancel();
+        };
     }, [activities, logs, i18n.language]);
 
     // Helper to render activity icon

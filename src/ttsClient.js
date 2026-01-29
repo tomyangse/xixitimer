@@ -93,11 +93,19 @@ function speakWithBrowser(text) {
     utterance.rate = 0.9;
     utterance.pitch = 1.1;
 
-    window.speechSynthesis.speak(utterance);
-
-    // Return a pseudo-audio object for compatibility
+    // Create a wrapper object that mimics the Audio interface
     return {
+        play: async () => {
+            window.speechSynthesis.cancel(); // Cancel any previous
+            window.speechSynthesis.speak(utterance);
+
+            // Return a promise that resolves when speaking ends
+            return new Promise((resolve) => {
+                utterance.onend = resolve;
+                utterance.onerror = resolve; // Resolve on error too to prevent hanging
+            });
+        },
         pause: () => window.speechSynthesis.cancel(),
-        onended: null
+        onended: null // This can be assigned by consumer
     };
 }
