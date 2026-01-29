@@ -66,6 +66,7 @@
         "adviceTitle": "조언",
         "clickToSpeak": "듣기",
         "autoPlayBlocked": "아이콘을 클릭하여 들으세요!",
-        "close": "알겠어요!"
+        "close": "알겠어요!",
+        "title": "Smarty Mentor"
     }
 }

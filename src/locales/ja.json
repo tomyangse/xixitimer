@@ -66,6 +66,7 @@
         "adviceTitle": "あなたへのアドバイス",
         "clickToSpeak": "クリックして聞く",
         "autoPlayBlocked": "アイコンをクリックして聞いてね！",
-        "close": "わかった！"
+        "close": "わかった！",
+        "title": "Smarty Mentor"
     }
 }

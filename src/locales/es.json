@@ -66,6 +66,7 @@
         "adviceTitle": "Consejo para ti",
         "clickToSpeak": "Clic para escuchar",
         "autoPlayBlocked": "¡Haz clic en el icono para escuchar!",
-        "close": "¡Entendido!"
+        "close": "¡Entendido!",
+        "title": "Smarty Mentor"
     }
 }

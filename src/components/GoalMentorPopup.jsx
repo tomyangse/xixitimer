@@ -173,7 +173,7 @@ export default function GoalMentorPopup({ onClose }) {
             <div className="mentor-popup animate-pop">
                 <div className="mentor-header">
                     <span className="mentor-avatar">🧸</span>
-                    <h2>小智导师</h2>
+                    <h2>{t('mentor.title')}</h2>
                     {advice && (
                         <button
                             className={`mentor-voice-btn ${isSpeaking ? 'speaking' : ''}`}
