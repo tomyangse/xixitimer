@@ -96,7 +96,7 @@ export default function GoalMentorPopup({ onClose }) {
                     if (result) {
                         const text = `${result.summary} ${result.suggestion} ${result.encouragement}`;
                         // Pre-load audio but don't force play if browser blocks it
-                        const audio = await speak(text);
+                        const audio = await speak(text, i18n.language);
                         if (isMounted && audio) { // Check mounted again after async speak
                             audioRef.current = audio;
                             try {
@@ -152,7 +152,7 @@ export default function GoalMentorPopup({ onClose }) {
 
         setIsSpeaking(true);
         const text = `${advice.summary} ${advice.suggestion} ${advice.encouragement}`;
-        const audio = await speak(text);
+        const audio = await speak(text, i18n.language);
 
         if (audio) {
             audioRef.current = audio;

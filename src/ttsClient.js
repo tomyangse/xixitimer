@@ -1,18 +1,36 @@
 // Google Cloud Text-to-Speech Client
 const GOOGLE_TTS_API_KEY = import.meta.env.VITE_GOOGLE_TTS_API_KEY;
 
+// Voice map for supported languages
+const VOICE_MAP = {
+    'en': { languageCode: 'en-US', name: 'en-US-Journey-F', gender: 'FEMALE' },
+    'zh': { languageCode: 'cmn-CN', name: 'cmn-CN-Standard-A', gender: 'FEMALE' },
+    'sv': { languageCode: 'sv-SE', name: 'sv-SE-Standard-A', gender: 'FEMALE' },
+    'fr': { languageCode: 'fr-FR', name: 'fr-FR-Standard-A', gender: 'FEMALE' },
+    'de': { languageCode: 'de-DE', name: 'de-DE-Standard-A', gender: 'FEMALE' },
+    'es': { languageCode: 'es-ES', name: 'es-ES-Standard-A', gender: 'FEMALE' },
+    'it': { languageCode: 'it-IT', name: 'it-IT-Standard-A', gender: 'FEMALE' },
+    'da': { languageCode: 'da-DK', name: 'da-DK-Standard-A', gender: 'FEMALE' },
+    'no': { languageCode: 'nb-NO', name: 'nb-NO-Standard-A', gender: 'FEMALE' },
+    'fi': { languageCode: 'fi-FI', name: 'fi-FI-Standard-A', gender: 'FEMALE' },
+    'is': { languageCode: 'is-IS', name: 'is-IS-Standard-A', gender: 'FEMALE' },
+    'ja': { languageCode: 'ja-JP', name: 'ja-JP-Standard-A', gender: 'FEMALE' },
+    'ko': { languageCode: 'ko-KR', name: 'ko-KR-Standard-A', gender: 'FEMALE' }
+};
+
 /**
  * Convert text to speech using Google Cloud TTS API
  * @param {string} text - Text to convert to speech
- * @param {string} languageCode - Language code (default: zh-CN)
- * @param {string} voiceName - Voice name (default: zh-CN-Wavenet-A for female)
+ * @param {string} lang - App language code (e.g., 'en', 'zh')
  * @returns {Promise<string>} - Base64 encoded audio content
  */
-export async function textToSpeech(text, languageCode = 'cmn-CN', voiceName = 'cmn-CN-Standard-A') {
+export async function textToSpeech(text, lang = 'zh') {
     if (!GOOGLE_TTS_API_KEY) {
         console.warn('Google TTS API key not configured');
         return null;
     }
+
+    const voiceConfig = VOICE_MAP[lang] || VOICE_MAP['en'];
 
     try {
         const response = await fetch(
@@ -25,9 +43,9 @@ export async function textToSpeech(text, languageCode = 'cmn-CN', voiceName = 'c
                 body: JSON.stringify({
                     input: { text },
                     voice: {
-                        languageCode,
-                        name: voiceName,
-                        ssmlGender: 'FEMALE'
+                        languageCode: voiceConfig.languageCode,
+                        name: voiceConfig.name,
+                        ssmlGender: voiceConfig.gender
                     },
                     audioConfig: {
                         audioEncoding: 'MP3',
@@ -66,30 +84,49 @@ export function playAudio(base64Audio) {
 /**
  * Speak text using Google Cloud TTS
  * @param {string} text - Text to speak
+ * @param {string} lang - Language code (e.g. 'en', 'zh')
  */
-export async function speak(text) {
-    const audioContent = await textToSpeech(text);
+export async function speak(text, lang = 'zh') {
+    const audioContent = await textToSpeech(text, lang);
     if (audioContent) {
         return playAudio(audioContent);
     }
 
     // Fallback to browser native TTS
     console.log('Using browser TTS fallback');
-    return speakWithBrowser(text);
+    return speakWithBrowser(text, lang);
 }
 
 /**
  * Fallback: Use browser's native Speech Synthesis
  * @param {string} text - Text to speak
+ * @param {string} lang - Language code
  */
-function speakWithBrowser(text) {
+function speakWithBrowser(text, lang = 'zh') {
     if (!window.speechSynthesis) {
         console.warn('Speech synthesis not supported');
         return null;
     }
 
+    // Map short codes to full BCP 47 tags for browser
+    const browserLangMap = {
+        'en': 'en-US',
+        'zh': 'zh-CN',
+        'sv': 'sv-SE',
+        'fr': 'fr-FR',
+        'de': 'de-DE',
+        'es': 'es-ES',
+        'it': 'it-IT',
+        'da': 'da-DK',
+        'no': 'nb-NO',
+        'fi': 'fi-FI',
+        'is': 'is-IS',
+        'ja': 'ja-JP',
+        'ko': 'ko-KR'
+    };
+
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'zh-CN';
+    utterance.lang = browserLangMap[lang] || 'en-US';
     utterance.rate = 0.9;
     utterance.pitch = 1.1;
 
